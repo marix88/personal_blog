@@ -1,24 +1,29 @@
 // 3rd party modules
 import express from "express";
 import path from "path";
+import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
 // Local modules
-import blogRoutes from "./routes/blogRoutes";
+import router from "./routes/blogRoutes.js";
 
 // Server initialization
-const app = express();
+export const app = express();
 const PORT = process.env.PORT;
 
 // Middlewares
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.json()); // parse the incoming requests with JSON payloads
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.set("view engine", "ejs");
 
 // Routes
-app.use("/", blogRoutes);
+app.use("/", router);
+app.use("/about", router);
 
 // Server listen and connection to database
 mongoose.connect(`${process.env.MONGODB_URI}`);

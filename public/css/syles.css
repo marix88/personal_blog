@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+@media screen and (min-width: 600px) {
+  section {
+    padding: 2rem 3rem;
+  }
+}
+
+body {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 20px;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  max-width: 1200px;
+  background-color: aquamarine;
+}
+
+section {
+  padding: 2rem;
+}
+
+p,
+h1,
+h2,
+h3,
+a,
+ul {
+  margin: 20;
+  padding: 20;
+  text-decoration: none;
+}
+
+footer {
+  color: #777;
+  text-align: center;
+  margin: 80px auto 20px;
+}
