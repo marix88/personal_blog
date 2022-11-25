@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <form id="addBlogPostForm" action="/public/images" enctype="multipart/form-data" method="POST">
+        <label for="title">Post title:</label>
+        <input type="text" id="title" name="title" required />
+        <label for="snippet">Post snippet:</label>
+        <input type="text" id="snippet" name="snippet" />
+        <label for="content">Post content:</label>
+        <textarea id="content" name="content" required></textarea>
+        <div class="uploads">
+            <label for="img" class="form-label">Featured Image</label>
+            <input type="file" class="form-control" id="img" name="img" accept="image/*" required enabled>
+          </div>
+          <button type="submit" class="btn btn-primary" name="submitPostBtn">Submit</button>
+          <p id="formResponse"></p>
+        </form>
+        <a href="/">See the latest blog posts</a>
+    </form>
+  </body>
+</html>

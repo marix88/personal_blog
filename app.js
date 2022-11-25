@@ -24,6 +24,8 @@ app.set("view engine", "ejs");
 // Routes
 app.use("/", router);
 app.use("/about", router);
+app.use("/create", router);
+app.use("/contact", router);
 
 // Server listen and connection to database
 mongoose.connect(`${process.env.MONGODB_URI}`);
