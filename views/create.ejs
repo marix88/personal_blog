@@ -3,6 +3,9 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <%- include("./partials/nav.ejs") %>
+    <section>
+      <h1>Create a new blog post</h1>
+    </section>
     <form id="addBlogPostForm" action="/public/images" enctype="multipart/form-data" method="POST">
         <label for="title">Post title:</label>
         <input type="text" id="title" name="title" required />
