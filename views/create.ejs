@@ -6,18 +6,20 @@
     <section>
       <h1>Create a new blog post</h1>
     </section>
-    <form id="addBlogPostForm" action="/public/images" enctype="multipart/form-data" method="POST">
-        <label for="title">Post title:</label>
-        <input type="text" id="title" name="title" required />
-        <label for="snippet">Post snippet:</label>
-        <input type="text" id="snippet" name="snippet" />
-        <label for="content">Post content:</label>
-        <textarea id="content" name="content" required></textarea>
+    <form id="addBlogPostForm" action="/public/images" enctype="multipart/form-data" method="POST" class="forms">
+        <div>
+        <input type="text" id="title" name="title" class="input-text" placeholder="Your blog post title" required /></div>
+        <div>
+        <input type="text" id="snippet" name="snippet" class="input-text" placeholder="Your blog post snippet"/></div>
+        <div>
+        <textarea id="content" name="content" placeholder="The content of your blog post" required></textarea></div>
         <div class="uploads">
-            <label for="img" class="form-label">Featured Image</label>
-            <input type="file" class="form-control" id="img" name="img" accept="image/*" required enabled>
+          <div class = "choose-file">
+            <input type="file" class="upload-btn" id="img" name="img" accept="image/*" required enabled/>
           </div>
-          <button type="submit" class="btn btn-primary" name="submitPostBtn">Submit</button>
+        </div>
+        <div class = "submit">
+          <button type="submit" class="submit-btn" name="submitPostBtn">SUBMIT</button></div>
           <p id="formResponse"></p>
         </form>
         <a href="/">See the latest blog posts</a>

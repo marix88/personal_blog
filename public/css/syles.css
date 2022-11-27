@@ -1,8 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 @media screen and (min-width: 600px) {
   section {
     padding: 2rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
   }
 }
 
@@ -13,18 +21,6 @@ body {
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   max-width: 1200px;
   background: linear-gradient(270deg, #03f2ea, #ecd905);
-}
-
-section {
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-ul {
-  margin: 20;
-  padding: 20;
-  text-decoration: none;
 }
 
 section h1 {
@@ -182,6 +178,74 @@ section p {
 .checkbox:checked + .button .icon::after {
   top: 0;
   transform: rotate(-135deg);
+}
+
+form {
+  position: relative;
+  padding: 1em;
+  box-sizing: border-box;
+  width: 50%;
+  height: 100%;
+  display: block;
+}
+
+input[type="text"] {
+  width: 50rem;
+  padding: 0.4rem;
+  margin: 10px 0;
+  font-size: medium;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1px 1px rgb(82, 83, 83);
+}
+
+.input-text {
+  border: 0.15rem solid rgb(120, 125, 125);
+}
+
+textarea {
+  font-size: medium;
+  width: 50rem;
+  height: fit-content;
+  min-height: 10rem;
+  resize: vertical;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  border: 0;
+  box-shadow: 2px 2px 2px rgb(120, 125, 125);
+}
+
+.uploads {
+  margin: 2rem 0;
+}
+
+input::file-selector-button {
+  font-weight: bold;
+  color: rgb(8, 8, 8);
+  padding: 0.5em;
+  border: thin solid white;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px rgb(120, 125, 125);
+}
+
+.submit-btn {
+  padding: 0.8rem;
+  border-color: black;
+  border-radius: 1rem;
+  background-color: #ecd905;
+  font-size: medium;
+  font-weight: bold;
+  box-shadow: 2px 2px 2px rgb(120, 125, 125);
+  width: 30%;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-btn:hover {
+  background-color: orange;
 }
 
 footer {
