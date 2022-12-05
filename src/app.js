@@ -23,22 +23,21 @@ const PORT = process.env.PORT;
 // Middlewares
 
 // import.meta.url to get the curent file's URL and then convert it to a path
-//const __filename = url.fileURLToPath(import.meta.url); // Returns the absolute path to the current file
-//const __dirname = path.dirname(__filename); // Returns the absolute path to the parrent folder
-//console.log(__filename);
-//console.log(__dirname);
-//console.log(path.join(__dirname, "about.html"));
-//console.log(import.meta.url);
+const __filename = url.fileURLToPath(import.meta.url); // Returns the absolute path to the current file
+const __dirname = path.dirname(__filename); // Returns the absolute path to the parrent folder
+/*console.log(__filename);
+console.log(__dirname);
+console.log(import.meta.url); */
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "./views"));
 
 app.use(logger("dev"));
 app.use(express.json()); // parse the incoming requests with JSON payloads
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static("src/public"));
+app.use(express.static(path.join(__dirname, "/public")));
 app.use(cors());
-
-app.set("view engine", "ejs");
-app.set("views", "src/views");
 
 // Routes
 app.use("/", routerIndex);
@@ -63,7 +62,7 @@ app.use((error, req, res, next) => {
 
   // render the error page
   res.render("error");
-  console.log("Error!");
+  console.log("Error");
   res.end();
 });
 
