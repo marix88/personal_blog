@@ -1,0 +1,61 @@
+<%- include('./partials/head') %> <%- include("./partials/nav.ejs") %>
+
+<div class="bg-image">
+  <img
+    id="imgBlog"
+    src="/images/<%= imageBlog %>"
+    class="w-100"
+    alt="Background"
+  />
+  <div class="mask mask-custom">
+    <div
+      class="d-flex flex-column justify-content-center align-items-center h-100"
+    >
+      <h1 id="titleBlog" class="text-white fw-bold"><%= titleBlog %></h1>
+    </div>
+  </div>
+</div>
+
+<section id="categories" class="pt-5">
+  <p id="descriptionBlog"><%= descriptionBlog %></p>
+  <p id="dateBlog" class="text-end"><%= dateBlog %></p>
+</section>
+
+<script>
+  let titleBlog = "<%= titleBlog %>";
+</script>
+
+<section id="cards">
+  <div class="d-flex flex-wrap justify-content-around">
+    <button id="editBlogBtn" class="btn btn-primary card-space">
+      Edit Blog Post
+    </button>
+    <button id="deleteBlogBtn" class="btn btn-primary card-space">
+      Delete Blog Post
+    </button>
+    <p id="deleteFormResponse"></p>
+  </div>
+  <form id="editBlogForm" hidden>
+    <div class="mb-3">
+      <label for="title" class="form-label">Change Title</label>
+      <input type="text" class="form-control" id="title" />
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Change Description</label>
+      <textarea class="form-control" id="description"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="img" class="form-label">Change Image</label>
+      <input type="file" class="form-control" id="img" accept="image/*" />
+    </div>
+    <button id="submitChanges" type="submit" class="btn btn-primary">
+      Submit
+    </button>
+    <p id="formResponse"></p>
+  </form>
+</section>
+
+<script>
+  <%- include('../public/javascripts/blog.js') %>
+</script>
+<%- include('./partials/footer') %>

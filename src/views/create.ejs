@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <div class="mask mask-custom">
+      <div class="d-flex flex-column justify-content-center align-items-center h-100">
+        <h1 class="text-white fw-bold">Add New Blog Post</h1>
+      </div>
+    </div>
+  </div>
+  <section id="cards" class="pt-5">
+    <form
+      id="addBlogPostForm">
+      <select id="selectCategory" class="form-select mb-3">
+        <option selected>Choose category</option>
+  
+        <!-- put all categories in selectCategory -->
+        <% for (let i=0 ; i<titleCategory.length ; i++) { %>
+          <option value="<%= titleCategory[i] %>"><%= titleCategory[i] %></option>
+        <% } %>
+  
+      </select>
+      enctype="multipart/form-data"
+      method="POST"
+      class="forms"
+    >
+      <div class="mb-3">
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="input-text"
+          placeholder="Your blog post title"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <input
+          type="text"
+          id="snippet"
+          name="snippet"
+          class="input-text"
+          placeholder="Your blog post snippet"
+        />
+      </div>
+      <div>
+        <textarea
+          id="content"
+          name="content"
+          placeholder="The content of your blog post"
+          required
+        ></textarea>
+      </div class="mb-3">
+      <div class="uploads">
+        <div class="choose-file">
+          <input
+            type="file"
+            class="upload-btn"
+            id="img"
+            name="img"
+            accept="image/*"
+            required
+            enabled
+          />
+        </div>
+      </div>
+      <div class="submit">
+        <button type="submit" class="submit-btn btn-primary" name="submitPostBtn">
+          SUBMIT
+        </button>
+      </div>
+      <p id="formResponse"></p>
+    </form>
+  </section>
+    <a href="/">See the latest blog posts</a>
+
+    <script>
+      <%- include("../public/javascripts/newblogpost.js") %>
+    </script>
+    <%- include("./partials/footer.ejs") %>
+  </body>
+</html>
