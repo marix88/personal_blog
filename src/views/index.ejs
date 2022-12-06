@@ -70,12 +70,11 @@
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <h4 class="card-title"><%= titleCategory[i] %></h4>
-              <h4 class="card-title"><%= countBlogs[i] %></h4>
             </div>
             <p class="card-text"><%= shortDescription[i] %></p>
           </div>
           <div class="card-footer text-center">
-            <a href="/category/<%= idCategory[i] %>" class="btn btn-primary"
+            <a href="/category/<%= titleCategory[i] %>" class="btn btn-primary"
               ><%= titleCategory[i] %></a
             >
           </div>
@@ -93,10 +92,10 @@
           <div class="card h-100">
             <div class="card-body">
               <h4 class="card-title"><%= titleBlog[i] %></h4>
-              <p class="card-text"><%= dateBlog[i] %></p>
+              <p class="card-text"><%= updatedAt[i] %></p>
             </div>
             <div class="card-footer text-center">
-              <a href="/category/blog/<%= idBlog[i] %>" class="btn btn-primary"
+              <a href="/category/blog/<%= titleBlog[i] %>" class="btn btn-primary"
                 >Details</a
               >
             </div>

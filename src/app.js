@@ -14,7 +14,7 @@ import logger from "morgan";
 import router from "./routes/blogRoutes.js";
 import routerCategory from "./routes/category.js";
 import routerIndex from "./routes/index.js";
-import "./mockup.js";
+//import "./mockup.js";
 
 // Server initialization
 export const app = express();
@@ -25,9 +25,9 @@ const PORT = process.env.PORT;
 // import.meta.url to get the curent file's URL and then convert it to a path
 const __filename = url.fileURLToPath(import.meta.url); // Returns the absolute path to the current file
 const __dirname = path.dirname(__filename); // Returns the absolute path to the parrent folder
-/*console.log(__filename);
-console.log(__dirname);
-console.log(import.meta.url); */
+//console.log(__filename);
+//console.log(__dirname);
+//console.log(import.meta.url);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
@@ -41,9 +41,7 @@ app.use(cors());
 
 // Routes
 app.use("/", routerIndex);
-app.use("/about", router);
-app.use("/create", router);
-app.use("/blog", router);
+app.use("/", router);
 app.use("/category", routerCategory);
 app.use("/contact", router);
 
@@ -69,6 +67,6 @@ app.use((error, req, res, next) => {
 // Server listen and connection to database
 mongoose.connect(`${process.env.MONGODB_URI}`);
 app.listen(PORT || "0.0.0.0", (error) => {
-  if (!error) console.log("Server running on port" + PORT);
+  if (!error) console.log("Server running on port " + PORT);
   else console.log("Error! Server can't start");
 });

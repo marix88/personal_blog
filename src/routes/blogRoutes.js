@@ -16,10 +16,12 @@ router.get("/edit-post", blog_edit_get);
 router.patch("/edit-post", upload.single("img"), blog_edit_patch);
 router.delete("/", blog_delete);
 
-router.get("/about", (req, res, next) => {
-  res.render("about", { title: "About" });
+router.get("/about", (req, res) => {
   console.log("About page displayed!");
-  res.end();
+  res.render("about", {
+    title: "About",
+    titleAllCategories: ["caine", "pisica", "soarece"],
+  });
 });
 
 export default router;

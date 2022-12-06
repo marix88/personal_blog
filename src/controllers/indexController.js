@@ -14,16 +14,14 @@ export const getHomePage = async (req, res, next) => {
       res.status(500).json({ err });
     });
 
-  const idCategory = categories.map((item) => item._id);
   const titleCategory = categories.map((item) => item.title);
   const shortDescription = categories.map((item) => item.description);
   const imageCategory = categories.map((item) => item.img);
 
   //for navbar
-  const idAllCategories = idCategory;
   const titleAllCategories = titleCategory;
 
-  const blogs = await Blog.find({}, "id category title date")
+  const blogs = await Blog.find()
     .sort({ _id: -1 })
     .exec()
     .then((docs) => {
@@ -35,31 +33,37 @@ export const getHomePage = async (req, res, next) => {
       res.status(500).json({ err });
     });
 
-  const idBlog = blogs.map((item) => item._id);
+  //const idBlog = blogs.map((item) => item._id);
   const categoryBlog = blogs.map((item) => item.category);
   const titleBlog = blogs.map((item) => item.title);
-  const dateBlog = blogs.map((item) => item.date);
+  const snippet = blogs.map((item) => item.snippet);
+  const content = blogs.map((item) => item.content);
+  const createdAt = blogs.map((item) => item.createdAt);
+  const updatedAt = blogs.map((item) => item.updatedAt);
 
-  const countBlogs = titleCategory.map((item) => {
-    let count = 0;
-    for (let i = 0; i < categoryBlog.length; i++) {
-      if (item === categoryBlog[i]) {
-        count++;
-      }
-    }
-    return count;
-  });
-
-  res.render("index", {
-    idAllCategories,
+  console.log(
     titleAllCategories,
-    idCategory,
     titleCategory,
     shortDescription,
     imageCategory,
-    countBlogs,
-    idBlog,
+    categoryBlog,
     titleBlog,
-    dateBlog,
+    snippet,
+    content,
+    createdAt,
+    updatedAt
+  );
+
+  res.render("index", {
+    titleAllCategories,
+    titleCategory,
+    shortDescription,
+    imageCategory,
+    categoryBlog,
+    titleBlog,
+    snippet,
+    content,
+    createdAt,
+    updatedAt,
   });
 };

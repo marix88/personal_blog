@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const blogSchema = new Schema({
+  category: {
+    type: String,
+  },
   title: {
     type: String,
     required: true,
@@ -18,7 +21,11 @@ const blogSchema = new Schema({
     default: Date.now(),
     immutable: true,
   },
-  updatedAt: Date,
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+    immutable: true,
+  },
 });
 
 const Blog = mongoose.model("Blog", blogSchema);

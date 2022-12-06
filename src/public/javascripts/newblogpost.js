@@ -15,14 +15,25 @@ $("#addBlogPostForm").submit(function (e) {
   const title = $("#title").val();
   const snippet = $("#snippet").val();
   const content = $("#content").val();
-  const file = $("#img")[0].files[0];
+  const file = $("#image")[0].files[0];
 
-  let date = new Date().toDateString().split(" ");
-  date = `Added: ${date[2]} ${date[1]} ${date[3]}`;
+  const createdAt = new Date().toDateString().split(" ");
+  createdAt = `Creation date: ${date[2]} ${date[1]} ${date[3]}`;
+
+  const updatedAt = new Date().toDateString().split(" ");
+  updatedAt = `Updated on: ${date[2]} ${date[1]} ${date[3]}`;
 
   let formData = new FormData();
 
-  if (!title || !snippet || !content || !file) {
+  if (
+    !category ||
+    !title ||
+    !snippet ||
+    !content ||
+    !file ||
+    !createdAt ||
+    !updatedAt
+  ) {
     $("#formResponse").append(
       '<div class="error-block">All fields are required</div>'
     );
@@ -31,7 +42,8 @@ $("#addBlogPostForm").submit(function (e) {
     formData.append("title", title);
     formData.append("snippet", snippet.value);
     formData.append("content", content.value);
-    formData.append("date", date);
+    formData.append("createdAt", date);
+    formData.append("updatedAt", date);
 
     fetch("/category/blog/create", {
       method: "POST",
