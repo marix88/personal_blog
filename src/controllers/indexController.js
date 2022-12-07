@@ -16,7 +16,6 @@ export const getHomePage = async (req, res, next) => {
 
   const titleCategory = categories.map((item) => item.title);
   const shortDescription = categories.map((item) => item.description);
-  const imageCategory = categories.map((item) => item.img);
 
   //for navbar
   const titleAllCategories = titleCategory;
@@ -45,7 +44,6 @@ export const getHomePage = async (req, res, next) => {
     titleAllCategories,
     titleCategory,
     shortDescription,
-    imageCategory,
     categoryBlog,
     titleBlog,
     snippet,
@@ -58,7 +56,6 @@ export const getHomePage = async (req, res, next) => {
     titleAllCategories,
     titleCategory,
     shortDescription,
-    imageCategory,
     categoryBlog,
     titleBlog,
     snippet,

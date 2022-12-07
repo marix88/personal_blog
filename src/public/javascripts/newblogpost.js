@@ -4,7 +4,6 @@
 $("#selectCategory").change(function (e) {
   $("#title").removeAttr("disabled");
   $("#description").removeAttr("disabled");
-  $("#img").removeAttr("disabled");
 });
 
 // add new blog post
@@ -15,7 +14,6 @@ $("#addBlogPostForm").submit(function (e) {
   const title = $("#title").val();
   const snippet = $("#snippet").val();
   const content = $("#content").val();
-  const file = $("#image")[0].files[0];
 
   const createdAt = new Date().toDateString().split(" ");
   createdAt = `Creation date: ${date[2]} ${date[1]} ${date[3]}`;
@@ -30,7 +28,6 @@ $("#addBlogPostForm").submit(function (e) {
     !title ||
     !snippet ||
     !content ||
-    !file ||
     !createdAt ||
     !updatedAt
   ) {
@@ -45,7 +42,7 @@ $("#addBlogPostForm").submit(function (e) {
     formData.append("createdAt", date);
     formData.append("updatedAt", date);
 
-    fetch("/category/blog/create", {
+    fetch("/create", {
       method: "POST",
       body: formData,
     })

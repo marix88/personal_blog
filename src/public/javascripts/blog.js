@@ -2,9 +2,8 @@
 $("#selectCategory").change(function (e) {
   $("#selectBlog").html("");
   $("#selectBlog").removeAttr("disabled");
-  $("#title").removeAttr("disabled");
+  $("#titleCategory").removeAttr("disabled");
   $("#description").removeAttr("disabled");
-  $("#img").removeAttr("disabled");
   for (const key in allBlogs) {
     if (this.value == key) {
       allBlogs[key].map((item) => {
@@ -29,9 +28,8 @@ $("#editBlogForm").submit(function (e) {
   if (!blog) {
     blog = titleBlog;
   }
-  const title = $("#title").val();
+  const title = $("#titleCategory").val();
   const description = $("#description").val();
-  const file = $("#img")[0].files[0];
 
   let date = new Date().toDateString().split(" ");
   date = `Edited: ${date[2]} ${date[1]} ${date[3]}`;
@@ -42,16 +40,13 @@ $("#editBlogForm").submit(function (e) {
   formData.append("date", date);
 
   if (title) {
-    formData.append("title", title);
+    formData.append("titleCategory", title);
   }
   if (description) {
     formData.append("description", description);
   }
-  if (file) {
-    formData.append("img", file);
-  }
 
-  if (title || description || file) {
+  if (title || description) {
     fetch("/category/blog/edit-blog", {
       method: "PATCH",
       body: formData,
@@ -65,7 +60,6 @@ $("#editBlogForm").submit(function (e) {
         titleBlog = res.updateBlog.title;
         $("#descriptionBlog").html(res.updateBlog.description);
         $("#dateBlog").html(res.updateBlog.date);
-        $("#imgBlog").attr("src", "../../images/" + res.updateBlog.img);
         console.log(res.updateBlog);
       })
       .catch((err) => {

@@ -2,12 +2,6 @@
 <%- include('./partials/head') %> <%- include("./partials/nav.ejs") %>
 
 <div class="bg-image">
-  <img
-    id="imgBlog"
-    src="/images/<%= imageBlog %>"
-    class="w-100"
-    alt="Background"
-  />
   <div class="mask mask-custom">
     <div
       class="d-flex flex-column justify-content-center align-items-center h-100"
@@ -18,8 +12,7 @@
 </div>
 
 <section id="categories" class="pt-5">
-  <p id="descriptionBlog"><%= descriptionBlog %></p>
-  <p id="dateBlog" class="text-end"><%= dateBlog %></p>
+  <p id="updatedAtCategory" class="text-end">updated at: <%= updatedAt %></p>
 </section>
 
 <script>
@@ -36,7 +29,9 @@
     </button>
     <p id="deleteFormResponse"></p>
   </div>
-  <form id="editBlogForm" hidden>
+  <form id="editBlogForm" enctype="multipart/form-data"
+  method="POST"
+  class="forms" hidden>
     <div class="mb-3">
       <label for="title" class="form-label">Change Title</label>
       <input type="text" class="form-control" id="title" />
@@ -45,10 +40,7 @@
       <label for="description" class="form-label">Change Description</label>
       <textarea class="form-control" id="description"></textarea>
     </div>
-    <div class="mb-3">
-      <label for="img" class="form-label">Change Image</label>
-      <input type="file" class="form-control" id="img" accept="image/*" />
-    </div>
+
     <button id="submitChanges" type="submit" class="btn btn-primary">
       Submit
     </button>

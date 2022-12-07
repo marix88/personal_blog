@@ -1,22 +1,18 @@
-import fs from "fs";
 import mongoose from "mongoose";
-import sharp from "sharp";
-import path from "path";
 import Category from "../models/category.js";
 import Blog from "../models/blogpost.js";
 
 export const forNavbar = async () => {
-  const categories = await Category.find({}, "_id title")
+  const categories = await Category.find()
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
       return docs;
     });
 
-  const idAllCategories = categories.map((item) => item._id);
   const titleAllCategories = categories.map((item) => item.title);
 
-  return { idAllCategories, titleAllCategories };
+  return { titleAllCategories };
 };
 
 // get category
@@ -34,12 +30,12 @@ export const getCategory = async (req, res, next) => {
 
   const titleCategory = category.title;
   const shortDescription = category.description;
-  const imageCategory = category.img;
 
   const blogs = await Blog.find(
     { category: titleCategory },
-    "_id title img date"
+    "_id title updatedAt"
   )
+
     .sort({ _id: -1 })
     .exec()
     .then((docs) => {
@@ -53,39 +49,30 @@ export const getCategory = async (req, res, next) => {
 
   const idBlog = blogs.map((item) => item._id);
   const titleBlog = blogs.map((item) => item.title);
-  const imageBlog = blogs.map((item) => item.img);
-  const dateBlog = blogs.map((item) => item.date);
+  const createdAt = blogs.map((item) => item.createdAt);
+  const updatedAt = blogs.map((item) => item.updatedAt);
 
   //for navbar
   const allCategories = forNavbar();
-  const idAllCategories = allCategories.idAllCategories;
   const titleAllCategories = allCategories.titleAllCategories;
 
   res.render("category", {
-    idAllCategories,
     titleAllCategories,
     titleCategory,
     shortDescription,
-    imageCategory,
     idBlog,
     titleBlog,
-    imageBlog,
-    dateBlog,
+    updatedAt,
   });
 };
 
 // add new category
-export const postAddCategory = async (req, res, next) => {
-  await sharp(req.file.path)
-    .resize(480, 270)
-    .toFile(path.resolve(req.file.destination, "images", req.file.filename));
-  fs.unlinkSync(req.file.path);
+export const postAddCategory = (req, res, next) => {
 
-  const category = await new Category({
+  const category = new Category({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
     description: req.body.description,
-    img: req.file.filename,
   });
 
   category
@@ -113,13 +100,6 @@ export const patchEditCategory = async (req, res) => {
     const description = req.body.description;
     console.log(description);
     result.description = description;
-  }
-  if (req.file) {
-    await sharp(req.file.path)
-      .resize(480, 270)
-      .toFile(path.resolve(req.file.destination, "images", req.file.filename));
-    fs.unlinkSync(req.file.path);
-    result.img = req.file.filename;
   }
 
   let updateCategory = await Category.findOneAndUpdate(

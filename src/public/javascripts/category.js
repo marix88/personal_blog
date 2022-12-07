@@ -9,24 +9,20 @@ $("#editCategoryForm").submit(function (e) {
   $(".error-block").remove(); // remove the error text
   $(".success-block").remove(); // remove the succes text
 
-  const title = $("#title").val();
+  const title = $("#titleCategory").val();
   const description = $("#description").val();
-  const file = $("#img")[0].files[0];
 
   let formData = new FormData();
   formData.append("category", titleCategory);
 
   if (title) {
-    formData.append("title", title);
+    formData.append("titleCategory", title);
   }
   if (description) {
     formData.append("description", description);
   }
-  if (file) {
-    formData.append("img", file);
-  }
 
-  if (title || description || file) {
+  if (title || description) {
     fetch("/category", {
       method: "PATCH",
       body: formData,
@@ -39,7 +35,6 @@ $("#editCategoryForm").submit(function (e) {
         $("#titleCategory").html(res.updateCategory.title);
         titleCategory = res.updateCategory.title;
         $("#descriptionCategory").html(res.updateCategory.description);
-        $("#imgCategory").attr("src", "../../images/" + res.updateCategory.img);
         console.log(res.updateCategory);
       })
       .catch((err) => {

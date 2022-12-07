@@ -1,6 +1,3 @@
-import fs from "fs";
-import path from "path";
-import sharp from "sharp";
 import mongoose from "mongoose";
 import Blog from "../models/blogpost.js";
 import Category from "../models/category.js";
@@ -13,10 +10,9 @@ const forNavbar = async () => {
       return docs;
     });
 
-  const idAllCategories = categories.map((item) => item._id);
   const titleAllCategories = categories.map((item) => item.title);
 
-  return { idAllCategories, titleAllCategories };
+  return { titleAllCategories };
 };
 
 // add new blog post from the create page using the form
@@ -37,11 +33,9 @@ export const blog_create_get = (req, res, next) => {
 
   //for navbar
   const allCategories = forNavbar();
-  const idAllCategories = allCategories.idAllCategories;
   const titleAllCategories = allCategories.titleAllCategories;
 
   res.render("create", {
-    idAllCategories,
     titleAllCategories,
     titleCategory,
   });
@@ -49,10 +43,6 @@ export const blog_create_get = (req, res, next) => {
 
 // add (POST) a new blog post in the database using the data collected through the create page
 export const blog_post_add = (req, res, next) => {
-  sharp(req.file.path)
-    .resize(480, 270)
-    .toFile(path.resolve(req.file.destination, "images", req.file.filename));
-  fs.unlinkSync(req.file.path);
 
   const blog = new Blog({
     _id: new mongoose.Types.ObjectId(),
@@ -60,8 +50,8 @@ export const blog_post_add = (req, res, next) => {
     title: req.body.title,
     snippet: req.file.snippet,
     content: req.body.content,
-    image: req.file.filename,
-    date: req.body.date,
+    createdAt: req.body.date,
+    updatedAt: req.body.date,
   });
 
   blog
@@ -90,13 +80,6 @@ export const blog_edit_patch = (req, res) => {
     const content = req.body.content;
     console.log(content);
     result.content = content;
-  }
-  if (req.file) {
-    sharp(req.file.path)
-      .resize(480, 270)
-      .toFile(path.resolve(req.file.destination, "images", req.file.filename));
-    fs.unlinkSync(req.file.path);
-    result.img = req.file.filename;
   }
 
   console.log(req.body.blog);
@@ -154,11 +137,9 @@ export const blog_edit_get = (req, res, next) => {
 
   //for navbar
   const allCategories = forNavbar();
-  const idAllCategories = allCategories.idAllCategories;
   const titleAllCategories = allCategories.titleAllCategories;
 
   res.render("edit-post", {
-    idAllCategories,
     titleAllCategories,
     titleCategory,
     allBlogs: JSON.stringify(allBlogs),
@@ -169,14 +150,14 @@ export const blog_edit_get = (req, res, next) => {
     category: req.body.category,
     title: req.body.title,
     content: req.body.content,
-    img: req.file.filename,
-    date: req.body.date,
+    createdAt: req.body.createdAt,
+    updatedAt: req.body.updatedAt,
   });
 };
 
 // find a blog post by id
 export const blog_post_get = (req, res, next) => {
-  const blog = Blog.findById(req.params.blogId)
+  const blog = Blog.findById(req.params._id)
     .exec()
     .then((doc) => {
       console.log(doc);
@@ -188,22 +169,22 @@ export const blog_post_get = (req, res, next) => {
     });
 
   const titleBlog = blog.title;
+  const snippet = blog.snippet;
   const contentBlog = blog.content;
-  const imageBlog = blog.img;
-  const dateBlog = blog.date;
+  const createdAt = blog.createdAt;
+  const updatedAt = blog.updatedAt;
 
   //for navbar
   const allCategories = forNavbar();
-  const idAllCategories = allCategories.idAllCategories;
   const titleAllCategories = allCategories.titleAllCategories;
 
   res.render("blog", {
-    idAllCategories,
     titleAllCategories,
     titleBlog,
+    snippet,
     contentBlog,
-    imageBlog,
-    dateBlog,
+    createdAt,
+    updatedAt,
   });
 };
 

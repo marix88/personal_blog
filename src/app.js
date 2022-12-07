@@ -34,7 +34,7 @@ app.set("views", path.join(__dirname, "./views"));
 
 app.use(logger("dev"));
 app.use(express.json()); // parse the incoming requests with JSON payloads
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(cors());
@@ -42,8 +42,7 @@ app.use(cors());
 // Routes
 app.use("/", routerIndex);
 app.use("/", router);
-app.use("/category", routerCategory);
-app.use("/contact", router);
+app.use("/", routerCategory);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -9,22 +9,21 @@ $("#addCategoryForm").submit(function (e) {
   $(".error-block").remove(); // remove the error text
   $(".success-block").remove(); // remove the succes text
 
-  const title = $("#title").val();
+  const title = $("#titleCategory").val();
   const description = $("#description").val();
-  const file = $("#img")[0].files[0];
 
   let formData = new FormData();
 
-  if (!title || !description || !file) {
+  if (!title || !description) {
     $("#formResponse").append(
       '<div class="error-block">All fields are required</div>'
     );
   } else {
-    formData.append("title", title);
+    // parameters: name (from the form), value, filename(optional)
+    formData.append("titleCategory", title); 
     formData.append("description", description);
-    formData.append("img", file);
 
-    fetch("/category/add-category", {
+    fetch("/add-category", {
       method: "POST",
       body: formData,
     })
