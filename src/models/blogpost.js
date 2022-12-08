@@ -8,12 +8,10 @@ const blogSchema = new Schema({
   },
   title: {
     type: String,
-    required: true,
   },
   snippet: String,
   content: {
     type: String,
-    required: true,
   },
   createdAt: {
     type: Date,

@@ -13,14 +13,14 @@ const forNavbar = async () => {
       return docs;
     });
 
-  //const titleCategory = req.params.categories;
+  const titleCategory = categories.title;
 
-  //return { titleCategory };
+  return { titleCategory };
 };
 
-// add new blog post from the create page using the form
-export const blog_create_get = (req, res) => {
-  const categories = Category.find({})
+// add to the database a new blog post from the create page form
+export const blog_create_get = async (req, res) => {
+  const categories = await Category.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -32,20 +32,21 @@ export const blog_create_get = (req, res) => {
       res.status(500).json({ err });
     });
 
-  const titleCategory = req.params.category;
+  const titleCategory = categories.title;
 
   //for navbar
   const allCategories = forNavbar();
   const titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("create", {
+  res.render("create" 
+  /*, {
     titleAllCategories,
     titleCategory,
-  });
-};
+  };*/
+  )};
 
 // add (POST) a new blog post in the database using the data collected through the create page
-export const blog_post_add = (req, res) => {
+export const blog_post = (req, res) => {
 
   const blog = new Blog({
     _id: new mongoose.Types.ObjectId(),
@@ -109,7 +110,7 @@ export const blog_edit_get = (req, res) => {
 
   const titleCategory = categories.title;
 
-  const blogs = Blog.find({}, "category title")
+  const blogs = Blog.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {

@@ -7,7 +7,8 @@ $("#selectCategory").change(function (e) {
 });
 
 // add new blog post
-$("#addBlogPostForm").submit(function (e) {
+const form = document.getElementById("addBlogPostForm");
+form.submit(function (e) {
   e.preventDefault();
 
   const category = $("#selectCategory option:selected").val();
@@ -16,7 +17,7 @@ $("#addBlogPostForm").submit(function (e) {
   const content = $("#content").val();
   const createdAt = new Date().toDateString().split(" ");
 
-  let formData = new FormData();
+  let formData = new FormData(form);
 
   if (
     !category ||
@@ -35,12 +36,13 @@ $("#addBlogPostForm").submit(function (e) {
     formData.append("content", content);
     formData.append("createdAt", createdAt);
 
+    
     fetch("/create", {
       method: "POST",
       body: formData,
     })
-      .then((response) => {
-        console.log(response.body);
+      .then((data) => {
+        console.log((data)); // make the return value available to me
         $("#formResponse").append(
           '<div class="success-block">Added new blog post successfully</div>'
         );

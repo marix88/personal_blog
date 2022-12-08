@@ -11,10 +11,6 @@
   </div>
 </div>
 
-<section id="categories" class="pt-5">
-  <p id="updatedAtCategory" class="text-end">updated at: <%= updatedAt %></p>
-</section>
-
 <script>
   let titleBlog = "<%= titleBlog %>";
 </script>
@@ -37,8 +33,12 @@
       <input type="text" class="form-control" id="title" />
     </div>
     <div class="mb-3">
-      <label for="description" class="form-label">Change Description</label>
-      <textarea class="form-control" id="description"></textarea>
+      <label for="snippet" class="form-label">Change Snippet</label>
+      <input type="text" class="form-control" id="snippet" />
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">Change Content</label>
+      <textarea class="form-control" id="content"></textarea>
     </div>
 
     <button id="submitChanges" type="submit" class="btn btn-primary">

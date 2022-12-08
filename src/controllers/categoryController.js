@@ -33,7 +33,7 @@ export const getCategory = async (req, res) => {
 
   const blogs = await Blog.find(
     { category: titleCategory },
-    "_id title updatedAt"
+    "_id"
   )
 
     .sort({ _id: -1 })
@@ -50,7 +50,6 @@ export const getCategory = async (req, res) => {
   const idBlog = blogs.map((item) => item._id);
   const titleBlog = blogs.map((item) => item.title);
   const createdAt = blogs.map((item) => item.createdAt);
-  const updatedAt = blogs.map((item) => item.updatedAt);
 
   //for navbar
   const allCategories = forNavbar();
@@ -62,7 +61,7 @@ export const getCategory = async (req, res) => {
     shortDescription,
     idBlog,
     titleBlog,
-    updatedAt,
+    createdAt,
   });
 };
 
