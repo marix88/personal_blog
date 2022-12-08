@@ -10,22 +10,21 @@
     </div>
   </div>
   <section id="cards" class="pt-5">
-    <form
-      id="addBlogPostForm">
-      <select id="selectCategory" class="form-select mb-3">
+    <form 
+    id="addBlogPostForm"
+    enctype="multipart/form-data"
+    method="POST"
+    class="forms"
+  > <div>
+      <select id="selectCategory" class="mb-3">
         <option selected>Choose category</option>
   
         <!-- put all categories in selectCategory -->
-        <% for (let i=0 ; i<titleCategory.length ; i++) { %>
-          <option value="<%= titleCategory[i] %>"><%= titleCategory[i] %></option>
-        <% } %>
-  
+          <option>fish</option>
+          <option>boats</option>
+          <option>city</option>
       </select>
-      enctype="multipart/form-data"
-      method="POST"
-      class="forms"
-    >
-      <div class="mb-3">
+      </div>
         <input
           type="text"
           id="title"
@@ -34,7 +33,6 @@
           placeholder="Your blog post title"
           required
         />
-      </div>
       <div class="mb-3">
         <input
           type="text"
@@ -54,7 +52,6 @@
       </div class="mb-3">
       <div>
         <input type="date" name="createdAt" enabled/>
-        <input type="date" name="updatedAt" enabled/>
       </div>
       <div class="submit">
         <button type="submit" class="submit-btn btn-primary" name="submitPostBtn">

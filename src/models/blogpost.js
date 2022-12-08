@@ -19,12 +19,7 @@ const blogSchema = new Schema({
     type: Date,
     default: Date.now(),
     immutable: true,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now(),
-    immutable: true,
-  },
+  }
 });
 
 const Blog = mongoose.model("Blog", blogSchema);

@@ -3,7 +3,7 @@ import Category from "../models/category.js";
 import Blog from "../models/blogpost.js";
 
 export const forNavbar = async () => {
-  const categories = await Category.find()
+  const categories = await Category.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -16,7 +16,7 @@ export const forNavbar = async () => {
 };
 
 // get category
-export const getCategory = async (req, res, next) => {
+export const getCategory = async (req, res) => {
   const category = await Category.findById(req.params.categoryId)
     .exec()
     .then((doc) => {
@@ -67,7 +67,7 @@ export const getCategory = async (req, res, next) => {
 };
 
 // add new category
-export const postAddCategory = (req, res, next) => {
+export const postAddCategory = (req, res) => {
 
   const category = new Category({
     _id: new mongoose.Types.ObjectId(),

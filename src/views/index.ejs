@@ -49,24 +49,47 @@
 <section id="categories">
   <h2 class="text-center fw-bold">All Blog Posts</h2>
   <div class="row">
-    <% for (let i=0; i<titleCategory.length; i++) { %>
       <div class="col-md-4 card-space">
         <div class="card h-100">
           <div class="card-body">
             <div class="d-flex justify-content-between">
-              <h4 class="card-title"><%= titleCategory[i] %></h4>
+              <h4 class="card-title">Boats</h4>
             </div>
-            <p class="card-text"><%= shortDescription[i] %></p>
+            <p class="card-text">Boats in Galati.</p>
           </div>
           <div class="card-footer text-center">
-            <a href="/category/<%= titleCategory[i] %>" class="btn btn-primary"
-              ><%= titleCategory[i] %></a
-            >
           </div>
         </div>
       </div>
-    <% } %> 
   </div>
+  <div class="row">
+    <div class="col-md-4 card-space">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h4 class="card-title">Fish</h4>
+          </div>
+          <p class="card-text">Fish in Galati, Romania.</p>
+        </div>
+        <div class="card-footer text-center">
+        </div>
+      </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-4 card-space">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h4 class="card-title">Galati</h4>
+        </div>
+        <p class="card-text">Galati city, Romania.</p>
+      </div>
+      <div class="card-footer text-center">
+      </div>
+    </div>
+  </div>
+</div>
 </section>
       <section id="last-blogposts-inserted">
         <h2 class="text-white text-center fw-bold">
@@ -77,10 +100,10 @@
           <div class="card h-100">
             <div class="card-body">
               <h4 class="card-title"><%= titleBlog[i] %></h4>
-              <p class="card-text">updated at: <%= updatedAt[i] %></p>
+              <p class="card-text">created at: <%= createdAt[i] %></p>
             </div>
             <div class="card-footer text-center">
-              <a href="/category/blog/<%= titleBlog[i] %>" class="btn btn-primary"
+              <a href="/<%= titleBlog[i] %>" class="btn btn-primary"
                 >Details</a
               >
             </div>

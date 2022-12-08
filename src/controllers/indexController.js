@@ -1,8 +1,8 @@
 import Blog from "../models/blogpost.js";
 import Category from "../models/category.js";
 
-export const getHomePage = async (req, res, next) => {
-  const categories = await Category.find()
+export const getHomePage = async (req, res) => {
+  const categories = await Category.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -14,11 +14,18 @@ export const getHomePage = async (req, res, next) => {
       res.status(500).json({ err });
     });
 
-  const titleCategory = categories.map((item) => item.title);
-  const shortDescription = categories.map((item) => item.description);
+  const titleCategory = categories.title;
+  const shortDescription = categories.description;
+  const limitNumber = 3;
+  const latest = await Blog.find({}).sort({_id: -1}).limit(limitNumber);
+  const fish = await Blog.find({ "category": "fish" }).limit(limitNumber);
+  const boats = await Blog.find({ "category": "boats" }).limit(limitNumber);
+  const city = await Blog.find({ "category": "city" }).limit(limitNumber);
+
+  const galati = { latest, fish, boats, city }
 
   //for navbar
-  const titleAllCategories = titleCategory;
+  // const titleAllCategories = titleCategory;
 
   const blogs = await Blog.find()
     .sort({ _id: -1 })
@@ -38,10 +45,8 @@ export const getHomePage = async (req, res, next) => {
   const snippet = blogs.map((item) => item.snippet);
   const content = blogs.map((item) => item.content);
   const createdAt = blogs.map((item) => item.createdAt);
-  const updatedAt = blogs.map((item) => item.updatedAt);
 
   console.log(
-    titleAllCategories,
     titleCategory,
     shortDescription,
     categoryBlog,
@@ -49,11 +54,10 @@ export const getHomePage = async (req, res, next) => {
     snippet,
     content,
     createdAt,
-    updatedAt
   );
 
   res.render("index", {
-    titleAllCategories,
+    // titleAllCategories,
     titleCategory,
     shortDescription,
     categoryBlog,
@@ -61,6 +65,5 @@ export const getHomePage = async (req, res, next) => {
     snippet,
     content,
     createdAt,
-    updatedAt,
   });
 };

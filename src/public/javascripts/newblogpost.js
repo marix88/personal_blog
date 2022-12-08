@@ -2,7 +2,7 @@
 
 // select category
 $("#selectCategory").change(function (e) {
-  $("#title").removeAttr("disabled");
+  $("#titleCategory").removeAttr("disabled");
   $("#description").removeAttr("disabled");
 });
 
@@ -14,12 +14,7 @@ $("#addBlogPostForm").submit(function (e) {
   const title = $("#title").val();
   const snippet = $("#snippet").val();
   const content = $("#content").val();
-
   const createdAt = new Date().toDateString().split(" ");
-  createdAt = `Creation date: ${date[2]} ${date[1]} ${date[3]}`;
-
-  const updatedAt = new Date().toDateString().split(" ");
-  updatedAt = `Updated on: ${date[2]} ${date[1]} ${date[3]}`;
 
   let formData = new FormData();
 
@@ -28,8 +23,7 @@ $("#addBlogPostForm").submit(function (e) {
     !title ||
     !snippet ||
     !content ||
-    !createdAt ||
-    !updatedAt
+    !createdAt 
   ) {
     $("#formResponse").append(
       '<div class="error-block">All fields are required</div>'
@@ -37,17 +31,16 @@ $("#addBlogPostForm").submit(function (e) {
   } else {
     formData.append("category", category);
     formData.append("title", title);
-    formData.append("snippet", snippet.value);
-    formData.append("content", content.value);
-    formData.append("createdAt", date);
-    formData.append("updatedAt", date);
+    formData.append("snippet", snippet);
+    formData.append("content", content);
+    formData.append("createdAt", createdAt);
 
     fetch("/create", {
       method: "POST",
       body: formData,
     })
-      .then((data) => {
-        console.log(data);
+      .then((response) => {
+        console.log(response.body);
         $("#formResponse").append(
           '<div class="success-block">Added new blog post successfully</div>'
         );

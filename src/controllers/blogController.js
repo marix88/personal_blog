@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import express from "express";
+import path from "path";
+import fs from "fs";
 import Blog from "../models/blogpost.js";
 import Category from "../models/category.js";
 
@@ -10,14 +13,14 @@ const forNavbar = async () => {
       return docs;
     });
 
-  const titleAllCategories = categories.map((item) => item.title);
+  //const titleCategory = req.params.categories;
 
-  return { titleAllCategories };
+  //return { titleCategory };
 };
 
 // add new blog post from the create page using the form
-export const blog_create_get = (req, res, next) => {
-  const categories = Category.find({}, "title")
+export const blog_create_get = (req, res) => {
+  const categories = Category.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -29,7 +32,7 @@ export const blog_create_get = (req, res, next) => {
       res.status(500).json({ err });
     });
 
-  const titleCategory = categories.map((item) => item.title);
+  const titleCategory = req.params.category;
 
   //for navbar
   const allCategories = forNavbar();
@@ -42,16 +45,15 @@ export const blog_create_get = (req, res, next) => {
 };
 
 // add (POST) a new blog post in the database using the data collected through the create page
-export const blog_post_add = (req, res, next) => {
+export const blog_post_add = (req, res) => {
 
   const blog = new Blog({
     _id: new mongoose.Types.ObjectId(),
     category: req.body.category,
     title: req.body.title,
-    snippet: req.file.snippet,
+    snippet: req.body.snippet,
     content: req.body.content,
     createdAt: req.body.date,
-    updatedAt: req.body.date,
   });
 
   blog
@@ -92,8 +94,8 @@ export const blog_edit_patch = (req, res) => {
 };
 
 // get edit blog post
-export const blog_edit_get = (req, res, next) => {
-  const categories = Category.find({}, "title")
+export const blog_edit_get = (req, res) => {
+  const categories = Category.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -105,7 +107,7 @@ export const blog_edit_get = (req, res, next) => {
       res.status(500).json({ err });
     });
 
-  const titleCategory = categories.map((item) => item.title);
+  const titleCategory = categories.title;
 
   const blogs = Blog.find({}, "category title")
     .sort({ _id: 1 })
@@ -151,12 +153,11 @@ export const blog_edit_get = (req, res, next) => {
     title: req.body.title,
     content: req.body.content,
     createdAt: req.body.createdAt,
-    updatedAt: req.body.updatedAt,
   });
 };
 
 // find a blog post by id
-export const blog_post_get = (req, res, next) => {
+export const blog_post_get = (req, res) => {
   const blog = Blog.findById(req.params._id)
     .exec()
     .then((doc) => {
@@ -172,7 +173,7 @@ export const blog_post_get = (req, res, next) => {
   const snippet = blog.snippet;
   const contentBlog = blog.content;
   const createdAt = blog.createdAt;
-  const updatedAt = blog.updatedAt;
+
 
   //for navbar
   const allCategories = forNavbar();
@@ -184,7 +185,6 @@ export const blog_post_get = (req, res, next) => {
     snippet,
     contentBlog,
     createdAt,
-    updatedAt,
   });
 };
 
