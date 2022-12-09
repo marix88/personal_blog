@@ -8,47 +8,11 @@
     class="w-100"
     alt="background"
   />
-  <div class="mask mask-custom">
-    <div
-      class="d-flex flex-column justify-content-center align-items-center h-100"
-    >
-      <h1 class="text-white fw-bold">All blog posts</h1>
-    </div>
-  </div>
 </div>
-
-<section id="cards" class="pt-5">
-  <div class="d-flex flex-wrap justify-content-around">
-    <button id="addCategoryBtn" class="btn btn-primary card-space">
-      Add Category
-    </button>
-    <a href="/create" class="btn btn-primary card-space"
-      >Add blog post</a
-    >
-    <a href="/edit-post" class="btn btn-primary card-space"
-      >Edit blog post</a
-    >
-  </div>
-
-  <form id="addCategoryForm" enctype="multipart/form-data"
-  method="POST"
-  class="forms" hidden>
-    <div class="mb-3">
-      <label for="titleCategory" class="form-label" >Title</label>
-      <input type="text" class="form-control" id="titleCategory" name="titleCategory" required />
-    </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea class="form-control" id="description" name="description" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <p id="formResponse"></p>
-  </form>
-</section>
 
 <section id="categories">
   <h2 class="text-center fw-bold">All Blog Posts</h2>
-  <div class="row">
+  <div class="row d-flex flex-wrap justify-left">
       <div class="col-md-4 card-space">
         <div class="card h-100">
           <div class="card-body">
@@ -62,7 +26,7 @@
         </div>
       </div>
   </div>
-  <div class="row">
+  <div class="row d-flex flex-wrap justify-content-around">
     <div class="col-md-4 card-space">
       <div class="card h-100">
         <div class="card-body">
@@ -76,7 +40,7 @@
       </div>
     </div>
 </div>
-<div class="row">
+<div class="row d-flex flex-wrap justify-right">
   <div class="col-md-4 card-space">
     <div class="card h-100">
       <div class="card-body">
@@ -103,7 +67,7 @@
               <p class="card-text">created at: <%= createdAt[i] %></p>
             </div>
             <div class="card-footer text-center">
-              <a href="/<%= titleBlog[i] %>" class="btn btn-primary"
+              <a href="" class="btn btn-primary"
                 >Details</a
               >
             </div>
@@ -112,17 +76,28 @@
         </div>
       </section>
 
-      <script>
-        const titleBlogLength = <%= titleBlog.length %>
+      <section id="cards" class="pt-5">
+        <div class="d-flex flex-wrap justify-content-around">
+          <a href="/category" class="btn btn-primary card-space" id="addCategoryBtn">Add Category</a>
+          <!--<button id="addCategoryBtn" class="btn btn-primary card-space">
+            Add Category
+          </button>-->
+          <a href="/create" class="btn btn-primary card-space"
+            >Add blog post</a
+          >
+          <a href="/edit-post" class="btn btn-primary card-space"
+            >Edit blog post</a
+          >
+        </div>
+      </section>
 
-        if(titleBlogLength < 3){
+      <script>
+        if(titleBlog.length < 3){
           document.getElementById('last-blogposts-inserted').classList.add('last-blogposts-inserted-hidden')
         }
       </script>
-
-      <script type="module">
-        <%- include("../public/javascripts/add-category.js") %>
-      </script>
-      <%- include("./partials/footer.ejs") %>
+        <script type="javascript" src="../public/javascripts/add-category.js"></script>
+        <script type="javascript" src="../public/javascripts/newblogpost.js"></script>
+        <%- include("./partials/footer.ejs") %>
     </body>
   

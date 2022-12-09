@@ -3,7 +3,8 @@ $("#addCategoryBtn").click(function (e) {
 });
 
 // add new category
-$("#addCategoryForm").submit(function (e) {
+const form = document.getElementById("addCategoryForm");
+form.submit(function (e) {
   e.preventDefault();
 
   $(".error-block").remove(); // remove the error text
@@ -12,7 +13,7 @@ $("#addCategoryForm").submit(function (e) {
   const title = $("#titleCategory").val();
   const description = $("#description").val();
 
-  let formData = new FormData();
+  let formData = new FormData(form);
 
   if (!title || !description) {
     $("#formResponse").append(

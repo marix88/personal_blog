@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<%- include('./partials/head') %> <%- include("./partials/nav.ejs") %>
-
-<div class="bg-image">
+<%- include('./partials/head') %>
+<body>
+  <%- include("./partials/nav.ejs") %>
   <div class="mask mask-custom">
     <div
       class="d-flex flex-column justify-content-center align-items-center h-100"
@@ -9,7 +8,6 @@
       <h1 id="titleBlog" class="text-white fw-bold"><%= titleBlog %></h1>
     </div>
   </div>
-</div>
 
 <script>
   let titleBlog = "<%= titleBlog %>";
@@ -48,7 +46,8 @@
   </form>
 </section>
 
-<script type="module">
-  <%- include('../public/javascripts/blog.js') %>
+<script type="javascript" src="../public/javascripts/blog.js">
 </script>
 <%- include('./partials/footer') %>
+</body>
+

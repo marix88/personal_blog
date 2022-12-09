@@ -18,12 +18,9 @@ router.get("/edit-post", blog_edit_get);
 router.patch("/edit-post", blog_edit_patch);
 router.delete("/", blog_delete);
 
-router.get("/about", (req, res) => {
+router.get("/", (req, res, next) => {
   console.log("About page displayed!");
-  res.render("about", {
-    title: "About",
-    titleAllCategories: ["caine", "pisica", "soarece"],
-  });
+  res.render("about");
 });
 
 export default router;

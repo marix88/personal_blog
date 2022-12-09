@@ -1,63 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<%- include('./partials/head') %>
-<body>
-  <%- include("./partials/nav.ejs") %>
-<div class="bg-image">
-  <div class="mask mask-custom">
-    <div class="d-flex flex-column justify-content-center align-items-center h-100">
-      <h1 id="titleCategory" class="text-white fw-bold"><%= titleCategory %></h1>
-    </div>
-  </div>
-</div>
-
-<script>let titleCategory = "<%= titleCategory %>"</script>
-
-<section id="categories" class="pt-5">
-  <p id="descriptionCategory"><%= shortDescription %></p>
-  <div class="row">
-
-    <% for (let i=0; i<titleBlog.length; i++) { %>
-
-      <div class="col-md-4 card-space">
-        <div class="card h-100">
-          <div class="card-body">
-            <h4 class="card-title"><%= titleBlog[i] %></h4>
-            <h5 class="card-title"><%= updatedAt[i] %></h5>
-          </div>
-          <div class="card-footer text-center">
-            <a href="/category/blog/<%= titleBlog[i] %>" class="btn btn-primary">Details</a>
-          </div>
-        </div>
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <div class="mask mask-custom">
+      <div
+        class="d-flex flex-column justify-content-center align-items-center h-100"
+      > <h1 class="text-white fw-bold">Add New Category</h1>
       </div>
-    <% } %>
-  </div>
-</section>
-
-<script>const title = "<%= titleCategory %>"</script>
-
-<section id="cards">
-  <div class="d-flex flex-wrap justify-content-around">
-    <button id="editCategoryBtn" class="btn btn-primary card-space">Edit Category</button>
-    <button id="deleteCategoryBtn" class="btn btn-primary card-space">Delete Category</button>
-    <a href="/category/blog/create" class="btn btn-primary card-space">Add Blog Post</a>
-    <p id="deleteFormResponse"></p>
-  </div>
-  <form id="editCategoryForm" hidden>
-    <div class="mb-3">
-      <label for="titleCategory" class="form-label">Change Title</label>
-      <input type="text" class="form-control" id="titleCategory" name="titleCategory">
     </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">Change Description</label>
-      <textarea class="form-control" id="description" name="description"></textarea>
-    </div>
-    <button id="submitChanges" type="submit" class="btn btn-primary">Submit</button>
-    <p id="formResponse"></p>
-  </form>
-</section>
-
-<script type="module"><%- include('../public/javascripts/category.js') %></script>
-<%- include('./partials/footer') %>
-</body>
-</html>
+    <section id="cards" class="pt-5">
+      <form id="addCategoryForm" enctype="multipart/form-data"
+            method="POST"
+            class="forms">
+            <div class="mb-3">
+                <label for="titleCategory" class="form-label" >Title</label>
+                <input type="text" class="form-control" id="titleCategory" name="titleCategory" placeholder="Your category name" required />
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" placeholder="Describe this category" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <p id="formResponse"></p>
+      </form>
+    </section>
+    <script type="javascript" src="../public/javascripts/add-category.js"></script>
+    <%- include('./partials/footer') %>
+  </body>

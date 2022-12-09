@@ -28,11 +28,10 @@ $("#editBlogForm").submit(function (e) {
   if (!blog) {
     blog = titleBlog;
   }
-  const title = $("#titleCategory").val();
-  const description = $("#description").val();
-
+  const title = $("#title").val();
+  const snippet = $("#snippet").val();
+  const content = $("content").val();
   let date = new Date().toDateString().split(" ");
-  date = `Edited: ${date[2]} ${date[1]} ${date[3]}`;
 
   let formData = new FormData();
 
@@ -42,11 +41,15 @@ $("#editBlogForm").submit(function (e) {
   if (title) {
     formData.append("titleCategory", title);
   }
-  if (description) {
-    formData.append("description", description);
+  if (snippet) {
+    formData.append("snippet", snippet);
   }
 
-  if (title || description) {
+  if (content) {
+    formData.append("content", content);
+  }
+
+  if (title || snippet || content) {
     fetch("/category/blog/edit-blog", {
       method: "PATCH",
       body: formData,
@@ -58,7 +61,10 @@ $("#editBlogForm").submit(function (e) {
         );
         $("#titleBlog").html(res.updateBlog.title);
         titleBlog = res.updateBlog.title;
-        $("#descriptionBlog").html(res.updateBlog.description);
+        $("#snippet").html(res.updateBlog.snippet);
+        snippet = res.updateBlog.snippet;
+        $("#content").html(res.updateBlog.content);
+        content = res.updateBlog.content;
         $("#dateBlog").html(res.updateBlog.date);
         console.log(res.updateBlog);
       })

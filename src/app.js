@@ -40,6 +40,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(cors());
 
 // Routes
+app.use("/about", router);
 app.use("/", routerIndex);
 app.use("/", router);
 app.use("/", routerCategory);

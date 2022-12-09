@@ -39,7 +39,7 @@ export const getHomePage = async (req, res) => {
       res.status(500).json({ err });
     });
 
-  //const idBlog = blogs.map((item) => item._id);
+  const idBlog = blogs.map((item) => item._id);
   const categoryBlog = blogs.map((item) => item.category);
   const titleBlog = blogs.map((item) => item.title);
   const snippet = blogs.map((item) => item.snippet);
@@ -49,6 +49,7 @@ export const getHomePage = async (req, res) => {
   console.log(
     titleCategory,
     shortDescription,
+    idBlog,
     categoryBlog,
     titleBlog,
     snippet,
