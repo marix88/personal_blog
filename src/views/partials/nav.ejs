@@ -1,10 +1,12 @@
+<script type="javascript" src="../../public/javascripts/categories.js"></script>
+<script type="javascript" src="../../public/javascripts/blog.js"></script>
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary" role="navigation">
   <div class="container-fluid">
     <a class="navbar-brand" href="../../">My blog</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="##navbarNavAltMarkup" aria-controls="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon" id="hamburgerNavButton"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="../../">Home</a>
@@ -13,13 +15,13 @@
         <a class="nav-link" href="/about">About</a>
       </li>
       <li class="nav-item dropdown">
-          <a class="nav-link active dropdown-toggle" href="/categories" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+          <a class="nav-link active dropdown-toggle" href="navbarDropdown" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Categories
           </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
           <% for(let i=0; i<titleAllCategories.length; i++) { %>
-            <a class="dropdown-item" href="/category/<%= idAllCategories[i] %>"><%= titleAllCategories[i] %></a>  
+            <a class="dropdown-item" href="/<%= idAllCategories[i] %>"><%= titleAllCategories[i] %></a>  
           <% } %>
           </li>
         </ul>

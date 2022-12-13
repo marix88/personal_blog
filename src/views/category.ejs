@@ -1,12 +1,22 @@
   <%- include("./partials/head.ejs") %>
+  <script type="javascript" src="../public/javascripts/add-category.js"></script>
   <body>
     <%- include("./partials/nav.ejs") %>
+    <div class="bg-image">
+      <img
+        src="https://ro.maricelapotoc.eu/wp-content/uploads/2022/05/mare-768x397.jpg"
+        class="w-100"
+        alt="background"
+      />
+    
+    <!--keep the elements centered and placed over the bg-image-->
     <div class="mask mask-custom">
       <div
         class="d-flex flex-column justify-content-center align-items-center h-100"
       > <h1 class="text-white fw-bold">Add New Category</h1>
       </div>
     </div>
+    
     <section id="cards" class="pt-5">
       <form id="addCategoryForm" enctype="multipart/form-data"
             method="POST"
@@ -20,9 +30,8 @@
                 <textarea class="form-control" id="description" name="description" placeholder="Describe this category" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <p id="formResponse"></p>
+            <p id="addCategoryFormResponse"></p>
       </form>
     </section>
-    <script type="javascript" src="../public/javascripts/add-category.js"></script>
     <%- include('./partials/footer') %>
   </body>

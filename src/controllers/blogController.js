@@ -29,18 +29,41 @@ export const blog_create_get = async (req, res, next) => {
       res.status(500).json({ err });
     });
 
+  let idCategory = categories.map((item)=>(item._id));
   let titleCategory = categories.map((item)=>(item.title));
+  let description = categories.map((item)=>(item.description));
+
+  let blogs = await Blog.find({}, "_id category title")
+    .sort({ _id: 1 })
+    .exec()
+    .then((docs) => {
+      console.log(docs);
+      return docs;
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ err });
+    });
+
+  let categoryBlog = blogs.map((item) => item.category);
+  let titleBlog = blogs.map((item) => item.title);
+  let idBlog = blogs.map((item) => item._id);
 
   //for navbar
   let allCategories = await forNavbar();
   let idAllCategories = allCategories.idAllCategories;
   let titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("index", {
+  res.render("create", {
     idAllCategories,
     titleAllCategories,
     titleAllCategories,
+    idCategory,
     titleCategory,
+    description,
+    idBlog,
+    categoryBlog,
+    titleBlog,
   });
 };
 
@@ -94,8 +117,7 @@ export const blog_edit_patch = (req, res) => {
 
 // get edit blog post
 export const blog_edit_get = async (req, res) => {
-  let categories = Category.find({})
-    .select("title")
+  let categories = Category.find({}, "title")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -142,10 +164,11 @@ export const blog_edit_get = async (req, res) => {
   let idAllCategories = allCategories.idAllCategories;
   let titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("edit-post", {
+  res.render("index", {
     idAllCategories,
     titleAllCategories,
     titleCategory,
+    titleBlog,
     allBlogs: JSON.stringify(allBlogs),
   });
 
@@ -160,8 +183,8 @@ export const blog_edit_get = async (req, res) => {
 };
 
 // find a blog post by id
-export const blog_post_get = async (req, res, next) => {
-  let blog = Blog.findById(req.params._id)
+export const blog_post_get = async (req, res) => {
+  let blog = await Blog.findById(req.params._id)
     .exec()
     .then((result) => {
       console.log(result);

@@ -1,6 +1,12 @@
+$("seePostsBtn").click(function (e) {
+  res.render("categories");
+})
+
 $("#editCategoryBtn").click(function (e) {
   $("form").removeAttr("hidden");
 });
+const titleCategory = $("#titleCategory").val();
+const description = $("#description").val();
 
 // edit category
 $("#editCategoryForm").submit(function (e) {
@@ -9,40 +15,37 @@ $("#editCategoryForm").submit(function (e) {
   $(".error-block").remove(); // remove the error text
   $(".success-block").remove(); // remove the succes text
 
-  const title = $("#titleCategory").val();
-  const description = $("#description").val();
-
   let formData = new FormData();
   formData.append("category", titleCategory);
 
-  if (title) {
-    formData.append("titleCategory", title);
+  if (titleCategory) {
+    formData.append("titleCategory", titleCategory);
   }
-  if (description) {
+  if (descriptionCategory) {
     formData.append("description", description);
   }
 
-  if (title || description) {
+  if (titleCategory || description) {
     fetch("/categories", {
       method: "PATCH",
       body: formData,
     })
       .then((data) => data.json())
       .then((res) => {
-        $("#formResponse").append(
+        $("#editCategoryFormResponse").append(
           '<div class="success-block">Update successfully</div>'
         );
         $("#titleCategory").html(res.updateCategory.title);
-        titleCategory = res.updateCategory.title;
-        $("#descriptionCategory").html(res.updateCategory.description);
+        updatedTitleCategory = res.updateCategory.title;
+        $("#description").html(res.updateCategory.description);
         console.log(res.updateCategory);
       })
       .catch((err) => {
         console.error(err);
-        $("#formResponse").append('<div class="error-block">Error</div>');
+        $("#editCategoryFormResponse").append('<div class="error-block">Error</div>');
       });
   } else {
-    $("#formResponse").append(
+    $("#editCategoryFormResponse").append(
       '<div class="error-block">All fields are empty</div>'
     );
   }

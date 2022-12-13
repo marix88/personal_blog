@@ -1,13 +1,18 @@
-// put all blog posts for the selected category in selectBlog
+let title = $("#titleBlog").val();
+let snippet = $("#snippet").val();
+let content = $("#content").val();
+let date = new Date().toDateString().split(" ");
+
+// put all blog posts for the selected category in selectCategory dropdown
 $("#selectCategory").change(function (e) {
-  $("#selectBlog").html("");
-  $("#selectBlog").removeAttr("disabled");
+  $("#selectCategory").html("");
+  $("#selectCategory").removeAttr("disabled");
   $("#titleCategory").removeAttr("disabled");
-  $("#description").removeAttr("disabled");
+  $("#descriptionCategory").removeAttr("disabled");
   for (const key in allBlogs) {
     if (this.value == key) {
       allBlogs[key].map((item) => {
-        $("#selectBlog").append(`<option value="${item}">${item}</option>`);
+        $("#selectCategory").append(`<option value="${item}">${item}</option>`);
       });
     }
   }
@@ -15,35 +20,29 @@ $("#selectCategory").change(function (e) {
 
 // see the content of the blog post when pressing the "Read More" button
 $("#readMoreBtn").click(function (e) {
-  const title = $("#title").val();
-  const snippet = $("#snippet").val();
-  const content = $("#content").val();
+  res.render("blog", {title,
+  snippet,
+  content,
+  date, })
 });
 
 $("#editBlogBtn").click(function (e) {
-  $("form").removeAttr("hidden");
+  $("#editBlogForm").removeAttr("hidden");
 });
 
 // edit blog
 $("#editBlogForm").submit(function (e) {
   e.preventDefault();
 
-  $(".error-block").remove(); // remove the error text
-  $(".success-block").remove(); // remove the succes text
-
-  let blogSelected = $("#selectBlog option:selected").val();
-  if (!blogSelected) {
-    blogSelected = titleBlog;
+  let blogCategorySelected = $("#selectCategory option:selected").val();
+  if (!blogCategorySelected) {
+    blogCategorySelected = titleBlog;
   }
-  const title = $("#title").val();
-  const snippet = $("#snippet").val();
-  const content = $("#content").val();
-  let date = new Date().toDateString().split(" ");
 
   let formData = new FormData();
 
-  formData.append("categorySelected", blogSelected);
-  formData.append("date", date);
+  formData.append("categoryUpdated", blogCategorySelected);
+  formData.append("createdAtEdit", date);
 
   if (title) {
     formData.append("titleBlog", title);
@@ -56,14 +55,18 @@ $("#editBlogForm").submit(function (e) {
     formData.append("content", content);
   }
 
-  if (title || snippet || content) {
-    fetch("/edit-blog", {
+  if (date) {
+    formData.append("createdAtEdit", date);
+  }
+
+  if (title || snippet || content || date) {
+    fetch("/blog", {
       method: "PATCH",
       body: formData,
     })
       .then((data) => data.json())
       .then((res) => {
-        $("#formResponse").append(
+        $("#editFormResponse").append(
           '<div class="success-block">Update successfully</div>'
         );
         $("#titleBlog").html(res.updateBlog.title);
@@ -72,15 +75,15 @@ $("#editBlogForm").submit(function (e) {
         snippet = res.updateBlog.snippet;
         $("#content").html(res.updateBlog.content);
         content = res.updateBlog.content;
-        $("#dateBlog").html(res.updateBlog.date);
+        $("#createdAtEdit").html(res.updateBlog.date);
         console.log(res.updateBlog);
       })
       .catch((err) => {
         console.error(err);
-        $("#formResponse").append('<div class="error-block">Error</div>');
+        $("#editFormResponse").append('<div class="error-block">Error</div>');
       });
   } else {
-    $("#formResponse").append(
+    $("#editFormResponse").append(
       '<div class="error-block">All fields are empty</div>'
     );
   }
@@ -93,6 +96,6 @@ $("#deleteBlogBtn").click(function (e) {
   fetch("blog", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ blogSelected: titleBlog }),
+    //body: JSON.stringify({ selectCategory: titleBlog }),
   }).then(() => (window.location = "../../"));
 });

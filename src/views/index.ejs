@@ -1,4 +1,6 @@
 <%- include("./partials/head.ejs") %> 
+<script type="javascript" src="../public/javascripts/add-category.js"></script>
+<script type="javascript" src="../public/javascripts/newblogpost.js"></script>
 <body>
 <%- include("./partials/nav.ejs") %>
 
@@ -9,6 +11,7 @@
     alt="background"
   />
 
+  <!--keep the elements centered and placed over the bg-image-->
   <div class="mask mask-custom">
     <div class="d-flex flex-column justify-content-center align-items-center h-100">
     </div>
@@ -18,23 +21,22 @@
 <section id="categories">
   <h2 class="text-center fw-bold">All Blog Categories</h2>
   <div class="row">
-
-    <% for (let i=0 ; i<titleCategory.length  ; i++) { %>
+    <% for (let i=0 ; i<titleCategory.length; i++) { %>
       <div class="col-md-4 card-space">
         <div class="card h-100">
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <h4 class="card-title"><%= titleCategory[i] %></h4>
             </div>
-            <p class="card-text"><%= shortDescription[i] %></p>
-          </div>
+            <p class="card-text"><%= description[i] %></p>
+            </div>
           <div class="card-footer text-center">
-            <a href="/category/<%= idCategory[i] %>" class="btn btn-primary"><%= titleCategory[i] %></a>
+            <a href="/<%= idCategory[i] %>" class="btn btn-primary" id="seePostsBtn">See posts from <%= titleCategory[i] %></a>
           </div>
         </div>
       </div>
     <% } %>
-</div>
+  </div>
 </section>
       <section id="last-blogposts-inserted">
         <h2 class="text-white text-center fw-bold">
@@ -57,29 +59,6 @@
         </div>
       </section>
 
-      <section id="cards" class="pt-5">
-        <div class="d-flex flex-wrap justify-content-around">
-          <a href="/category" class="btn btn-primary card-space" id="addCategoryBtn">Add Category</a>
-          <!--<button id="addCategoryBtn" class="btn btn-primary card-space">
-            Add Category
-          </button>-->
-          <a href="/create" class="btn btn-primary card-space"
-            >Add blog post</a
-          >
-          <a href="/edit-post" class="btn btn-primary card-space"
-            >Edit blog post</a
-          >
-        </div>
-      </section>
-
-      <%
-        if(titleBlog.length < 3){
-          document.getElementById('last-blogposts-inserted').classList.add('last-blogposts-inserted-hidden')
-        } %>
-        <script type="javascript" src="../public/javascripts/add-category.js"></script>
-        <script type="javascript" src="../public/javascripts/newblogpost.js"></script>
-        <script type="javascript" src="../public/javascripts/blog.js"></script>
-        <script type="javascript" src="../public/javascripts/categories.js"></script>
-        <%- include("./partials/footer.ejs") %>
-    </body>
+  <%- include("./partials/footer.ejs") %>
+</body>
   

@@ -16,7 +16,7 @@ export const getHomePage = async (req, res, next) => {
 
   const idCategory = categories.map((item) => item._id);
   const titleCategory = categories.map((item) => item.title);
-  const shortDescription = categories.map((item) => item.description);
+  const description = categories.map((item) => item.description);
 
   //for navbar
   // const allCategories = forNavbar();
@@ -47,7 +47,7 @@ export const getHomePage = async (req, res, next) => {
     titleAllCategories,
     idCategory,
     titleCategory,
-    shortDescription,
+    description,
     idBlog, "This was the blog _id",
     categoryBlog,
     titleBlog,
@@ -61,7 +61,7 @@ export const getHomePage = async (req, res, next) => {
     titleAllCategories,
     idCategory,
     titleCategory,
-    shortDescription,
+    description,
     idBlog,
     categoryBlog,
     titleBlog,

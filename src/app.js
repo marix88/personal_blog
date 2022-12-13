@@ -12,8 +12,9 @@ import logger from "morgan";
 
 // Local modules
 import router from "./routes/blogRoutes.js";
-import routerCategory from "./routes/category.js";
-import routerIndex from "./routes/index.js";
+import routerCategory from "./routes/categoryRoutes.js";
+import routerIndex from "./routes/indexRoutes.js";
+import Blog from "./models/blogpost.js";
 //import "./mockup.js";
 
 // Server initialization
@@ -70,3 +71,10 @@ app.listen(PORT || "0.0.0.0", (error) => {
   if (!error) console.log("Server running on port " + PORT);
   else console.log("Error! Server can't start");
 });
+
+const blog = new Blog({
+  category: "winter",
+  title: "Winter is here",
+  snippet: "the cold and the snow are cool",
+  content: "waiting for the summer"
+})

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Category from "../models/category.js";
 import Blog from "../models/blogpost.js";
 
-export const forNavbar = async () => {
+const forNavbar = async () => {
   const categories = await Category.find({}, "id, title")
     .sort({ _id: 1 })
     .exec()
@@ -17,9 +17,9 @@ export const forNavbar = async () => {
   return { idAllCategories, titleAllCategories };
 };
 
-// get category
+// show category page to add a new category, method: get 
 export const getCategory = async (req, res) => {
-  const category = await Category.findById(req.params.id)
+  const category = await Category.find({}, "id title description")
     .exec()
     .then((doc) => {
       console.log(doc);
@@ -30,8 +30,9 @@ export const getCategory = async (req, res) => {
       res.status(500).json({ error });
     });
 
+  const idCategory = category._id;
   const titleCategory = category.title;
-  const shortDescription = category.description;
+  const description = category.description;
 
   const blogs = await Blog.find(
     { category: titleCategory },
@@ -51,9 +52,8 @@ export const getCategory = async (req, res) => {
 
   const idBlog = blogs.map((item) => item._id);
   const titleBlog = blogs.map((item) => item.title);
-  const createdAt = blogs.map((item) => item.createdAt);
 
-  //for navbar
+  // take the result from fornavbar function (ID and title for all categories)
   const allCategories = forNavbar();
   const idAllCategories = allCategories.idAllCategories;
   const titleAllCategories = allCategories.titleAllCategories;
@@ -61,17 +61,16 @@ export const getCategory = async (req, res) => {
   res.render("category", {
     idAllCategories,
     titleAllCategories,
+    idCategory,
     titleCategory,
-    shortDescription,
+    description,
     idBlog,
     titleBlog,
-    createdAt,
   });
 };
 
-// add new category
-export const postAddCategory = (req, res, next) => {
-
+// add new category, method: POST. Send category page data to database.
+export const postAddCategory = (req, res) => {
   const category = new Category({
     _id: new mongoose.Types.ObjectId(req.params.id),
     title: req.body.title,

@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 
 const blogSchema = new Schema({
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Category",
   },
   title: String,
