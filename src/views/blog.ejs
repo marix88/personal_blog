@@ -9,23 +9,18 @@
     </div>
   </div>
 
-<script>
-  let titleBlog = "<%= titleBlog %>";
-</script>
+  <section id="categories" class="pt-5">
+    <p id="content">Content:<%= contentBlog %></p>
+  </section>
 
 <section id="cards">
-  <div class="d-flex flex-wrap justify-content-around">
-    <button id="editBlogBtn" class="btn btn-primary card-space">
-      Edit Blog Post
-    </button>
-    <button id="deleteBlogBtn" class="btn btn-primary card-space">
-      Delete Blog Post
-    </button>
-    <p id="deleteFormResponse"></p>
-  </div>
-  <form id="editBlogForm" enctype="multipart/form-data"
+  <form id="editBlogForm" enctype="multipart/form-data" hidden
   method="POST"
-  class="forms" hidden>
+  class="forms">
+  <div class="mb-3">
+    <label for="categorySelected" class="form-label">Change Title Here</label>
+    <input type="text" class="form-control" id="categorySelected" name="categorySelected"/>
+  </div>
     <div class="mb-3">
       <label for="title" class="form-label">Change Title</label>
       <input type="text" class="form-control" id="title" />
@@ -45,6 +40,16 @@
     <p id="formResponse"></p>
   </form>
 </section>
+
+<div class="d-flex flex-wrap justify-content-around">
+  <button id="editBlogBtn" class="btn btn-primary card-space">
+    Edit Blog Post
+  </button>
+  <button id="deleteBlogBtn" class="btn btn-primary card-space">
+    Delete Blog Post
+  </button>
+  <p id="deleteFormResponse"></p>
+</div>
 
 <script type="javascript" src="../public/javascripts/blog.js">
 </script>

@@ -1,14 +1,10 @@
-<!DOCTYPE html>
 <html lang="en">
   <%- include("./partials/head.ejs") %>
   <body>
     <%- include("./partials/nav.ejs") %>
-    <div class="mask mask-custom">
-      <div class="d-flex flex-column justify-content-center align-items-center h-100">
-        <h1 class="text-white fw-bold">Add New Blog Post</h1>
+      <div class="d-flex flex-column justify-content-center align-items-center h-30">
+        <h1 class="text-red fw-bold">Add New Blog Post</h1>
       </div>
-    </div>
-  </div>
   <section id="cards" class="pt-5">
     <form 
     id="addBlogPostForm"
@@ -20,9 +16,9 @@
         <option selected>Choose category</option>
   
         <!-- put all categories in selectCategory -->
-          <option>fish</option>
-          <option>boats</option>
-          <option>city</option>
+        <% for (let i=0 ; i<titleCategory.length ; i++) { %>
+          <option value="<%= titleCategory[i] %>"><%= titleCategory[i] %></option>
+        <% } %>
       </select>
       </div>
         <input
@@ -42,15 +38,14 @@
           placeholder="Your blog post snippet"
         />
       </div>
-      <div>
+      <div class="mb-3">
         <textarea
-          id="content"
           name="content"
           placeholder="The content of your blog post"
           required
         ></textarea>
-      </div class="mb-3">
-      <div>
+      </div>
+      <div class="mb-3">
         <input type="date" name="createdAt" enabled/>
       </div>
       <div class="submit">
@@ -61,8 +56,9 @@
       <p id="formResponse"></p>
     </form>
   </section>
+  <div id="space">
     <a href="/">See the latest blog posts</a>
-
+  </div>
     <script type="javascript" src ="../public/javascripts/newblogpost.js">
     </script>
     <%- include("./partials/footer.ejs") %>

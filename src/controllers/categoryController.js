@@ -3,21 +3,23 @@ import Category from "../models/category.js";
 import Blog from "../models/blogpost.js";
 
 export const forNavbar = async () => {
-  const categories = await Category.find({})
+  const categories = await Category.find({}, "id, title")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
       return docs;
     });
 
+  const idAllCategories = categories.map((item) => item._id);
   const titleAllCategories = categories.map((item) => item.title);
+ 
 
-  return { titleAllCategories };
+  return { idAllCategories, titleAllCategories };
 };
 
 // get category
 export const getCategory = async (req, res) => {
-  const category = await Category.findById(req.params.categoryId)
+  const category = await Category.findById(req.params.id)
     .exec()
     .then((doc) => {
       console.log(doc);
@@ -33,7 +35,7 @@ export const getCategory = async (req, res) => {
 
   const blogs = await Blog.find(
     { category: titleCategory },
-    "_id"
+    "_id title"
   )
 
     .sort({ _id: -1 })
@@ -53,9 +55,11 @@ export const getCategory = async (req, res) => {
 
   //for navbar
   const allCategories = forNavbar();
+  const idAllCategories = allCategories.idAllCategories;
   const titleAllCategories = allCategories.titleAllCategories;
 
   res.render("category", {
+    idAllCategories,
     titleAllCategories,
     titleCategory,
     shortDescription,
@@ -66,19 +70,19 @@ export const getCategory = async (req, res) => {
 };
 
 // add new category
-export const postAddCategory = (req, res) => {
+export const postAddCategory = (req, res, next) => {
 
   const category = new Category({
-    _id: new mongoose.Types.ObjectId(),
+    _id: new mongoose.Types.ObjectId(req.params.id),
     title: req.body.title,
     description: req.body.description,
   });
 
   category
     .save()
-    .then((result) => {
-      console.log(result);
-      res.json({ result });
+    .then((doc) => {
+      console.log(doc);
+      res.json({ doc });
     })
     .catch((error) => {
       console.log(error);
@@ -115,6 +119,5 @@ export const patchEditCategory = async (req, res) => {
 export const deleteCategory = async (req, res) => {
   const deleteCategory = await Category.deleteOne({ title: req.body.category });
   console.log(deleteCategory);
-
   res.end();
 };

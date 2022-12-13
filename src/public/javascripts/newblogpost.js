@@ -2,8 +2,7 @@
 
 // select category
 $("#selectCategory").change(function (e) {
-  $("#titleCategory").removeAttr("disabled");
-  $("#description").removeAttr("disabled");
+  $("#titleCategory");
 });
 
 // add new blog post

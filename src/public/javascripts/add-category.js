@@ -1,6 +1,6 @@
 $("#addCategoryBtn").click(function (e) {
   $("#addCategoryForm").removeAttr("hidden");
-});
+}); 
 
 // add new category
 const form = document.getElementById("addCategoryForm");
@@ -24,7 +24,7 @@ form.submit(function (e) {
     formData.append("titleCategory", title); 
     formData.append("description", description);
 
-    fetch("/add-category", {
+    fetch("/category", {
       method: "POST",
       body: formData,
     })

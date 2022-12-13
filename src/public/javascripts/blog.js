@@ -1,4 +1,4 @@
-// put all places for the selected category in selectPlace
+// put all blog posts for the selected category in selectBlog
 $("#selectCategory").change(function (e) {
   $("#selectBlog").html("");
   $("#selectBlog").removeAttr("disabled");
@@ -13,6 +13,13 @@ $("#selectCategory").change(function (e) {
   }
 });
 
+// see the content of the blog post when pressing the "Read More" button
+$("#readMoreBtn").click(function (e) {
+  const title = $("#title").val();
+  const snippet = $("#snippet").val();
+  const content = $("#content").val();
+});
+
 $("#editBlogBtn").click(function (e) {
   $("form").removeAttr("hidden");
 });
@@ -24,22 +31,22 @@ $("#editBlogForm").submit(function (e) {
   $(".error-block").remove(); // remove the error text
   $(".success-block").remove(); // remove the succes text
 
-  let blog = $("#selectBlog option:selected").val();
-  if (!blog) {
-    blog = titleBlog;
+  let blogSelected = $("#selectBlog option:selected").val();
+  if (!blogSelected) {
+    blogSelected = titleBlog;
   }
   const title = $("#title").val();
   const snippet = $("#snippet").val();
-  const content = $("content").val();
+  const content = $("#content").val();
   let date = new Date().toDateString().split(" ");
 
   let formData = new FormData();
 
-  formData.append("blog", blog);
+  formData.append("categorySelected", blogSelected);
   formData.append("date", date);
 
   if (title) {
-    formData.append("titleCategory", title);
+    formData.append("titleBlog", title);
   }
   if (snippet) {
     formData.append("snippet", snippet);
@@ -50,7 +57,7 @@ $("#editBlogForm").submit(function (e) {
   }
 
   if (title || snippet || content) {
-    fetch("/category/blog/edit-blog", {
+    fetch("/edit-blog", {
       method: "PATCH",
       body: formData,
     })
@@ -83,9 +90,9 @@ $("#editBlogForm").submit(function (e) {
 $("#deleteBlogBtn").click(function (e) {
   e.preventDefault();
 
-  fetch("/category/blog", {
+  fetch("blog", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ blog: titleBlog }),
+    body: JSON.stringify({ blogSelected: titleBlog }),
   }).then(() => (window.location = "../../"));
 });

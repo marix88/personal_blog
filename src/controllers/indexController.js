@@ -1,8 +1,8 @@
 import Blog from "../models/blogpost.js";
 import Category from "../models/category.js";
 
-export const getHomePage = async (req, res) => {
-  const categories = await Category.find({})
+export const getHomePage = async (req, res, next) => {
+  const categories = await Category.find() // get a list of all categories in the "categories" collection
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -14,20 +14,16 @@ export const getHomePage = async (req, res) => {
       res.status(500).json({ err });
     });
 
-  const titleCategory = categories.title;
-  const shortDescription = categories.description;
-  const limitNumber = 3;
-  const latest = await Blog.find({}).sort({_id: -1}).limit(limitNumber);
-  const fish = await Blog.find({ "category": "fish" }).limit(limitNumber);
-  const boats = await Blog.find({ "category": "boats" }).limit(limitNumber);
-  const city = await Blog.find({ "category": "city" }).limit(limitNumber);
-
-  const galati = { latest, fish, boats, city }
+  const idCategory = categories.map((item) => item._id);
+  const titleCategory = categories.map((item) => item.title);
+  const shortDescription = categories.map((item) => item.description);
 
   //for navbar
-  // const titleAllCategories = titleCategory;
+  // const allCategories = forNavbar();
+  const idAllCategories = idCategory;
+  const titleAllCategories = titleCategory;
 
-  const blogs = await Blog.find()
+  const blogs = await Blog.find({})
     .sort({ _id: -1 })
     .exec()
     .then((docs) => {
@@ -47,9 +43,12 @@ export const getHomePage = async (req, res) => {
   const createdAt = blogs.map((item) => item.createdAt);
 
   console.log(
+    idAllCategories,
+    titleAllCategories,
+    idCategory,
     titleCategory,
     shortDescription,
-    idBlog,
+    idBlog, "This was the blog _id",
     categoryBlog,
     titleBlog,
     snippet,
@@ -58,9 +57,12 @@ export const getHomePage = async (req, res) => {
   );
 
   res.render("index", {
-    // titleAllCategories,
+    idAllCategories,
+    titleAllCategories,
+    idCategory,
     titleCategory,
     shortDescription,
+    idBlog,
     categoryBlog,
     titleBlog,
     snippet,

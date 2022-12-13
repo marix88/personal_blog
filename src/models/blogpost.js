@@ -4,19 +4,15 @@ const { Schema, model } = mongoose;
 
 const blogSchema = new Schema({
   category: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
   },
-  title: {
-    type: String,
-  },
+  title: String,
   snippet: String,
-  content: {
-    type: String,
-  },
+  content:  String,
   createdAt: {
     type: Date,
     default: Date.now(),
-    immutable: true,
   }
 });
 

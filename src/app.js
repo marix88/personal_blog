@@ -29,8 +29,8 @@ const __dirname = path.dirname(__filename); // Returns the absolute path to the 
 //console.log(__dirname);
 //console.log(import.meta.url);
 
-app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
+app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(express.json()); // parse the incoming requests with JSON payloads
