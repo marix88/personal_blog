@@ -1,7 +1,3 @@
-$("seePostsBtn").click(function (e) {
-  res.render("pages/categories");
-})
-
 $("#editCategoryBtn").click(function (e) {
   $("form").removeAttr("hidden");
 });

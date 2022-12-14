@@ -3,10 +3,7 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const blogSchema = new Schema({
-  category: {
-    type: String,
-    ref: "Category",
-  },
+  category: String,
   title: String,
   snippet: String,
   content:  String,

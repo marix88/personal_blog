@@ -15,7 +15,7 @@ import router from "./routes/blogRoutes.js";
 import routerCategory from "./routes/categoryRoutes.js";
 import routerIndex from "./routes/indexRoutes.js";
 import Blog from "./models/blogpost.js";
-//import "./mockup.js";
+import Category from "./models/category.js";
 
 // Server initialization
 export const app = express();
@@ -67,7 +67,16 @@ app.use((error, req, res, next) => {
 });
 
 // Server listen and connection to database
-mongoose.connect(`${process.env.MONGODB_URI}`);
+mongoose.connect(`${process.env.MONGODB_URI}`, 
+{ useNewUrlParser: true, useUnifiedTopology: true }, 
+(client, err) =>{
+  try{
+      console.log("Connected to db: " + client)
+  }catch(err){
+      console.log(err);
+  }
+}
+);
 app.listen(PORT || "0.0.0.0", (error) => {
   if (!error) console.log("Server running on port " + PORT);
   else console.log("Error! Server can't start");

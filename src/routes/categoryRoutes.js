@@ -6,9 +6,9 @@ import { deleteCategory } from "../controllers/categoryController.js";
 
 const routerCategory = express.Router();
 
-routerCategory.post("/:category", postAddCategory);
-
 routerCategory.get("/category", getCategory);
+
+routerCategory.post("/:category", postAddCategory);
 
 routerCategory.patch("/categories", patchEditCategory);
 

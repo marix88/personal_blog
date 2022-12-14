@@ -14,14 +14,14 @@ const forNavbar = async () => {
   const idAllCategories = categories.map((item) => item._id);
   const titleAllCategories = categories.map((item) => item.title);
  
-  console.log("id and title: ",idAllCategories, titleAllCategories);
+  console.log("id and title forNavbar categoryController: ", idAllCategories, titleAllCategories);
 
   // extract idAllCategories, titleAllCategories from the database
   return { idAllCategories, titleAllCategories };
 };
 
-// show category page to add a new category, method: get 
-export const getCategory = async (req, res) => {
+// show the category page to add a new category, method: get 
+export const getCategory = async (req, res, next) => {
   const category = await Category.find({}, "id title description")
     .exec()
     .then((doc) => {
@@ -37,7 +37,7 @@ export const getCategory = async (req, res) => {
   const titleCategory = category.title;
   const description = category.description;
 
-  const blogs = await Blog.find(
+  /*const blogs = await Blog.find(
     { category: titleCategory },
     "_id title"
   )
@@ -55,29 +55,25 @@ export const getCategory = async (req, res) => {
 
   const idBlog = blogs.map((item) => item._id);
   const titleBlog = blogs.map((item) => item.title);
-
+*/
   // take the result from fornavbar function (ID and title for all categories)
   const allCategories = await forNavbar();
   const idAllCategories = allCategories.idAllCategories;
   const titleAllCategories = allCategories.titleAllCategories;
 
   console.log(
-    "idAllCategories: ", idAllCategories, 
-    "titleAllCategories: ", titleAllCategories,
-    "idCategory: ", idCategory,
-    "titleCategory: ", titleCategory,
-    "description: ", description,
-    "idBlog: ", idBlog,
-    "titleBlog", titleBlog,
-  );
+    "getCategory: idAllCategories: ", idAllCategories, 
+    "getCategory: titleAllCategories: ", titleAllCategories,
+    "getCategory: idCategory: ", idCategory,
+    "getCategory: titleCategory: ", titleCategory,
+    "getCategory: description: ", description,
+  ); 
   res.render("pages/category", {
     idAllCategories, 
     titleAllCategories,
     idCategory,
     titleCategory,
     description,
-    idBlog,
-    titleBlog,
   });
 };
 
@@ -88,6 +84,10 @@ export const postAddCategory = (req, res) => {
     title: req.body.title,
     description: req.body.description,
   });
+
+  console.log("req.params.id is ", req.params.id);
+  console.log("req.body.title is ", req.body.title);
+  console.log("req.body.description is ", req.body.description);
 
   category
     .save()

@@ -20,7 +20,7 @@ const forNavbar = async () => {
 };
 
 // add to the database a new blog post from the "create" page form
-export const blog_create_get = async (req, res, next) => {
+export const blog_get = async (req, res, next) => {
   let categories = await Category.find({})
     .sort({ _id: 1 })
     .exec()
@@ -37,9 +37,9 @@ export const blog_create_get = async (req, res, next) => {
   let idCategory = categories.map((item)=>(item._id));
   let titleCategory = categories.map((item)=>(item.title));
   let description = categories.map((item)=>(item.description));
-  console.log("idCategory: ", idCategory);
-  console.log("titleCategory: ", titleCategory);
-  console.log("description: ", description);
+  console.log("blog_get: idCategory: ", idCategory);
+  console.log("blog_get: titleCategory: ", titleCategory);
+  console.log("blog_get: description: ", description);
 
   let blogs = await Blog.find({}, "_id category title")
     .sort({ _id: 1 })
@@ -53,20 +53,32 @@ export const blog_create_get = async (req, res, next) => {
       res.status(500).json({ err });
     });
   
-  // categoryBlog, titleBlog and idBlog from the database
+  // extract categoryBlog, titleBlog and idBlog from the database
   let categoryBlog = blogs.map((item) => item.category);
   let titleBlog = blogs.map((item) => item.title);
   let idBlog = blogs.map((item) => item._id);
-  console.log("categoryBlog: ", categoryBlog);
-  console.log("titleBlog", titleBlog);
-  console.log("idBlog", idBlog);
+  console.log("blog_get: categoryBlog: ", categoryBlog);
+  console.log("blog_get: titleBlog", titleBlog);
+  console.log("blog_get: idBlog", idBlog);
 
   //for navbar
   let allCategories = await forNavbar();
   let idAllCategories = allCategories.idAllCategories;
   let titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("pages/create", {
+  res.render("pages/blog", {
+    idAllCategories,
+    titleAllCategories,
+    titleAllCategories,
+    idCategory,
+    titleCategory,
+    description,
+    idBlog,
+    categoryBlog,
+    titleBlog,
+  });
+
+  console.log("blog_get res.render: ", {
     idAllCategories,
     titleAllCategories,
     titleAllCategories,
@@ -83,7 +95,7 @@ export const blog_create_get = async (req, res, next) => {
 export const blog_post = (req, res, next) => {
 
   const blog = new Blog({
-    _id: new mongoose.Types.ObjectId(req.params.id),
+    _id: new mongoose.Types.ObjectId,
     category: req.body.category,
     title: req.body.title,
     snippet: req.body.snippet,
@@ -91,11 +103,12 @@ export const blog_post = (req, res, next) => {
     createdAt: req.body.date,
   });
 
-  console.log("req.body.category: ", req.body.category);
-  console.log("req.body.title: ", req.body.title);
-  console.log("req.body.snippet: ", req.body.snippet);
-  console.log("req.body.content: ", req.body.content);
-  console.log("req.body.date: ", req.body.date);
+  console.log("blog post: req.body.id", req.body._id);
+  console.log("blog_post: req.body.category: ", req.body.category);
+  console.log("blog_post: req.body.title: ", req.body.title);
+  console.log("blog_post: req.body.snippet: ", req.body.snippet);
+  console.log("blog_post: req.body.content: ", req.body.content);
+  console.log("blog_post: req.body.date: ", req.body.date);
 
   blog
     .save()
@@ -148,6 +161,7 @@ export const blog_edit_get = async (req, res) => {
     });
 
   let titleCategory = categories.map((item) => item.title);
+  console.log("blog_edit_get: title category: ", titleCategory)
 
   let blogs = Blog.find({}, "category title")
     .sort({ _id: 1 })
@@ -163,8 +177,11 @@ export const blog_edit_get = async (req, res) => {
 
   let categoryBlog = blogs.map((item) => item.category);
   let titleBlog = blogs.map((item) => item.title);
+  console.log("blog_edit_get: categoryBlog: ", categoryBlog);
+  console.log("blog_edit_get: title blog: ", titleBlog);
 
   let allBlogs = {};
+  console.log("blog_edit_get: allBlogs: ", allBlogs);
 
   for (let i = 0; i<titleCategory.length; i++) {
     allBlogs[titleCategory[i]] = [];
@@ -175,7 +192,7 @@ export const blog_edit_get = async (req, res) => {
     }
   }
 
-  console.log(allBlogs);
+  console.log("blog_edit_get: allBlogs after for: ", allBlogs);
 
   //for navbar
   let allCategories = await forNavbar();
@@ -189,6 +206,16 @@ export const blog_edit_get = async (req, res) => {
     titleBlog,
     allBlogs: JSON.stringify(allBlogs),
   });
+
+  console.log("blog_edit_get: res.render: ",
+    {
+      idAllCategories,
+      titleAllCategories,
+      titleCategory,
+      titleBlog,
+      allBlogs: JSON.stringify(allBlogs),
+    }
+  )
 
   /*const blog = new Blog({
     _id: new mongoose.Types.ObjectId(req.params.id),
@@ -213,10 +240,16 @@ export const blog_post_get = async (req, res) => {
       res.status(500).json({ error });
     });
 
-  let titleBlog = blog.title;
-  let snippet = blog.snippet;
-  let contentBlog = blog.content;
-  let createdAt = blog.createdAt;
+  const titleBlog = blog.title;
+  const snippet = blog.snippet;
+  const contentBlog = blog.content;
+  const createdAt = blog.createdAt;
+
+  console.log("blog_post_get: titleBlog: ", titleBlog,
+  "blog_post_get: snippet: ", snippet,
+  "blog_post_get: contentBlog: ", contentBlog,
+  "blog_post_get: createdAt: ", createdAt,
+    )
 
 
   //for navbar
@@ -224,7 +257,7 @@ export const blog_post_get = async (req, res) => {
   let idAllCategories = allCategories.idAllCategories;
   let titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("pages/categories", {
+  res.render("pages/blog", {
     idAllCategories,
     titleAllCategories,
     titleBlog,
@@ -232,7 +265,17 @@ export const blog_post_get = async (req, res) => {
     contentBlog,
     createdAt,
   });
+
+  console.log(
+    "blog_post_get: render: idAllCategories: ", {idAllCategories},
+    "blog_post_get: render: titleAllCategories: ", {titleAllCategories},
+    "blog_post_get: render: titleBlog: ", {titleBlog},
+    "blog_post_get: render: snippet: ", {snippet},
+    "blog_post_get: render: contentBlog: ", {contentBlog},
+    "blog_post_get: render: createdAt: ", {createdAt},
+  )
 };
+
 
 // delete a blog post
 export const blog_delete = (req, res) => {

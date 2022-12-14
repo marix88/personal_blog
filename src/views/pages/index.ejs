@@ -2,70 +2,59 @@
 <html lang="en">
 <head>
 <%- include("../partials/head") %> 
-<script type="javascript" src="../public/javascripts/add-category.js"></script>
-<script type="javascript" src="../public/javascripts/newblogpost.js"></script>
+<script type="javascript" src="/javascripts/categories.js"></script>
+<script type="javascript" src="/javascripts/blog.js"></script>
 </head>
 <body>
   <header>
     <%- include("../partials/header") %>
   </header>
 
-<div class="bg-image">
-  <img
-    src="https://ro.maricelapotoc.eu/wp-content/uploads/2022/05/mare-768x397.jpg"
-    class="w-100"
-    alt="background"
-  />
-
-  <!--keep the elements centered and placed over the bg-image-->
+  <!--keep the elements centered -->
   <div class="mask mask-custom">
     <div class="d-flex flex-column justify-content-center align-items-center h-100">
     </div>
   </div>
-</div>
 
-<section id="categories">
-  <h2 class="text-center fw-bold">All Blog Categories</h2>
-  <div class="row">
-    <% for (let i=0 ; i<titleCategory.length; i++) { %>
-      <div class="col-md-4 card-space">
-        <div class="card h-100">
-          <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <h4 class="card-title"><%= titleCategory[i] %></h4>
-            </div>
-            <p class="card-text"><%= description[i] %></p>
-            </div>
-          <div class="card-footer text-center">
-            <a href="/<%= idCategory[i] %>" class="btn btn-primary" id="seePostsBtn">See posts from <%= titleCategory[i] %></a>
-          </div>
-        </div>
-      </div>
-    <% } %>
-  </div>
-</section>
-      <section id="last-blogposts-inserted">
-        <h2 class="text-white text-center fw-bold">
-          Last Blog Posts Introduced
-        </h2>
-        <div class="card-group">
-          <% for (let i=0; i<3; i++) { %>
+  <section id="categories">
+    <h2 class="text-center fw-bold">All Blog Categories</h2>
+    <div class="row">
+      <% for (let i=0 ; i<titleCategory.length; i++) { %>
+        <div class="col-md-4 card-space">
           <div class="card h-100">
             <div class="card-body">
-              <h4 class="card-title"><%= titleBlog[i] %></h4>
-              <p class="card-text">created at:</p>
+              <div class="d-flex justify-content-between">
+                <h4 class="card-title"><%= titleCategory[i] %></h4>
+              </div>
+              <p class="card-text"><%= description[i] %></p>
             </div>
             <div class="card-footer text-center">
-              <a href="/<%= idBlog[i] %>" class="btn btn-primary"
-                id="readMoreBtn">Read more</a
-              >
+              <a href="/<%= idCategory[i] %>" class="btn btn-primary" id="seePostsBtn">See posts from <%= titleCategory[i] %></a>
             </div>
           </div>
-          <% } %>
         </div>
-      </section>
-
-  <%- include("../partials/footer") %>
+      <% } %>
+    </div>
+  </section>
+  <section id="last-blogposts-inserted">
+    <h2 class="text-white text-center fw-bold">
+      Last Blog Posts Introduced
+    </h2>
+    <div class="card-group">
+      <% for (let i=0; i<3; i++) { %>
+        <div class="card h-100">
+          <div class="card-body">
+            <h4 class="card-title"><%= titleBlog[i] %></h4>
+              <p class="card-text">created at:</p>
+          </div>
+          <div class="card-footer text-center">
+            <a href="/<%= idBlog[i] %>" class="btn btn-primary" id="readMoreBtn">Read more</a>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </section>
+<%- include("../partials/footer") %>
 </body>
 </html>
   
