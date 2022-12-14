@@ -4,22 +4,17 @@ $("#selectCategory").change(function (e) {
   $("#selectCategory").removeAttr("disabled");
   $("#titleCategory").removeAttr("disabled");
   $("#descriptionCategory").removeAttr("disabled");
-  for (const key in allBlogs) {
-    if (this.value == key) {
-      allBlogs[key].map((item) => {
-        $("#selectCategory").append(`<option value="${item}">${item}</option>`);
-      });
-    }
-  }
+  console.blog("You need allBlogs to select a category from the dropdown!");
 });
 
 // see the content of the blog post when pressing the "Read More" button
 $("#readMoreBtn").click(function (e) {
-  let title = $("#titleBlog").val();
-  let snippet = $("#snippet").val();
-  let content = $("#content").val();
-  let date = new Date().toDateString().split(" ");
-  res.render("pages/blog")
+  fetch("/blog", {
+    method: "GET",
+  })
+  .then((res) => {
+    console.log("Fetch blog.js #readMoreBtn");
+  })
 });
 
 $("#editBlogBtn").click(function (e) {
@@ -30,20 +25,21 @@ $("#editBlogBtn").click(function (e) {
 $("#editBlogForm").submit(function (e) {
   e.preventDefault();
 
+  let category = $("category").val();
   let blogCategorySelected = $("#selectCategory option:selected").val();
-  if (!blogCategorySelected) {
-    blogCategorySelected = titleBlog;
-  }
-
   let title = $("#titleBlog").val();
   let snippet = $("#snippet").val();
   let content = $("#content").val();
   let date = new Date().toDateString().split(" ");
 
   let formData = new FormData();
-
-  formData.append("categoryUpdated", blogCategorySelected);
-  formData.append("createdAtEdit", date);
+ 
+  if (blogCategorySelected) {
+    formData.append("categoryUpdated", blogCategorySelected);
+  } else {
+    blogCategorySelected = titleBlog;
+  }
+  
 
   if (title) {
     formData.append("titleBlog", title);
@@ -60,7 +56,7 @@ $("#editBlogForm").submit(function (e) {
     formData.append("createdAtEdit", date);
   }
 
-  if (title || snippet || content || date) {
+  if (blogCategorySelected || title || snippet || content || date) {
     fetch("/blog", {
       method: "PATCH",
       body: formData,
@@ -70,6 +66,8 @@ $("#editBlogForm").submit(function (e) {
         $("#editFormResponse").append(
           '<div class="success-block">Update successfully</div>'
         );
+        $("#category").html(res.updateBlog.blogCategorySelected);
+        categoryUpdated = res.updateBlog.category;
         $("#titleBlog").html(res.updateBlog.title);
         titleBlog = res.updateBlog.title;
         $("#snippet").html(res.updateBlog.snippet);

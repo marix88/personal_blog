@@ -41,7 +41,7 @@ export const blog_get = async (req, res, next) => {
   console.log("blog_get: titleCategory: ", titleCategory);
   console.log("blog_get: description: ", description);
 
-  let blogs = await Blog.find({}, "_id category title")
+  let blogs = await Blog.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -53,13 +53,33 @@ export const blog_get = async (req, res, next) => {
       res.status(500).json({ err });
     });
   
-  // extract categoryBlog, titleBlog and idBlog from the database
-  let categoryBlog = blogs.map((item) => item.category);
-  let titleBlog = blogs.map((item) => item.title);
-  let idBlog = blogs.map((item) => item._id);
-  console.log("blog_get: categoryBlog: ", categoryBlog);
+  // extract values from the database
+  const idBlog = blogs.map((item) => item._id);
+  const categoryBlog = blogs.map((item) => item.category);
+  const titleBlog = blogs.map((item) => item.title);
+  const snippet = blogs.map((item) => item.snippet);
+  const content = blogs.map((item) => item.content);
+  const createdAt = blogs.map((item) => item.createdAt);
+  console.log("blog_get: : idBlog", idBlog);
+  console.log("blog_get: categoryBlog", categoryBlog);
   console.log("blog_get: titleBlog", titleBlog);
-  console.log("blog_get: idBlog", idBlog);
+  console.log("blog_get: snippet", snippet);
+  console.log("blog_get: content", content);
+  console.log("blog_get: createdAt", createdAt);
+
+  let allBlogs = {};
+  console.log("blog_edit_get: allBlogs: ", allBlogs);
+
+  for (let i = 0; i<titleCategory.length; i++) {
+    allBlogs[titleCategory[i]] = [];
+    for (let j = 0; j<titleBlog.length; j++) {
+      if (categoryBlog[j] == titleCategory[i]) {
+        allBlogs[titleCategory[i]].push(titleBlog[j]);
+      }
+    }
+  }
+
+  console.log("blog_edit_get: allBlogs after for: ", allBlogs);
 
   //for navbar
   let allCategories = await forNavbar();
@@ -69,13 +89,15 @@ export const blog_get = async (req, res, next) => {
   res.render("pages/blog", {
     idAllCategories,
     titleAllCategories,
-    titleAllCategories,
     idCategory,
     titleCategory,
     description,
     idBlog,
     categoryBlog,
     titleBlog,
+    snippet,
+    content, 
+    createdAt,
   });
 
   console.log("blog_get res.render: ", {
@@ -88,6 +110,9 @@ export const blog_get = async (req, res, next) => {
     idBlog,
     categoryBlog,
     titleBlog,
+    snippet,
+    content, 
+    createdAt,
   });
 };
 
@@ -124,7 +149,14 @@ export const blog_post = (req, res, next) => {
 
 // edit and existing blog post
 export const blog_edit_patch = (req, res) => {
+
   let result = {};
+
+  if(req.body.category) {
+    let category = req.body.category;
+    console.log(category);
+    result.category = category;
+  }
 
   if (req.body.title) {
     let title = req.body.title;

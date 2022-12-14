@@ -12,6 +12,9 @@
   <div class="mask mask-custom">
     <div class="d-flex flex-column justify-content-center align-items-center h-100">
       <h1 id="titleBlog" class="text-white fw-bold"><%= titleBlog %></h1>
+      <p><%= createdAt %></p>
+      <h2 class="text-white fw-bold"><%= snippet %></h2>
+      <p><%= content %></p>
     </div>
   </div>
 
@@ -20,11 +23,16 @@
   method="POST"
   class="forms">
   <select id="selectCategory" class="form-select mb-3">
-    <option selected>Choose category</option>
-
     <!-- put all categories in selectCategory -->
-   
+    <option selected>Choose category</option>
+    <% for(let i=0; i<titleAllCategories.length; i++) { %>
+      <option value = "<%= titleAllCategories[i] %>" name="category" ><%= titleAllCategories[i] %></option>  
+    <% } %>
   </select>
+ 
+  <select id="selectBlog" class="form-select mb-3" disabled>
+      <option selected>Choose blog post</option>
+    </select>
   <div class="mb-3">
     <label for="categoryUpdated" class="form-label">Change Category Here</label>
     <input type="text" class="form-control" id="categoryUpdated" name="categoryUpdated"/>
