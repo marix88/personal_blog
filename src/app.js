@@ -31,13 +31,14 @@ const __dirname = path.dirname(__filename); // Returns the absolute path to the 
 //console.log(import.meta.url);
 
 app.set("views", path.join(__dirname, "./views"));
-app.set("view engine", "ejs");
+// set the view engine to "ejs"
+app.set("view engine", "ejs"); 
 
 app.use(logger("dev"));
 app.use(express.json()); // parse the incoming requests with JSON payloads
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 // Routes
@@ -60,7 +61,7 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
 
   // render the error page
-  res.render("error");
+  res.render("pages/error");
   console.log("Error");
   res.end();
 });

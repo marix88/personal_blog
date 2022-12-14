@@ -17,7 +17,8 @@ router.delete("/blog", blog_delete);
 
 router.get("/", (req, res, next) => {
   console.log("About page displayed!");
-  res.render("about");
+  res.render("pages/about");
+  res.end();
 });
 
 export default router;

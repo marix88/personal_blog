@@ -1,6 +1,13 @@
-<%- include('./partials/head') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include("../partials/head") %>
+</head>
 <body>
-  <%- include("./partials/nav.ejs") %>
+  <header>
+    <%- include("../partials/header") %>
+    <script type="javascript" src="../public/javascripts/categories.js"></script>
+  </header> 
 <div class="bg-image">
   <div class="mask mask-custom">
     <div class="d-flex flex-column justify-content-center align-items-center h-100">
@@ -50,7 +57,6 @@
     <p id="editCategoryFormResponse"></p>
   </form>
 </section>
-
-<script type="javascript" src="../public/javascripts/categories.js"></script>
-<%- include('./partials/footer') %>
+<%- include('../partials/footer') %>
 </body>
+</html>

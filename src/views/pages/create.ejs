@@ -1,11 +1,14 @@
+<!DOCTYPE html>
 <html lang="en">
-  <%- include("./partials/head.ejs") %>
-  <script type="javascript" src ="../public/javascripts/newblogpost.js">
+<head>
+  <%- include("../partials/head") %> 
+  <script type="module" src ="../public/javascripts/newblogpost.js">
   </script>
-  <script type="javascript" src ="../public/javascripts/categories.js">
-  </script>
-  <body>
-    <%- include("./partials/nav.ejs") %>
+</head>
+<body class="container">
+  <header>
+    <%- include("../partials/header") %>
+  </header>
       <div class="d-flex flex-column justify-content-center align-items-center h-30">
         <h1 class="text-red fw-bold">Add New Blog Post</h1>
       </div>
@@ -18,10 +21,9 @@
   > <div>
       <select id="selectCategory" class="mb-3">
         <option selected>Choose category</option>
-  
         <!-- put all categories in selectCategory -->
         <% for (let i=0 ; i<titleCategory.length ; i++) { %>
-          <option value="<%= titleCategory[i] %>"><%= titleCategory[i] %></option>
+          <option value="<%= titleCategory[i] %>" name="category"><%= titleCategory[i] %></option>
         <% } %>
       </select>
       </div>
@@ -57,12 +59,12 @@
           SUBMIT
         </button>
       </div>
-      <p id="formResponse"></p>
+      <p id="createFormResponse"></p>
     </form>
   </section>
   <div id="space">
     <a href="/">See the latest blog posts</a>
   </div>
-    <%- include("./partials/footer.ejs") %>
+    <%- include("../partials/footer") %>
   </body>
 </html>

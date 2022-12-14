@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include("../partials/head") %>
+  </head>
+  <body>
+    <section id="errorSection">
+      <h1><%= message %></h1>
+      <h2><%= error.status %></h2>
+      <pre><%= error.stack %></pre>
+    </section>
+    <%- include("../partials/footer") %>
+  </body>
+</html>

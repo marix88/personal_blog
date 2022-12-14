@@ -3,6 +3,7 @@ import Category from "../models/category.js";
 import Blog from "../models/blogpost.js";
 
 const forNavbar = async () => {
+  // find all records in the categories collection, selecting the "_id" and "title" fields
   const categories = await Category.find({}, "id, title")
     .sort({ _id: 1 })
     .exec()
@@ -13,7 +14,9 @@ const forNavbar = async () => {
   const idAllCategories = categories.map((item) => item._id);
   const titleAllCategories = categories.map((item) => item.title);
  
+  console.log("id and title: ",idAllCategories, titleAllCategories);
 
+  // extract idAllCategories, titleAllCategories from the database
   return { idAllCategories, titleAllCategories };
 };
 
@@ -54,12 +57,21 @@ export const getCategory = async (req, res) => {
   const titleBlog = blogs.map((item) => item.title);
 
   // take the result from fornavbar function (ID and title for all categories)
-  const allCategories = forNavbar();
+  const allCategories = await forNavbar();
   const idAllCategories = allCategories.idAllCategories;
   const titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("category", {
-    idAllCategories,
+  console.log(
+    "idAllCategories: ", idAllCategories, 
+    "titleAllCategories: ", titleAllCategories,
+    "idCategory: ", idCategory,
+    "titleCategory: ", titleCategory,
+    "description: ", description,
+    "idBlog: ", idBlog,
+    "titleBlog", titleBlog,
+  );
+  res.render("pages/category", {
+    idAllCategories, 
     titleAllCategories,
     idCategory,
     titleCategory,

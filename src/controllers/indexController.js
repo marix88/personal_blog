@@ -56,7 +56,7 @@ export const getHomePage = async (req, res, next) => {
     createdAt,
   );
 
-  res.render("index", {
+  res.render("pages/index", {
     idAllCategories,
     titleAllCategories,
     idCategory,

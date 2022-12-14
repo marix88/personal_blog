@@ -1,8 +1,3 @@
-let title = $("#titleBlog").val();
-let snippet = $("#snippet").val();
-let content = $("#content").val();
-let date = new Date().toDateString().split(" ");
-
 // put all blog posts for the selected category in selectCategory dropdown
 $("#selectCategory").change(function (e) {
   $("#selectCategory").html("");
@@ -20,10 +15,11 @@ $("#selectCategory").change(function (e) {
 
 // see the content of the blog post when pressing the "Read More" button
 $("#readMoreBtn").click(function (e) {
-  res.render("blog", {title,
-  snippet,
-  content,
-  date, })
+  let title = $("#titleBlog").val();
+  let snippet = $("#snippet").val();
+  let content = $("#content").val();
+  let date = new Date().toDateString().split(" ");
+  res.render("pages/blog")
 });
 
 $("#editBlogBtn").click(function (e) {
@@ -38,6 +34,11 @@ $("#editBlogForm").submit(function (e) {
   if (!blogCategorySelected) {
     blogCategorySelected = titleBlog;
   }
+
+  let title = $("#titleBlog").val();
+  let snippet = $("#snippet").val();
+  let content = $("#content").val();
+  let date = new Date().toDateString().split(" ");
 
   let formData = new FormData();
 

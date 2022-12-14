@@ -1,8 +1,14 @@
-<%- include("./partials/head.ejs") %> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include("../partials/head") %> 
 <script type="javascript" src="../public/javascripts/add-category.js"></script>
 <script type="javascript" src="../public/javascripts/newblogpost.js"></script>
+</head>
 <body>
-<%- include("./partials/nav.ejs") %>
+  <header>
+    <%- include("../partials/header") %>
+  </header>
 
 <div class="bg-image">
   <img
@@ -59,6 +65,7 @@
         </div>
       </section>
 
-  <%- include("./partials/footer.ejs") %>
+  <%- include("../partials/footer") %>
 </body>
+</html>
   

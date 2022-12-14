@@ -1,5 +1,5 @@
 $("seePostsBtn").click(function (e) {
-  res.render("categories");
+  res.render("pages/categories");
 })
 
 $("#editCategoryBtn").click(function (e) {

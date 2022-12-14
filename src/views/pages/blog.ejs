@@ -1,8 +1,14 @@
-<%- include('./partials/head') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include("../partials/head") %> 
 <script type="javascript" src="../public/javascripts/blog.js">
 </script>
+</head>
 <body>
-<%- include("./partials/nav.ejs") %>
+<header>
+<%- include("../partials/header") %>
+</header>
   <div class="mask mask-custom">
     <div class="d-flex flex-column justify-content-center align-items-center h-100">
       <h1 id="titleBlog" class="text-white fw-bold"><%= titleBlog %></h1>
@@ -56,6 +62,7 @@
   </button>
   <p id="deleteFormResponse"></p>
 </div>
-<%- include('./partials/footer') %>
+<%- include("../partials/footer") %>
 </body>
+</html>
 

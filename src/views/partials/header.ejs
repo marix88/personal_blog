@@ -1,5 +1,3 @@
-<script type="javascript" src="../../public/javascripts/categories.js"></script>
-<script type="javascript" src="../../public/javascripts/blog.js"></script>
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary" role="navigation">
   <div class="container-fluid">
     <a class="navbar-brand" href="../../">My blog</a>
@@ -20,6 +18,7 @@
           </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
+          <em>titleAllCategories are: <% typeof titleAllCategories != 'undefined' ? titleAllCategories : 'default' %></em>
           <% for(let i=0; i<titleAllCategories.length; i++) { %>
             <a class="dropdown-item" href="/<%= idAllCategories[i] %>"><%= titleAllCategories[i] %></a>  
           <% } %>

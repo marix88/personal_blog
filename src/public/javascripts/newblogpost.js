@@ -42,13 +42,13 @@ form.submit(function (e) {
     })
       .then((data) => {
         console.log((data)); // make the return value available to me
-        $("#formResponse").append(
+        $("#createFormResponse").append(
           '<div class="success-block">Added new blog post successfully</div>'
         );
       })
       .catch((err) => {
         console.error(err);
-        $("#formResponse").append('<div class="error-block">Error</div>');
+        $("#createFormResponse").append('<div class="error-block">Error</div>');
       });
   }
 });
