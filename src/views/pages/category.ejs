@@ -43,10 +43,9 @@
           <div class="col-md-4 card-space">
             <div class="card h-100">
               <div class="card-body">
-                <h4 class="card-title"><%= titleBlog[i] %></h4>
-                <h5 class="card-title"><%= createdAt[i] %></h5>
+                <h4 class="card-title"><%= titleCategory[i] %></h4>
               </div>
-              <div class="card-footer text-center">
+              <div class="card-title text-center">
                 <a href="/<%= titleBlog[i] %>" class="btn btn-primary">Details</a>
               </div>
             </div>
@@ -59,7 +58,7 @@
       <div class="d-flex flex-wrap justify-content-around">
         <button id="editCategoryBtn" class="btn btn-primary card-space">Edit Category</button>
         <button id="deleteCategoryBtn" class="btn btn-primary card-space">Delete Category</button>
-        <a href="/categories" class="btn btn-primary card-space">Add Blog Category</a>
+        <a href="/category" class="btn btn-primary card-space">Add Blog Category</a>
         <p id="deleteFormResponse"></p>
       </div>
       <form id="editCategoryForm" hidden>

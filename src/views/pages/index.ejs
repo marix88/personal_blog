@@ -29,7 +29,7 @@
               <p class="card-text"><%= description[i] %></p>
             </div>
             <div class="card-footer text-center">
-              <a href="/category/<%= idCategory[i] %>" class="btn btn-primary" id="seePostsBtn">See posts from <%= titleCategory[i] %></a>
+              <a href="/<%= idCategory[i] %>" class="btn btn-primary" id="seePostsBtn">See posts from <%= titleCategory[i] %></a>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@
               <p class="card-text">created at:</p>
           </div>
           <div class="card-footer text-center">
-            <a href="category/blog/<%= idBlog[i] %>" class="btn btn-primary" id="readMoreBtn">Read more</a>
+            <a href="/<%= idBlog[i] %>" class="btn btn-primary" id="readMoreBtn">Read more</a>
           </div>
         </div>
       <% } %>
