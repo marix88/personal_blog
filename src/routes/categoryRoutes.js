@@ -1,17 +1,19 @@
 import express from "express";
-import { getCategory } from "../controllers/categoryController.js";
 import { postAddCategory } from "../controllers/categoryController.js";
+import { getCategory } from "../controllers/categoryController.js";
 import { patchEditCategory } from "../controllers/categoryController.js";
 import { deleteCategory } from "../controllers/categoryController.js";
 
 const routerCategory = express.Router();
 
-routerCategory.get("/category", getCategory);
+// first parameter: which path or URL does it want to listen to
 
-routerCategory.post("/:category", postAddCategory);
+routerCategory.post("/category", postAddCategory);
 
-routerCategory.patch("/categories", patchEditCategory);
+routerCategory.patch("/", patchEditCategory);
 
-routerCategory.delete("/categories", deleteCategory);
+routerCategory.delete("/", deleteCategory);
+
+routerCategory.get(":categoryId", getCategory);
 
 export default routerCategory;

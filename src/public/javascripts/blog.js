@@ -9,12 +9,11 @@ $("#selectCategory").change(function (e) {
 
 // see the content of the blog post when pressing the "Read More" button
 $("#readMoreBtn").click(function (e) {
-  fetch("/blog", {
+  fetch("/:blogId", {
     method: "GET",
-  })
-  .then((res) => {
-    console.log("Fetch blog.js #readMoreBtn");
-  })
+    headers: { "Content-Type": "application/json" },
+    //body: JSON.stringify({ selectCategory: titleBlog }),
+  }).then(() => (window.location = "../../:blogId"));
 });
 
 $("#editBlogBtn").click(function (e) {

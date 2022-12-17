@@ -4,7 +4,7 @@ import Blog from "../models/blogpost.js";
 
 const forNavbar = async () => {
   // find all records in the categories collection, selecting the "_id" and "title" fields
-  const categories = await Category.find({}, "id, title")
+  const categories = await Category.find({}, "_id, title")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -20,9 +20,37 @@ const forNavbar = async () => {
   return { idAllCategories, titleAllCategories };
 };
 
-// show the category page to add a new category, method: get 
+// add new category, method: POST. Send category page data to database.
+export const postAddCategory = (req, res, next) => {
+
+  const category = new Category({
+    _id: new mongoose.Types.ObjectId(),
+    title: req.body.titleCategory,
+    description: req.body.description,
+  });
+
+  console.log("postAddCategory: req.params.id is ", _id);
+  console.log("postAddCategory: req.body.title is ", title);
+  console.log("postAddCategory: req.body.description is ", description);
+
+  category
+    .save()
+    .then((result) => {
+      console.log(result);
+      res.json({ result });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ err });
+    });
+};
+
+
+// show all the blogs in a category, method: get 
 export const getCategory = async (req, res, next) => {
-  const category = await Category.find({}, "id title description")
+  const {categoryId} = req.params;
+  console.log(categoryId);
+  const category = await Category.findById(categoryId)
     .exec()
     .then((doc) => {
       console.log(doc);
@@ -33,11 +61,12 @@ export const getCategory = async (req, res, next) => {
       res.status(500).json({ error });
     });
 
+  // take the values from the "categories" collection in the datatabase
   const idCategory = category._id;
   const titleCategory = category.title;
   const description = category.description;
 
-  /*const blogs = await Blog.find(
+  const blogs = await Blog.find(
     { category: titleCategory },
     "_id title"
   )
@@ -48,14 +77,15 @@ export const getCategory = async (req, res, next) => {
       console.log(docs);
       return docs;
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ error });
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ err });
     });
 
   const idBlog = blogs.map((item) => item._id);
   const titleBlog = blogs.map((item) => item.title);
-*/
+  const createdAt = blogs.map((item) => item.createdAt);
+
   // take the result from fornavbar function (ID and title for all categories)
   const allCategories = await forNavbar();
   const idAllCategories = allCategories.idAllCategories;
@@ -65,48 +95,32 @@ export const getCategory = async (req, res, next) => {
     "getCategory: idAllCategories: ", idAllCategories, 
     "getCategory: titleAllCategories: ", titleAllCategories,
     "getCategory: idCategory: ", idCategory,
+    "getCategory: idCategory: ", idCategory,
     "getCategory: titleCategory: ", titleCategory,
     "getCategory: description: ", description,
+    "getCategory: idBlog: ", idBlog,
+    "getCategory: titleBlog: ", titleBlog,
+    "getCategory: createdAt: ", createdAt,
   ); 
+
   res.render("pages/category", {
     idAllCategories, 
     titleAllCategories,
     idCategory,
     titleCategory,
     description,
+    idBlog,
+    titleBlog,
+    createdAt,
   });
-};
-
-// add new category, method: POST. Send category page data to database.
-export const postAddCategory = (req, res) => {
-  const category = new Category({
-    _id: new mongoose.Types.ObjectId(req.params.id),
-    title: req.body.title,
-    description: req.body.description,
-  });
-
-  console.log("req.params.id is ", req.params.id);
-  console.log("req.body.title is ", req.body.title);
-  console.log("req.body.description is ", req.body.description);
-
-  category
-    .save()
-    .then((doc) => {
-      console.log(doc);
-      res.json({ doc });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ err });
-    });
 };
 
 // edit category
 export const patchEditCategory = async (req, res) => {
   let result = {};
 
-  if (req.body.title) {
-    const title = req.body.title;
+  if (req.body.titleCategory) {
+    const title = req.body.titleCategory;
     console.log(title);
     result.title = title;
   }

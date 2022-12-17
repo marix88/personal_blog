@@ -2,12 +2,12 @@
 
 // select category
 $("#selectCategory").change(function (e) {
-  $("#titleCategory");
+  $("#titleCategory").removeAttr("disabled");
+  $("#description").removeAttr("disabled");
 });
 
 // add new blog post
-const form = document.getElementById("addBlogPostForm");
-form.submit(function (e) {
+$("#addBlogPostForm").submit(function (e) {
   e.preventDefault();
 
   const category = $("#selectCategory option:selected").val();
@@ -16,7 +16,7 @@ form.submit(function (e) {
   const content = $("#content").val();
   const createdAt = new Date().toDateString().split(" ");
 
-  let formData = new FormData(form);
+  let formData = new FormData();
 
   if (
     !category ||

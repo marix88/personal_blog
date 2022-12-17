@@ -1,19 +1,19 @@
 import express from "express";
 const router = express.Router();
 
-import { blog_get } from "../controllers/blogController.js";
+import { blog_add_get } from "../controllers/blogController.js";
 import { blog_post } from "../controllers/blogController.js";
 import { blog_edit_get } from "../controllers/blogController.js";
 import { blog_edit_patch } from "../controllers/blogController.js";
 import { blog_post_get } from "../controllers/blogController.js";
 import { blog_delete } from "../controllers/blogController.js";
 
-router.get("/blog", blog_get);
-router.post("/:blog", blog_post);
+router.post("/create", blog_post);
 router.get("/blog", blog_post_get);
 router.get("/blog", blog_edit_get);
 router.patch("/blog", blog_edit_patch);
 router.delete("/blog", blog_delete);
+router.get("/:blogId", blog_add_get);
 
 router.get("/", (req, res, next) => {
   console.log("About page displayed!");

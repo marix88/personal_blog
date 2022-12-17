@@ -1,7 +1,7 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary" role="navigation">
   <div class="container-fluid">
     <a class="navbar-brand" href="../../">My blog</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="##navbarNavAltMarkup" aria-controls="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon" id="hamburgerNavButton"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -20,12 +20,12 @@
           <li>
           <% typeof titleAllCategories != 'undefined' ? titleAllCategories : 'default' %>
           <% for(let i=0; i<titleAllCategories.length; i++) { %>
-            <a class="dropdown-item" href="/<%= idAllCategories[i] %>"><%= titleAllCategories[i] %></a>  
+            <a class="dropdown-item" href="/category/<%= idAllCategories[i] %>"><%= titleAllCategories[i] %></a>  
           <% } %>
           </li>
         </ul>
       </li>
-      <li> <a class="nav-link" href="/create">Add Blog Post</a></li>
+      <li> <a class="nav-link" href="/category/blog/create">Add Blog Post</a></li>
       <li> <a class="nav-link" href="/category">Add Category</a></li>
       </ul>
       <form class="d-flex" role="search">

@@ -22,7 +22,7 @@ $("#editCategoryForm").submit(function (e) {
   }
 
   if (titleCategory || description) {
-    fetch("/categories", {
+    fetch("/category", {
       method: "PATCH",
       body: formData,
     })

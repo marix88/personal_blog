@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const blogSchema = new Schema({
-  category: String,
+  categoryBlogPost: String,
   title: String,
   snippet: String,
   content:  String,

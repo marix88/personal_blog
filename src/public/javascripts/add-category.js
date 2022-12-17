@@ -1,12 +1,11 @@
 // add new category
-const form = document.getElementById("addCategoryForm");
-form.submit(function (e) {
+$("#addCategoryForm").submit(function (e) {
   e.preventDefault();
 
 let titleCategory = $("#titleCategory").val();
 let description = $("#description").val();
 
-let formData = new FormData(form);
+let formData = new FormData();
 
   if (!titleCategory || !description) {
     $("#addCategoryFormResponse").append(
@@ -15,7 +14,7 @@ let formData = new FormData(form);
   } else {
     // parameters: name (from the form), value, filename(optional)
     formData.append("titleCategory", titleCategory); 
-    formData.append("descriptionCategory", description);
+    formData.append("description", description);
 
     fetch("/category", {
       method: "POST",

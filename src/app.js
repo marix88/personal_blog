@@ -67,7 +67,7 @@ app.use((error, req, res, next) => {
 
 // Server listen and connection to database
 mongoose.connect(`${process.env.MONGODB_URI}`, 
-{ useNewUrlParser: true, useUnifiedTopology: true }, 
+// { useNewUrlParser: true, useUnifiedTopology: true }, 
 (client, err) =>{
   try{
       console.log("Connected to db: " + client)

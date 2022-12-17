@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 import Blog from "../models/blogpost.js";
 import Category from "../models/category.js";
 
-const forNavbar = async () => {
+const forNavbar = async() => {
   // find all records in the categories collection, selecting the "_id" and "title" fields
-  let categories = await Category.find({}, "_id title") 
+  let categories = await Category.find({}, "title") 
     .sort({ _id: 1 })
     .exec()
     .then((docs) => { 
@@ -19,9 +19,9 @@ const forNavbar = async () => {
     return { idAllCategories, titleAllCategories };
 };
 
-// add to the database a new blog post from the "create" page form
-export const blog_get = async (req, res, next) => {
-  let categories = await Category.find({})
+// show the "create" page and select the category for the new blog post
+export const blog_add_get = async (req, res, next) => {
+  let categories = await Category.find({}, "title")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -33,95 +33,34 @@ export const blog_get = async (req, res, next) => {
       res.status(500).json({ err });
     });
   
-  // extract idCategory, titleCategory and description from the database
-  let idCategory = categories.map((item)=>(item._id));
-  let titleCategory = categories.map((item)=>(item.title));
-  let description = categories.map((item)=>(item.description));
-  console.log("blog_get: idCategory: ", idCategory);
-  console.log("blog_get: titleCategory: ", titleCategory);
-  console.log("blog_get: description: ", description);
-
-  let blogs = await Blog.find({})
-    .sort({ _id: 1 })
-    .exec()
-    .then((docs) => {
-      console.log(docs);
-      return docs;
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err });
-    });
-  
-  // extract values from the database
-  const idBlog = blogs.map((item) => item._id);
-  const categoryBlog = blogs.map((item) => item.category);
-  const titleBlog = blogs.map((item) => item.title);
-  const snippet = blogs.map((item) => item.snippet);
-  const content = blogs.map((item) => item.content);
-  const createdAt = blogs.map((item) => item.createdAt);
-  console.log("blog_get: : idBlog", idBlog);
-  console.log("blog_get: categoryBlog", categoryBlog);
-  console.log("blog_get: titleBlog", titleBlog);
-  console.log("blog_get: snippet", snippet);
-  console.log("blog_get: content", content);
-  console.log("blog_get: createdAt", createdAt);
-
-  let allBlogs = {};
-  console.log("blog_edit_get: allBlogs: ", allBlogs);
-
-  for (let i = 0; i<titleCategory.length; i++) {
-    allBlogs[titleCategory[i]] = [];
-    for (let j = 0; j<titleBlog.length; j++) {
-      if (categoryBlog[j] == titleCategory[i]) {
-        allBlogs[titleCategory[i]].push(titleBlog[j]);
-      }
-    }
-  }
-
-  console.log("blog_edit_get: allBlogs after for: ", allBlogs);
+  // extract titleCategory from the database
+  const titleCategory = categories.map((item)=>(item.title));
+  console.log("blog_add_get: titleCategory: ", titleCategory);
 
   //for navbar
   let allCategories = await forNavbar();
   let idAllCategories = allCategories.idAllCategories;
   let titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("pages/blog", {
+  res.render("pages/create", {
     idAllCategories,
     titleAllCategories,
-    idCategory,
     titleCategory,
-    description,
-    idBlog,
-    categoryBlog,
-    titleBlog,
-    snippet,
-    content, 
-    createdAt,
   });
 
-  console.log("blog_get res.render: ", {
+  console.log("blog_add_get res.render: ", {
     idAllCategories,
     titleAllCategories,
-    titleAllCategories,
-    idCategory,
     titleCategory,
-    description,
-    idBlog,
-    categoryBlog,
-    titleBlog,
-    snippet,
-    content, 
-    createdAt,
   });
 };
 
-// add (POST) a new blog post in the database using the data collected through the create page
+// method: POST. Insert the formData into the database
 export const blog_post = (req, res, next) => {
 
   const blog = new Blog({
-    _id: new mongoose.Types.ObjectId,
-    category: req.body.category,
+    _id: new mongoose.Types.ObjectId(),
+    categoryBlogPost: req.body.categoryBlogPost,
     title: req.body.title,
     snippet: req.body.snippet,
     content: req.body.content,
@@ -129,7 +68,7 @@ export const blog_post = (req, res, next) => {
   });
 
   console.log("blog post: req.body.id", req.body._id);
-  console.log("blog_post: req.body.category: ", req.body.category);
+  console.log("blog_post: req.body.categoryBlogPost: ", req.body.categoryBlogPost);
   console.log("blog_post: req.body.title: ", req.body.title);
   console.log("blog_post: req.body.snippet: ", req.body.snippet);
   console.log("blog_post: req.body.content: ", req.body.content);
@@ -137,9 +76,9 @@ export const blog_post = (req, res, next) => {
 
   blog
     .save()
-    .then((doc) => {
-      console.log(doc);
-      res.json({ doc });
+    .then((result) => {
+      console.log(result);
+      res.json({ result });
     })
     .catch((err) => {
       console.log(err);
@@ -152,10 +91,10 @@ export const blog_edit_patch = (req, res) => {
 
   let result = {};
 
-  if(req.body.category) {
-    let category = req.body.category;
+  if(req.body.categoryBlogPost) {
+    let category = req.body.categoryBlogPost;
     console.log(category);
-    result.category = category;
+    result.categoryBlogPost = category;
   }
 
   if (req.body.title) {
@@ -195,7 +134,7 @@ export const blog_edit_get = async (req, res) => {
   let titleCategory = categories.map((item) => item.title);
   console.log("blog_edit_get: title category: ", titleCategory)
 
-  let blogs = Blog.find({}, "category title")
+  let blogs = Blog.find({}, "categoryBlogPost title")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -207,7 +146,7 @@ export const blog_edit_get = async (req, res) => {
       res.status(500).json({ error });
     });
 
-  let categoryBlog = blogs.map((item) => item.category);
+  let categoryBlog = blogs.map((item) => item.categoryBlogPost);
   let titleBlog = blogs.map((item) => item.title);
   console.log("blog_edit_get: categoryBlog: ", categoryBlog);
   console.log("blog_edit_get: title blog: ", titleBlog);
@@ -251,7 +190,7 @@ export const blog_edit_get = async (req, res) => {
 
   /*const blog = new Blog({
     _id: new mongoose.Types.ObjectId(req.params.id),
-    category: req.body.category,
+    categoryBlogPost: req.body.categoryBlogPost,
     title: req.body.title,
     snippet: req.body.snippet,
     content: req.body.content,
@@ -259,9 +198,9 @@ export const blog_edit_get = async (req, res) => {
   });*/
 };
 
-// find a blog post by id
+// find a blog post by id and display it on the "blog" page
 export const blog_post_get = async (req, res) => {
-  let blog = await Blog.findById(req.params._id)
+  let blog = Blog.findById(req.params.id)
     .exec()
     .then((result) => {
       console.log(result);
@@ -272,15 +211,18 @@ export const blog_post_get = async (req, res) => {
       res.status(500).json({ error });
     });
 
+  // extract the values from the database
   const titleBlog = blog.title;
   const snippet = blog.snippet;
   const contentBlog = blog.content;
   const createdAt = blog.createdAt;
+  const categoryBlog = blog.categoryBlogPost;
 
   console.log("blog_post_get: titleBlog: ", titleBlog,
   "blog_post_get: snippet: ", snippet,
   "blog_post_get: contentBlog: ", contentBlog,
   "blog_post_get: createdAt: ", createdAt,
+  "blog_post_get: categoryBlog ", categoryBlog,
     )
 
 
@@ -296,6 +238,7 @@ export const blog_post_get = async (req, res) => {
     snippet,
     contentBlog,
     createdAt,
+    categoryBlog,
   });
 
   console.log(
@@ -305,6 +248,7 @@ export const blog_post_get = async (req, res) => {
     "blog_post_get: render: snippet: ", {snippet},
     "blog_post_get: render: contentBlog: ", {contentBlog},
     "blog_post_get: render: createdAt: ", {createdAt},
+    "blog_post_get: render: categoryBlog: ", {categoryBlog},
   )
 };
 
