@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include("../partials/head") %>
-  <script type="module" src="/javascripts/add-category.js"></script>
+  <script type="module" src="/javascripts/categories"></script>
 </head>
   <body>
     <header>
@@ -13,26 +13,9 @@
     <div class="mask mask-custom">
       <div
         class="d-flex flex-column justify-content-center align-items-center h-100"
-      > <h1 class="text-white fw-bold">Add New Category</h1>
+      > <h1 class="text-white fw-bold">Blog posts</h1>
       </div>
     </div>
-    
-    <section id="cards" class="pt-5">
-      <form id="addCategoryForm" enctype="multipart/form-data"
-            method="POST"
-            class="forms">
-            <div class="mb-3">
-                <label for="titleCategory" class="form-label" >Title</label>
-                <input type="text" class="form-control" id="titleCategory" name="titleCategory" placeholder="Your category name" required />
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description" placeholder="Describe this category" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <p id="addCategoryFormResponse"></p>
-      </form>
-    </section>
 
     <section id="categories" class="pt-5">
       <p id="descriptionCategory"><%= description %></p>
@@ -43,10 +26,10 @@
           <div class="col-md-4 card-space">
             <div class="card h-100">
               <div class="card-body">
-                <h4 class="card-title"><%= titleCategory[i] %></h4>
+                <h4 class="card-title"><%= titleBlog[i] %></h4>
               </div>
               <div class="card-title text-center">
-                <a href="/<%= titleBlog[i] %>" class="btn btn-primary">Details</a>
+                <a href="category/blog/<%= idBlog[i] %>" class="btn btn-primary">Details</a>
               </div>
             </div>
           </div>
@@ -58,7 +41,6 @@
       <div class="d-flex flex-wrap justify-content-around">
         <button id="editCategoryBtn" class="btn btn-primary card-space">Edit Category</button>
         <button id="deleteCategoryBtn" class="btn btn-primary card-space">Delete Category</button>
-        <a href="/category" class="btn btn-primary card-space">Add Blog Category</a>
         <p id="deleteFormResponse"></p>
       </div>
       <form id="editCategoryForm" hidden>

@@ -2,10 +2,10 @@
 $("#addCategoryForm").submit(function (e) {
   e.preventDefault();
 
-let titleCategory = $("#titleCategory").val();
-let description = $("#description").val();
+const titleCategory = $("#titleCategory").val();
+const description = $("#description").val();
 
-let formData = new FormData();
+const formData = new FormData();
 
   if (!titleCategory || !description) {
     $("#addCategoryFormResponse").append(
@@ -16,7 +16,7 @@ let formData = new FormData();
     formData.append("titleCategory", titleCategory); 
     formData.append("description", description);
 
-    fetch("/category", {
+    fetch("/add-category", {
       method: "POST",
       body: formData,
     })

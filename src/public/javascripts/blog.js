@@ -3,17 +3,24 @@ $("#selectCategory").change(function (e) {
   $("#selectCategory").html("");
   $("#selectCategory").removeAttr("disabled");
   $("#titleCategory").removeAttr("disabled");
-  $("#descriptionCategory").removeAttr("disabled");
+  $("#description").removeAttr("disabled");
   console.blog("You need allBlogs to select a category from the dropdown!");
+  for (const key in allBlogs) {
+    if (this.value == key) {
+      allBlogs[key].map((item) => {
+        $("#selectBlog").append(`<option value="${item}">${item}</option>`);
+      });
+    }
+  }
 });
 
 // see the content of the blog post when pressing the "Read More" button
 $("#readMoreBtn").click(function (e) {
-  fetch("/:blogId", {
+  fetch("/blog/:blogId", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
     //body: JSON.stringify({ selectCategory: titleBlog }),
-  }).then(() => (window.location = "../../:blogId"));
+  }).then(() => (window.location = "../../blog/:blogId"));
 });
 
 $("#editBlogBtn").click(function (e) {
@@ -91,7 +98,7 @@ $("#editBlogForm").submit(function (e) {
 $("#deleteBlogBtn").click(function (e) {
   e.preventDefault();
 
-  fetch("blog", {
+  fetch("/blog", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
     //body: JSON.stringify({ selectCategory: titleBlog }),

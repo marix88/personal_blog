@@ -1,8 +1,8 @@
 import express from "express";
-const routerIndex = express.Router();
 
 import { getHomePage } from "../controllers/indexController.js";
-routerIndex.get("/", getHomePage);
+const routerIndex = express.Router();
 
+routerIndex.get("/", getHomePage);
 
 export default routerIndex;

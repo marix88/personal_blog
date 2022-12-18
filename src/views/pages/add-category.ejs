@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("../partials/head") %>
+  <script type="module" src="/javascripts/add-category.js"></script>
+</head>
+<body>
+    <header>
+      <%- include("../partials/header") %>
+    </header>
+
+    <!--keep the elements centered and placed over the bg-image-->
+    <div class="mask mask-custom">
+        <div
+          class="d-flex flex-column justify-content-center align-items-center h-100"
+        > <h1 class="text-white fw-bold">Add New Category</h1>
+        </div>
+    </div>
+
+    <section id="cards" class="pt-5">
+        <form id="addCategoryForm" enctype="multipart/form-data"
+              method="POST"
+              class="forms">
+              <div class="mb-3">
+                  <label for="titleCategory" class="form-label" >Title</label>
+                  <input type="text" class="form-control" id="titleCategory" name="titleCategory" placeholder="Your category name" required />
+              </div>
+              <div class="mb-3">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control" id="description" name="description" placeholder="Describe this category" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <p id="addCategoryFormResponse"></p>
+        </form>
+    </section>
+<%- include("../partials/footer") %>
+</body>
+</html>

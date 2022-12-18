@@ -4,7 +4,7 @@ import Category from "../models/category.js";
 
 const forNavbar = async() => {
   // find all records in the categories collection, selecting the "_id" and "title" fields
-  let categories = await Category.find({}, "title") 
+  let categories = await Category.find({}, "_id title") 
     .sort({ _id: 1 })
     .exec()
     .then((docs) => { 
@@ -53,68 +53,6 @@ export const blog_add_get = async (req, res, next) => {
     titleAllCategories,
     titleCategory,
   });
-};
-
-// method: POST. Insert the formData into the database
-export const blog_post = (req, res, next) => {
-
-  const blog = new Blog({
-    _id: new mongoose.Types.ObjectId(),
-    categoryBlogPost: req.body.categoryBlogPost,
-    title: req.body.title,
-    snippet: req.body.snippet,
-    content: req.body.content,
-    createdAt: req.body.date,
-  });
-
-  console.log("blog post: req.body.id", req.body._id);
-  console.log("blog_post: req.body.categoryBlogPost: ", req.body.categoryBlogPost);
-  console.log("blog_post: req.body.title: ", req.body.title);
-  console.log("blog_post: req.body.snippet: ", req.body.snippet);
-  console.log("blog_post: req.body.content: ", req.body.content);
-  console.log("blog_post: req.body.date: ", req.body.date);
-
-  blog
-    .save()
-    .then((result) => {
-      console.log(result);
-      res.json({ result });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err });
-    });
-};
-
-// edit and existing blog post
-export const blog_edit_patch = (req, res) => {
-
-  let result = {};
-
-  if(req.body.categoryBlogPost) {
-    let category = req.body.categoryBlogPost;
-    console.log(category);
-    result.categoryBlogPost = category;
-  }
-
-  if (req.body.title) {
-    let title = req.body.title;
-    console.log(title);
-    result.title = title;
-  }
-  if (req.body.content) {
-    let content = req.body.content;
-    console.log(content);
-    result.content = content;
-  }
-
-  console.log(req.body.blog);
-  let updateBlog = Blog.findOneAndUpdate({ title: req.body.blog }, result, {
-    new: true,
-  });
-  console.log(updateBlog);
-
-  res.json({ updateBlog });
 };
 
 // get edit blog post
@@ -198,13 +136,47 @@ export const blog_edit_get = async (req, res) => {
   });*/
 };
 
+// edit and existing blog post
+export const blog_edit_patch = (req, res) => {
+
+  let result = {};
+  result.createdAt = req.body.createdAt;
+
+  /*if(req.body.categoryBlogPost) {
+    let category = req.body.categoryBlogPost;
+    console.log(category);
+    result.categoryBlogPost = category;
+  }*/
+
+  if (req.body.title) {
+    let title = req.body.title;
+    console.log(title);
+    result.title = title;
+  }
+  if (req.body.content) {
+    let content = req.body.content;
+    console.log(content);
+    result.content = content;
+  }
+
+  console.log(req.body.blog);
+  let updateBlog = Blog.findOneAndUpdate({ title: req.body.blog }, result, {
+    new: true,
+  });
+  console.log(updateBlog);
+
+  res.json({ updateBlog });
+};
+
 // find a blog post by id and display it on the "blog" page
-export const blog_post_get = async (req, res) => {
-  let blog = Blog.findById(req.params.id)
+export const blog_get = async (req, res) => {
+  const {blogId} = req.params;
+  console.log(blogId);
+  let blog = Blog.findById(req.params.blogId)
     .exec()
-    .then((result) => {
-      console.log(result);
-      return result;
+    .then((doc) => {
+      console.log(doc);
+      return doc;
     })
     .catch((error) => {
       console.log(error);
@@ -259,3 +231,36 @@ export const blog_delete = (req, res) => {
   console.log(blog_delete);
   res(end);
 };
+
+// method: POST. Insert the formData into the database
+export const blog_post = (req, res, next) => {
+
+  const blog = new Blog({
+    _id: new mongoose.Types.ObjectId(),
+    categoryBlogPost: req.body.selectCategory,
+    title: req.body.title,
+    snippet: req.body.snippet,
+    content: req.body.content,
+    createdAt: req.body.date,
+  });
+
+  console.log("blog post: req.body.id", _id);
+  console.log("blog_post: req.body.categoryBlogPost: ", categoryBlogPost);
+  console.log("blog_post: req.body.title: ", title);
+  console.log("blog_post: req.body.snippet: ", snippet);
+  console.log("blog_post: req.body.content: ", content);
+  console.log("blog_post: req.body.date: ", createdAt);
+
+  blog
+    .save()
+    .then((result) => {
+      console.log(result);
+      res.json({ result });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ err });
+    });
+    next();
+};
+

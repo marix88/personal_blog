@@ -8,12 +8,12 @@ const routerCategory = express.Router();
 
 // first parameter: which path or URL does it want to listen to
 
-routerCategory.post("/category", postAddCategory);
+routerCategory.post("/add-category", postAddCategory);
 
-routerCategory.patch("/", patchEditCategory);
+routerCategory.patch("/category", patchEditCategory);
 
-routerCategory.delete("/", deleteCategory);
+routerCategory.delete("/category", deleteCategory);
 
-routerCategory.get(":categoryId", getCategory);
+routerCategory.get("/category/:categoryId", getCategory);
 
 export default routerCategory;

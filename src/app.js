@@ -41,10 +41,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 // Routes
-app.use("/about", router);
-app.use("/", routerIndex);
-app.use("/", router);
-app.use("/", routerCategory);
+app.use(routerIndex);
+app.use(routerCategory);
+app.use(router);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -66,16 +65,10 @@ app.use((error, req, res, next) => {
 });
 
 // Server listen and connection to database
-mongoose.connect(`${process.env.MONGODB_URI}`, 
-// { useNewUrlParser: true, useUnifiedTopology: true }, 
-(client, err) =>{
-  try{
-      console.log("Connected to db: " + client)
-  }catch(err){
-      console.log(err);
-  }
-}
-);
+mongoose.connect(`${process.env.MONGODB_URI}`) 
+.catch(error => handleError(error));
+console.log("Connected to Atlas!");
+
 app.listen(PORT || "0.0.0.0", (error) => {
   if (!error) console.log("Server running on port " + PORT);
   else console.log("Error! Server can't start");

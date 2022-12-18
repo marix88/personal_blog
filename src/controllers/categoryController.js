@@ -43,11 +43,11 @@ export const postAddCategory = (req, res, next) => {
       console.log(err);
       res.status(500).json({ err });
     });
+    next();
 };
 
-
 // show all the blogs in a category, method: get 
-export const getCategory = async (req, res, next) => {
+export const getCategory = async (req, res) => {
   const {categoryId} = req.params;
   console.log(categoryId);
   const category = await Category.findById(categoryId)
