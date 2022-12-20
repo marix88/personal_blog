@@ -55,6 +55,38 @@ export const blog_add_get = async (req, res, next) => {
   });
 };
 
+// method: POST. Insert the formData into the database
+export const blog_post = (req, res, next) => {
+
+  const blog = new Blog({
+    _id: new mongoose.Types.ObjectId(),
+    categoryBlogPost: req.body.selectCategory,
+    title: req.body.title,
+    snippet: req.body.snippet,
+    content: req.body.content,
+    createdAt: req.body.date,
+  });
+
+  console.log("blog post: req.body.id", _id);
+  console.log("blog_post: req.body.categoryBlogPost: ", categoryBlogPost);
+  console.log("blog_post: req.body.title: ", title);
+  console.log("blog_post: req.body.snippet: ", snippet);
+  console.log("blog_post: req.body.content: ", content);
+  console.log("blog_post: req.body.date: ", createdAt);
+
+  blog
+    .save()
+    .then((result) => {
+      console.log(result);
+      res.json({ result });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ err });
+    });
+    next();
+};
+
 // get edit blog post
 export const blog_edit_get = async (req, res) => {
   let categories = Category.find({}, "title")
@@ -232,35 +264,4 @@ export const blog_delete = (req, res) => {
   res(end);
 };
 
-// method: POST. Insert the formData into the database
-export const blog_post = (req, res, next) => {
-
-  const blog = new Blog({
-    _id: new mongoose.Types.ObjectId(),
-    categoryBlogPost: req.body.selectCategory,
-    title: req.body.title,
-    snippet: req.body.snippet,
-    content: req.body.content,
-    createdAt: req.body.date,
-  });
-
-  console.log("blog post: req.body.id", _id);
-  console.log("blog_post: req.body.categoryBlogPost: ", categoryBlogPost);
-  console.log("blog_post: req.body.title: ", title);
-  console.log("blog_post: req.body.snippet: ", snippet);
-  console.log("blog_post: req.body.content: ", content);
-  console.log("blog_post: req.body.date: ", createdAt);
-
-  blog
-    .save()
-    .then((result) => {
-      console.log(result);
-      res.json({ result });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err });
-    });
-    next();
-};
 

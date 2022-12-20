@@ -1,11 +1,11 @@
 // send the form to the server
 
 // select category
-$("#selectCategory").change(function (e) {
+/*$("#selectCategory").change(function (e) {
   $("#titleCategory").removeAttr("disabled");
   $("#description").removeAttr("disabled");
 });
-
+*/
 // add new blog post
 $("#addBlogPostForm").submit(function (e) {
   e.preventDefault();

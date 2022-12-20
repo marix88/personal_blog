@@ -20,6 +20,43 @@ const forNavbar = async () => {
   return { idAllCategories, titleAllCategories };
 };
 
+
+// add new category, method: GET. Render add-category.ejs page.
+export const getAddCategory = async (req, res, next) => {
+  
+  let categories = await Category.find({}, "title")
+    .sort({ _id: 1 })
+    .exec()
+    .then((docs) => {
+      console.log(docs);
+      return docs;
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ err });
+    });
+
+  // extract titleCategory from the database
+  const titleCategory = categories.map((item)=>(item.title));
+  console.log("getAddCategory: titleCategory: ", titleCategory);
+
+  //for navbar
+  let allCategories = await forNavbar();
+  let idAllCategories = allCategories.idAllCategories;
+  let titleAllCategories = allCategories.titleAllCategories;
+
+  res.render("pages/add-category", {
+    idAllCategories,
+    titleAllCategories,
+    titleCategory,
+  });
+
+  console.log("getAddCategory res.render: ", {
+    idAllCategories,
+    titleAllCategories,
+    titleCategory,
+  });
+}
 // add new category, method: POST. Send category page data to database.
 export const postAddCategory = (req, res, next) => {
 
