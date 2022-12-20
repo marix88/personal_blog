@@ -58,29 +58,23 @@ export const getAddCategory = async (req, res, next) => {
   });
 }
 // add new category, method: POST. Send category page data to database.
-export const postAddCategory = (req, res, next) => {
+export const postAddCategory = (req, res) => {
 
   const category = new Category({
-    _id: new mongoose.Types.ObjectId(),
+    _id: new mongoose.Types.ObjectId,
     title: req.body.titleCategory,
     description: req.body.description,
   });
 
-  console.log("postAddCategory: req.params.id is ", _id);
-  console.log("postAddCategory: req.body.title is ", title);
-  console.log("postAddCategory: req.body.description is ", description);
-
   category
     .save()
-    .then((result) => {
-      console.log(result);
-      res.json({ result });
+    .then((doc) => {
+      res.json({ doc });
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json({ err });
     });
-    next();
 };
 
 // show all the blogs in a category, method: get 

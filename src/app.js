@@ -41,9 +41,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 // Routes
-app.use(routerIndex);
 app.use(routerCategory);
 app.use(router);
+app.use(routerIndex);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

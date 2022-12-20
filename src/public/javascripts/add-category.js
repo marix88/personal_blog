@@ -21,7 +21,6 @@ const formData = new FormData();
       body: formData,
     })
       .then((data) => {
-        console.log(data);
         $("#addCategoryFormResponse").append(
           '<div class="success-block">Added new category successfully</div>'
         );
