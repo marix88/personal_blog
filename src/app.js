@@ -35,7 +35,7 @@ app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(express.json()); // parse the incoming requests with JSON payloads
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded()); // parse incoming Request Object if object, with nested objects, or generally any type. The default option: { extended: true}
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());

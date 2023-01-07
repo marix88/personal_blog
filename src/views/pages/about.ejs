@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("../partials/head") %>
+  <head>
+    <%- include("../partials/head"); %>
+  </head>
   <body>
     <header>
       <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary" role="navigation">
@@ -27,7 +29,8 @@
           </div>
         </div>
       </nav>
-      </header>
+    </header>
+  <main>
     <div id="about">
       <h2 id="aboutMe">ABOUT</h2>
       <p>This is a project of a personal blog.</p>
@@ -36,6 +39,9 @@
         This personal blog example is made with JavaScript, NodeJS and Express.
       </p>
     </div>
-    <%- include("../partials/footer") %>
+  </main>
+    <footer>
+      <%- include("../partials/footer"); %>
+    </footer>
   </body>
 </html>

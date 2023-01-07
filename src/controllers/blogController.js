@@ -202,9 +202,9 @@ export const blog_edit_patch = (req, res) => {
 
 // find a blog post by id and display it on the "blog" page
 export const blog_get = async (req, res) => {
-  const {blogId} = req.params;
+  const { blogId } = req.params;
   console.log(blogId);
-  let blog = Blog.findById(req.params.blogId)
+  const blog = await Blog.findById(blogId)
     .exec()
     .then((doc) => {
       console.log(doc);
@@ -256,6 +256,19 @@ export const blog_get = async (req, res) => {
   )
 };
 
+// find all blog posts and display them on /blogs page
+export const blogs_get = async (req, res) => {
+  const allBlogPosts = await Blog.find()
+  .exec()
+  .then((docs) => {
+      console.log(docs);
+      return docs;
+    })
+  .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error });
+    });
+}
 
 // delete a blog post
 export const blog_delete = (req, res) => {

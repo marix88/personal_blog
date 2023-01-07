@@ -4,14 +4,7 @@ $("#selectCategory").change(function (e) {
   $("#selectCategory").removeAttr("disabled");
   $("#titleCategory").removeAttr("disabled");
   $("#description").removeAttr("disabled");
-  console.blog("You need allBlogs to select a category from the dropdown!");
-  for (const key in allBlogs) {
-    if (this.value == key) {
-      allBlogs[key].map((item) => {
-        $("#selectBlog").append(`<option value="${item}">${item}</option>`);
-      });
-    }
-  }
+  console.log("You need allBlogs to select a category from the dropdown!");
 });
 
 // see the content of the blog post when pressing the "Read More" button
@@ -30,8 +23,6 @@ $("#editBlogBtn").click(function (e) {
 // edit blog
 $("#editBlogForm").submit(function (e) {
   e.preventDefault();
-
-  let category = $("category").val();
   let blogCategorySelected = $("#selectCategory option:selected").val();
   let title = $("#titleBlog").val();
   let snippet = $("#snippet").val();

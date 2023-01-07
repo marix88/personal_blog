@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include("../partials/head") %>
+  <%- include("../partials/head"); %>
   <script type="module" src="/javascripts/categories"></script>
 </head>
   <body>
     <header>
-      <%- include("../partials/header") %>
+      <%- include("../partials/header"); %>
     </header>
     
     <!--keep the elements centered and placed over the bg-image-->
@@ -56,6 +56,8 @@
         <p id="editCategoryFormResponse"></p>
       </form>
     </section>
-    <%- include("../partials/footer") %>
+    <footer>
+      <%- include("../partials/footer"); %>
+    </footer>
   </body>
 </html>

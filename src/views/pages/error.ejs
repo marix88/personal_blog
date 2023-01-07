@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include("../partials/head") %>
+    <%- include("../partials/head"); %>
   </head>
   <body>
     <section id="errorSection">
@@ -9,6 +9,8 @@
       <h2><%= error.status %></h2>
       <pre><%= error.stack %></pre>
     </section>
-    <%- include("../partials/footer") %>
+    <footer>
+      <%- include("../partials/footer"); %>
+    </footer>
   </body>
 </html>

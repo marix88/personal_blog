@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include("../partials/head") %>
+  <%- include("../partials/head"); %>
   <script type="module" src="/javascripts/add-category.js"></script>
   <script>let titleCategory = "<%= titleCategory %>"</script>
 </head>
 <body>
     <header>
-      <%- include("../partials/header") %>
+      <%- include("../partials/header"); %>
     </header>
 
     <!--keep the elements centered and placed over the bg-image-->
@@ -19,6 +19,7 @@
     </div>
     <section id="cards" class="pt-5">
         <form id="addCategoryForm" enctype="multipart/form-data"
+              action="/add-category"
               method="POST"
               class="forms">
               <div class="mb-3">
@@ -33,6 +34,8 @@
               <p id="addCategoryFormResponse"></p>
         </form>
     </section>
-<%- include("../partials/footer") %>
+<footer>
+  <%- include("../partials/footer"); %>
+</footer>
 </body>
 </html>

@@ -59,17 +59,14 @@ export const getAddCategory = async (req, res, next) => {
 }
 // add new category, method: POST. Send category page data to database.
 export const postAddCategory = (req, res) => {
-
-  const category = new Category({
-    _id: new mongoose.Types.ObjectId,
-    title: req.body.titleCategory,
-    description: req.body.description,
-  });
-
+  console.log(req.body);
+  const category = new Category(req.body);
+  console.log("Data from the form:", req.body);
   category
     .save()
     .then((doc) => {
-      res.json({ doc });
+      res.send({ doc });
+      console.log(doc);
     })
     .catch((err) => {
       console.log(err);

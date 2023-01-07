@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<%- include("../partials/head") %> 
+<%- include("../partials/head"); %> 
 <script type="module" src="/javascripts/blog.js">
 </script>
 </head>
 <body>
 <header>
-<%- include("../partials/header") %>
+<%- include("../partials/header"); %>
 </header>
   <div class="mask mask-custom">
     <div class="d-flex flex-column justify-content-center align-items-center h-100">
       <h1 id="titleBlog" class="text-white fw-bold"><%= titleBlog %></h1>
       <p><%= createdAt %></p>
       <p>Category: <%= categoryBlog %></p>
-      <h2 class="text-white fw-bold"><%= snippet %></h2>
-      <p><%= content %></p>
+      <h2><%= snippet %></h2>
+      <p><%= contentBlog %></p>
     </div>
   </div>
 
@@ -31,9 +31,6 @@
     <% } %>
   </select>
  
-  <select id="selectBlog" class="form-select mb-3" disabled>
-      <option selected>Choose blog post</option>
-    </select>
   <div class="mb-3">
     <label for="categoryUpdated" class="form-label">Change Category Here</label>
     <input type="text" class="form-control" id="categoryUpdated" name="categoryUpdated"/>
@@ -71,7 +68,9 @@
   </button>
   <p id="deleteFormResponse"></p>
 </div>
-<%- include("../partials/footer") %>
+<footer>
+<%- include("../partials/footer"); %>
+</footer>
 </body>
 </html>
 
