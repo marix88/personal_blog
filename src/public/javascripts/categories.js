@@ -31,8 +31,8 @@ $("#editCategoryForm").submit(function (e) {
         $("#editCategoryFormResponse").append(
           '<div class="success-block">Update successfully</div>'
         );
-        $("#titleCategory").html(res.updateCategory.title);
-        updatedTitleCategory = res.updateCategory.title;
+        $("#titleCategory").html(res.updateCategory.titleCategory);
+        updatedTitleCategory = res.updateCategory.titleCategory;
         $("#description").html(res.updateCategory.description);
         console.log(res.updateCategory);
       })

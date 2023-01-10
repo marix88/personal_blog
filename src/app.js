@@ -11,8 +11,8 @@ import cors from "cors";
 import logger from "morgan";
 
 // Local modules
-import router from "./routes/blogRoutes.js";
 import routerCategory from "./routes/categoryRoutes.js";
+import router from "./routes/blogRoutes.js";
 import routerIndex from "./routes/indexRoutes.js";
 
 
@@ -35,7 +35,7 @@ app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(express.json()); // parse the incoming requests with JSON payloads
-app.use(express.urlencoded()); // parse incoming Request Object if object, with nested objects, or generally any type. The default option: { extended: true}
+app.use(express.urlencoded({ extended: true })); // parse incoming Request Object if object, with nested objects, or generally any type.
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
@@ -48,7 +48,7 @@ app.use(routerIndex);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createHttpError(404));
-  console.log("Error 404 here!");
+  console.log("Error 404 here in app.js!");
 });
 
 // error handler
@@ -60,13 +60,16 @@ app.use((error, req, res, next) => {
 
   // render the error page
   res.render("pages/error");
-  console.log("Error");
+  console.log("Error handler in app.js");
   res.end();
 });
 
 // Server listen and connection to database
-mongoose.connect(`${process.env.MONGODB_URI}`) 
-.catch(error => handleError(error));
+mongoose.connect(`${process.env.MONGODB_URI}`, { 
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}) 
+.catch(error => console.log(error));
 console.log("Connected to Atlas!");
 
 app.listen(PORT || "0.0.0.0", (error) => {

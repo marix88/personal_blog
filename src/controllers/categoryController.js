@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
 import Category from "../models/category.js";
 import Blog from "../models/blogpost.js";
+import { Document } from "mongoose";
 
 const forNavbar = async () => {
   // find all records in the categories collection, selecting the "_id" and "title" fields
-  const categories = await Category.find({}, "_id, title")
+  const categories = await Category.find({}, "_id, titleCategory")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -21,10 +21,10 @@ const forNavbar = async () => {
 };
 
 
-// add new category, method: GET. Render add-category.ejs page.
-export const getAddCategory = async (req, res, next) => {
+// add new category, method: GET. Render add-category.ejs page containing the form to add a new category.
+export const getAddCategory = async (req, res) => {
   
-  let categories = await Category.find({}, "title")
+  /* let categories = await Category.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -35,10 +35,11 @@ export const getAddCategory = async (req, res, next) => {
       console.log(err);
       res.status(500).json({ err });
     });
-
+  */
   // extract titleCategory from the database
-  const titleCategory = categories.map((item)=>(item.title));
-  console.log("getAddCategory: titleCategory: ", titleCategory);
+  // const titleCategory = categories.map((item)=>(item.titleCategory));
+  // const titleCategory = categories.forEach((item) => item.titleCategory);
+  // console.log("getAddCategory: titleCategory: ", titleCategory);
 
   //for navbar
   let allCategories = await forNavbar();
@@ -48,25 +49,29 @@ export const getAddCategory = async (req, res, next) => {
   res.render("pages/add-category", {
     idAllCategories,
     titleAllCategories,
-    titleCategory,
+    // titleCategory,
   });
 
   console.log("getAddCategory res.render: ", {
     idAllCategories,
     titleAllCategories,
-    titleCategory,
+    // titleCategory,
   });
 }
+
 // add new category, method: POST. Send category page data to database.
 export const postAddCategory = (req, res) => {
-  console.log(req.body);
-  const category = new Category(req.body);
-  console.log("Data from the form:", req.body);
+  // create an instance of the Category model
+  let category = new Category({
+    titleCategory: req.body.titleCategory,
+    description: req.body.description,
+  });
+  console.log("titleCategory is: ", req.body.titleCategory);
+
   category
     .save()
-    .then((doc) => {
-      res.send({ doc });
-      console.log(doc);
+    .then((item) => {
+      console.log(item);
     })
     .catch((err) => {
       console.log(err);
@@ -91,12 +96,12 @@ export const getCategory = async (req, res) => {
 
   // take the values from the "categories" collection in the datatabase
   const idCategory = category._id;
-  const titleCategory = category.title;
+  const titleCategory = category.titleCategory;
   const description = category.description;
 
   const blogs = await Blog.find(
     { category: titleCategory },
-    "_id title"
+    "_id titleCategory"
   )
 
     .sort({ _id: -1 })
@@ -111,7 +116,7 @@ export const getCategory = async (req, res) => {
     });
 
   const idBlog = blogs.map((item) => item._id);
-  const titleBlog = blogs.map((item) => item.title);
+  const titleBlog = blogs.map((item) => item.titleCategory);
   const createdAt = blogs.map((item) => item.createdAt);
 
   // take the result from fornavbar function (ID and title for all categories)

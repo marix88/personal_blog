@@ -3,7 +3,6 @@
 <head>
   <%- include("../partials/head"); %>
   <script type="module" src="/javascripts/add-category.js"></script>
-  <script>let titleCategory = "<%= titleCategory %>"</script>
 </head>
 <body>
     <header>
@@ -18,17 +17,17 @@
         </div>
     </div>
     <section id="cards" class="pt-5">
-        <form id="addCategoryForm" enctype="multipart/form-data"
-              action="/add-category"
+        <form id="addCategoryForm" 
               method="POST"
+              action="http://localhost:3000/add-category"
               class="forms">
               <div class="mb-3">
                   <label for="titleCategory" class="form-label" >Title</label>
-                  <input type="text" class="form-control" id="titleCategory" name="titleCategory" placeholder="Your category name" required />
+                  <input type="text" class="form-control" id="CategoryTitle" name="titleCategory" placeholder="Your category name" required />
               </div>
               <div class="mb-3">
                   <label for="description" class="form-label">Description</label>
-                  <textarea class="form-control" id="description" name="description" placeholder="Describe this category" required></textarea>
+                  <textarea class="form-control" id="CategoryDescription" name="description" placeholder="Describe this category" required></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
               <p id="addCategoryFormResponse"></p>

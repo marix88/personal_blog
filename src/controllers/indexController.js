@@ -4,7 +4,7 @@ import Category from "../models/category.js";
 
 const forNavbar = async () => {
   // find all records in the categories collection, selecting the "_id" and "title" fields
-  const categories = await Category.find({}, "id, title")
+  const categories = await Category.find({}, "id, titleCategory")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -12,7 +12,7 @@ const forNavbar = async () => {
     });
 
   const idAllCategories = categories.map((item) => item._id);
-  const titleAllCategories = categories.map((item) => item.title);
+  const titleAllCategories = categories.map((item) => item.titleCategory);
  
   console.log("id and title: ",idAllCategories, titleAllCategories);
 
@@ -34,7 +34,7 @@ export const getHomePage = async (req, res, next) => {
     });
 
   const idCategory = categories.map((item) => item._id);
-  const titleCategory = categories.map((item) => item.title);
+  const titleCategory = categories.map((item) => item.titleCategory);
   const description = categories.map((item) => item.description);
   console.log("getHomePage: idCategory", idCategory);
   console.log("getHomePage: titleCategory", titleCategory);
