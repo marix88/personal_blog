@@ -30,6 +30,17 @@ section {
   background-image: linear-gradient(#ffffff, #919191);
 }
 
+.dropdown-menu:hover {
+  background-color: #26a652;
+  color: #dc3545;
+  text-decoration-color: #0d6efd;
+}
+
+.dropdown-menu:hover .dropdown-content {
+  background-color: aquamarine;
+  color: black;
+}
+
 #last-blogposts-inserted,
 #cards {
   background-image: linear-gradient(#919191, #ffffff);
@@ -95,6 +106,10 @@ textarea {
 
 #space {
   padding-left: 4rem;
+  text-align: center;
+}
+
+.centered {
   text-align: center;
 }
 

@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
 <%- include("../partials/head"); %> 
-<script type="module" src="/javascripts/blog.js">
-</script>
 </head>
 <body>
 <header>
@@ -14,7 +12,7 @@
       <h1 id="titleBlog" class="text-white fw-bold"><%= titleBlog %></h1>
       <p><%= createdAt %></p>
       <p>Category: <%= categoryBlog %></p>
-      <h2><%= snippet %></h2>
+      <p><%= snippet %></p>
       <p><%= contentBlog %></p>
     </div>
   </div>
@@ -72,5 +70,7 @@
 <%- include("../partials/footer"); %>
 </footer>
 </body>
+<script type="module" src="/javascripts/blog.js">
+</script>
 </html>
 

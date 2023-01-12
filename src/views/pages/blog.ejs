@@ -2,66 +2,36 @@
 <html lang="en">
 <head>
 <%- include("../partials/head"); %> 
-<script type="module" src="/javascripts/blog.js">
-</script>
 </head>
 <body>
 <header>
 <%- include("../partials/header"); %>
 </header>
   <div class="mask mask-custom">
-    <div class="d-flex flex-column justify-content-center align-items-center h-100">
-      <h1 id="titleBlog" class="text-white fw-bold"><%= titleBlog %></h1>
-      <p><%= createdAt %></p>
-      <p>Category: <%= categoryBlog %></p>
-      <h2><%= snippet %></h2>
-      <p><%= contentBlog %></p>
+    <h2 class="centered">All blog posts</h2>
+    <div class="d-flex flex-column justify-content-center align-items-center h-100">     
+      <div class="card-group">
+        <% blogs.forEach (blog => { %>
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title"><%= blog.title %></h4>
+                <p class="card-text">created at: <%= blog.createdAt %></p>
+                <p>Category: <%= blog.categoryBlog %></p>
+                <p><%= blog.snippet %></p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="/blog/<%= blog._id %>" class="btn btn-primary" id="readMoreBtnBlog">Read more</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
     </div>
   </div>
-
-<section id="cards">
-  <form id="editBlogForm" enctype="multipart/form-data" hidden
-  method="POST"
-  class="forms">
-  <select id="selectCategory" class="form-select mb-3">
-    <!-- put all categories in selectCategory -->
-    <option selected>Choose category</option>
-    <% for(let i=0; i<titleAllCategories.length; i++) { %>
-      <option value = "<%= titleAllCategories[i] %>" name="category" ><%= titleAllCategories[i] %></option>  
-    <% } %>
-  </select>
- 
-  <div class="mb-3">
-    <label for="categoryUpdated" class="form-label">Change Category Here</label>
-    <input type="text" class="form-control" id="categoryUpdated" name="categoryUpdated"/>
-  </div>
-    <div class="mb-3">
-      <label for="title" class="form-label">Change Title</label>
-      <input type="text" class="form-control" id="titleBlog" name="titleBlog" />
-    </div>
-    <div class="mb-3">
-      <label for="snippet" class="form-label">Change Snippet</label>
-      <input type="text" class="form-control" id="snippet" name="snippet" />
-    </div>
-    <div class="mb-3">
-      <label for="content" class="form-label">Change Content</label>
-      <textarea class="form-control" id="content" name="content"></textarea>
-    </div>
-    <div class="mb-3">
-      <label for="createdAtEdit" class="form-label">Change Date</label>
-      <input type="date" id="createdAtEdit" name="createdAtEdit" enabled/>
-    </div>
-
-    <button id="submitChanges" type="submit" class="btn btn-primary">
-      Submit
-    </button>
-    <p id="editFormResponse"></p>
-  </form>
-</section>
-
 <footer>
 <%- include("../partials/footer"); %>
 </footer>
 </body>
+<script type="module" src="/javascripts/blog.js">
+</script>
 </html>
 

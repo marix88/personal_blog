@@ -5,13 +5,37 @@ $("#selectCategory").change(function (e) {
   $("#titleCategory").removeAttr("disabled");
   $("#description").removeAttr("disabled");
   console.log("You need allBlogs to select a category from the dropdown!");
+  for (const key in allBlogs) {
+    if (this.value == key) {
+      allBlogs[key].map((item) => {
+        $("#selectBlog").append(`<option value="${item}">${item}</option>`);
+      });
+    }
+  }
 });
 
-// see the content of the blog post when pressing the "Read More" button
-// $("#readMoreBtn").click(function (e) {
+// format the date
+let createdAt = new Date().toDateString().split(" ");
+createdAt = `Edited: ${createdAt[2]} ${createdAt[1]} ${createdAt[3]}`;
+
+// see the content of the blog post when pressing the "Read More" button on home page
 const readMore = document.getElementById("readMoreBtn"); 
-readMore.addEventListener("click", () => {
-    fetch("/blog/:blogId", {
+console.log(readMore);
+readMore?.addEventListener("click", () => {
+  alert('You clicked the button');
+    fetch("/blogpost", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    //body: JSON.stringify({ selectCategory: titleBlog }),
+  }).then(() => (window.location = "../../blog/:blogId"));
+});
+
+// see the content of the blog post when pressing the "Read More" button on /blog page
+const readMoreBlog = document.getElementById("readMoreBtnBlog"); 
+console.log(readMoreBlog);
+readMoreBlog?.addEventListener("click", () => {
+  alert('You clicked the button');
+    fetch("/blogpost", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
     //body: JSON.stringify({ selectCategory: titleBlog }),
