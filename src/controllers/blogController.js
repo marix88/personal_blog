@@ -56,40 +56,36 @@ export const blog_add_get = async (req, res, next) => {
 };
 
 // method: POST. Insert the formData into the database
-export const blog_post = (req, res, next) => {
+export const blog_post = (req, res) => {
 
   const blog = new Blog({
-    _id: new mongoose.Types.ObjectId(),
-    categoryBlogPost: req.body.selectCategory,
+    categoryBlogPost: req.body.selectedCategory,
     title: req.body.title,
     snippet: req.body.snippet,
     content: req.body.content,
     createdAt: req.body.date,
   });
 
-  console.log("blog post: req.body.id", _id);
-  console.log("blog_post: req.body.categoryBlogPost: ", categoryBlogPost);
+  /* console.log("blog_post: req.body.categoryBlogPost: ", categoryBlogPost);
   console.log("blog_post: req.body.title: ", title);
   console.log("blog_post: req.body.snippet: ", snippet);
   console.log("blog_post: req.body.content: ", content);
-  console.log("blog_post: req.body.date: ", createdAt);
+  console.log("blog_post: req.body.date: ", createdAt); */
 
   blog
     .save()
-    .then((result) => {
-      console.log(result);
-      res.json({ result });
+    .then((item) => {
+      console.log(item);
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json({ err });
     });
-    next();
 };
 
 // get edit blog post
 export const blog_edit_get = async (req, res) => {
-  let categories = Category.find({}, "title")
+  const categories = await Category.find({}, "titleCategory")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -101,10 +97,10 @@ export const blog_edit_get = async (req, res) => {
       res.status(500).json({ err });
     });
 
-  let titleCategory = categories.map((item) => item.title);
+  const titleCategory = categories.map((item) => item.title);
   console.log("blog_edit_get: title category: ", titleCategory)
 
-  let blogs = Blog.find({}, "categoryBlogPost title")
+  let blogs = await Blog.find({}, "categoryBlogPost title")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -115,20 +111,25 @@ export const blog_edit_get = async (req, res) => {
       console.log(error);
       res.status(500).json({ error });
     });
-
+  
+  // const categoryBlog = blogs.categoryBlogPost;
+  // const titleBlog = blogs.title;
   let categoryBlog = blogs.map((item) => item.categoryBlogPost);
   let titleBlog = blogs.map((item) => item.title);
+  let createdAt = blogs.map((item) => item.createdAt);
+  let snippet = blogs.map((item) => item.snippet);
+  let contentBlog = blogs.map((item) => item.content);
   console.log("blog_edit_get: categoryBlog: ", categoryBlog);
   console.log("blog_edit_get: title blog: ", titleBlog);
 
   let allBlogs = {};
   console.log("blog_edit_get: allBlogs: ", allBlogs);
 
-  for (let i = 0; i<titleCategory.length; i++) {
-    allBlogs[titleCategory[i]] = [];
+  for (let i = 0; i<categoryBlog.length; i++) {
+    allBlogs[categoryBlog[i]] = [];
     for (let j = 0; j<titleBlog.length; j++) {
-      if (categoryBlog[j] == titleCategory[i]) {
-        allBlogs[titleCategory[i]].push(titleBlog[j]);
+      if (categoryBlog[j] == categoryBlog[i]) {
+        allBlogs[categoryBlog[i]].push(titleBlog[j]);
       }
     }
   }
@@ -145,6 +146,10 @@ export const blog_edit_get = async (req, res) => {
     titleAllCategories,
     titleCategory,
     titleBlog,
+    categoryBlog,
+    createdAt,
+    snippet,
+    contentBlog,
     allBlogs: JSON.stringify(allBlogs),
   });
 
@@ -154,6 +159,7 @@ export const blog_edit_get = async (req, res) => {
       titleAllCategories,
       titleCategory,
       titleBlog,
+      createdAt,
       allBlogs: JSON.stringify(allBlogs),
     }
   )
@@ -215,18 +221,29 @@ export const blog_get = async (req, res) => {
       res.status(500).json({ error });
     });
 
+  
+  const idBlog = blog.map((item) => item._id);
+  const categoryBlog = blog.map((item) => item.categoryBlogPost);
+  const titleBlog = blog.map((item) => item.title);
+  const snippet = blog.map((item) => item.snippet);
+  const contentBlog = blog.map((item) => item.content);
+  const createdAt = blog.map((item) => item.createdAt);
+
   // extract the values from the database
+  /*const idBlog = blog._id;
   const titleBlog = blog.title;
   const snippet = blog.snippet;
   const contentBlog = blog.content;
   const createdAt = blog.createdAt;
-  const categoryBlog = blog.categoryBlogPost;
+  const categoryBlog = blog.categoryBlogPost;*/
 
-  console.log("blog_post_get: titleBlog: ", titleBlog,
-  "blog_post_get: snippet: ", snippet,
-  "blog_post_get: contentBlog: ", contentBlog,
-  "blog_post_get: createdAt: ", createdAt,
-  "blog_post_get: categoryBlog ", categoryBlog,
+  console.log( "blog_get: idBlog: ", idBlog,
+  "blog_get: categoryBlog: ", categoryBlog,
+  "blog_get: titleBlog: ", titleBlog,
+  "blog_get: snippet: ", snippet,
+  "blog_get: contentBlog: ", contentBlog,
+  "blog_get: createdAt: ", createdAt,
+  "blog_get: categoryBlog ", categoryBlog,
     )
 
 
@@ -238,21 +255,23 @@ export const blog_get = async (req, res) => {
   res.render("pages/blog", {
     idAllCategories,
     titleAllCategories,
+    idBlog,
+    categoryBlog,
     titleBlog,
     snippet,
     contentBlog,
     createdAt,
-    categoryBlog,
   });
 
   console.log(
-    "blog_post_get: render: idAllCategories: ", {idAllCategories},
-    "blog_post_get: render: titleAllCategories: ", {titleAllCategories},
-    "blog_post_get: render: titleBlog: ", {titleBlog},
-    "blog_post_get: render: snippet: ", {snippet},
-    "blog_post_get: render: contentBlog: ", {contentBlog},
-    "blog_post_get: render: createdAt: ", {createdAt},
-    "blog_post_get: render: categoryBlog: ", {categoryBlog},
+    "blog_get: render: idAllCategories: ", {idAllCategories},
+    "blog_get: render: titleAllCategories: ", {titleAllCategories},
+    "blog_get: render: titleAllCategories: ", {idBlog},
+    "blog_get: render: titleBlog: ", {titleBlog},
+    "blog_get: render: snippet: ", {snippet},
+    "blog_get: render: contentBlog: ", {contentBlog},
+    "blog_get: render: createdAt: ", {createdAt},
+    "blog_get: render: categoryBlog: ", {categoryBlog},
   )
 };
 

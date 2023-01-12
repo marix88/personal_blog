@@ -8,8 +8,10 @@ $("#selectCategory").change(function (e) {
 });
 
 // see the content of the blog post when pressing the "Read More" button
-$("#readMoreBtn").click(function (e) {
-  fetch("/blog/:blogId", {
+// $("#readMoreBtn").click(function (e) {
+const readMore = document.getElementById("readMoreBtn"); 
+readMore.addEventListener("click", () => {
+    fetch("/blog/:blogId", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
     //body: JSON.stringify({ selectCategory: titleBlog }),

@@ -15,15 +15,15 @@
   <section id="cards" class="pt-5">
     <form 
     id="addBlogPostForm"
-    enctype="multipart/form-data"
     method="POST"
+    action="http://localhost:3000/create"
     class="forms"
   > <div>
       <select id="selectCategory" name="selectCategory" class="mb-3">
         <option selected>Choose category</option>
         <!-- put all categories in selectCategory -->
         <% for (let i=0 ; i<titleCategory.length; i++) { %>
-          <option value="<%= titleCategory[i] %>"><%= titleCategory[i] %></option>
+          <option name="selectedCategory" value="<%= titleCategory[i] %>"><%= titleCategory[i] %></option>
         <% } %>
       </select>
       </div>
