@@ -13,10 +13,10 @@ const router = express.Router();
 
 router.get("/create", blog_add_get);
 router.post("/create", blog_post);
-router.get("/blog", blog_edit_get);
-router.patch("/blog", blog_edit_patch);
-router.delete("/blog", blog_delete);
-router.get("/blogs", blogs_get);
+router.get("/blog/:blogId", blog_edit_get);
+router.patch("/blog/:blogId", blog_edit_patch);
+router.delete("/blog/:blogId", blog_delete);
+router.get("/blog", blogs_get);
 router.get("/blog/:blogId", blog_get);
 router.get("/about", (req, res, next) => {
   console.log("About page displayed!");

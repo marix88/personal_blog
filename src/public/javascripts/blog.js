@@ -56,7 +56,7 @@ $("#editBlogForm").submit(function (e) {
   }
 
   if (blogCategorySelected || title || snippet || content || date) {
-    fetch("/blog", {
+    fetch("/blogpost", {
       method: "PATCH",
       body: formData,
     })
@@ -91,7 +91,7 @@ $("#editBlogForm").submit(function (e) {
 $("#deleteBlogBtn").click(function (e) {
   e.preventDefault();
 
-  fetch("/blog", {
+  fetch("/blogpost", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
     //body: JSON.stringify({ selectCategory: titleBlog }),

@@ -141,7 +141,7 @@ export const blog_edit_get = async (req, res) => {
   let idAllCategories = allCategories.idAllCategories;
   let titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("pages/blog", {
+  res.render("pages/blogpost", {
     idAllCategories,
     titleAllCategories,
     titleCategory,
@@ -206,7 +206,7 @@ export const blog_edit_patch = (req, res) => {
   res.json({ updateBlog });
 };
 
-// find a blog post by id and display it on the "blog" page
+// find a blog post by id and display it on the "blogpost" page
 export const blog_get = async (req, res) => {
   const { blogId } = req.params;
   console.log(blogId);
@@ -252,7 +252,7 @@ export const blog_get = async (req, res) => {
   let idAllCategories = allCategories.idAllCategories;
   let titleAllCategories = allCategories.titleAllCategories;
 
-  res.render("pages/blog", {
+  res.render("pages/blogpost", {
     idAllCategories,
     titleAllCategories,
     idBlog,
@@ -277,7 +277,8 @@ export const blog_get = async (req, res) => {
 
 // find all blog posts and display them on /blogs page
 export const blogs_get = async (req, res) => {
-  const allBlogPosts = await Blog.find()
+  const blogs = await Blog.find({})
+  .sort({ _id: 1 })
   .exec()
   .then((docs) => {
       console.log(docs);
@@ -287,6 +288,58 @@ export const blogs_get = async (req, res) => {
       console.log(error);
       res.status(500).json({ error });
     });
+
+const idBlog = blogs.map((item) => item._id);
+const categoryBlog = blogs.map((item) => item.categoryBlogPost);
+const titleBlog = blogs.map((item) => item.title);
+const snippet = blogs.map((item) => item.snippet);
+const contentBlog = blogs.map((item) => item.content);
+const createdAt = blogs.map((item) => item.createdAt);
+
+  // extract the values from the database
+  /*const idBlog = blog._id;
+  const titleBlog = blog.title;
+  const snippet = blog.snippet;
+  const contentBlog = blog.content;
+  const createdAt = blog.createdAt;
+  const categoryBlog = blog.categoryBlogPost;*/
+
+  console.log( "blog_get: idBlog: ", idBlog,
+  "blog_get: categoryBlog: ", categoryBlog,
+  "blog_get: titleBlog: ", titleBlog,
+  "blog_get: snippet: ", snippet,
+  "blog_get: contentBlog: ", contentBlog,
+  "blog_get: createdAt: ", createdAt,
+  "blog_get: categoryBlog ", categoryBlog,
+    )
+
+
+  //for navbar
+  let allCategories = await forNavbar();
+  let idAllCategories = allCategories.idAllCategories;
+  let titleAllCategories = allCategories.titleAllCategories;
+
+  res.render("pages/blog", {
+    idAllCategories,
+    titleAllCategories,
+    idBlog,
+    categoryBlog,
+    titleBlog,
+    snippet,
+    contentBlog,
+    createdAt,
+  });
+
+  console.log(
+    "blog_get: render: idAllCategories: ", {idAllCategories},
+    "blog_get: render: titleAllCategories: ", {titleAllCategories},
+    "blog_get: render: titleAllCategories: ", {idBlog},
+    "blog_get: render: titleBlog: ", {titleBlog},
+    "blog_get: render: snippet: ", {snippet},
+    "blog_get: render: contentBlog: ", {contentBlog},
+    "blog_get: render: createdAt: ", {createdAt},
+    "blog_get: render: categoryBlog: ", {categoryBlog},
+  );
 }
 
 // delete a blog post
