@@ -16,12 +16,12 @@
     method="POST"
     action="http://localhost:3000/create"
     class="forms"
-  > <div>
+  > <div id="categoriesList">
       <select id="selectCategory" name="selectCategory" class="mb-3">
         <option selected>Choose category</option>
         <!-- put all categories in selectCategory -->
-        <% for (let i=0 ; i<titleCategory.length; i++) { %>
-          <option name="selectedCategory" value="<%= titleCategory[i] %>"><%= titleCategory[i] %></option>
+        <% for (let i=0; i<titleCategory.length; i++) { %>
+          <option><%= titleCategory[i] %></option>
         <% } %>
       </select>
       </div>
@@ -66,7 +66,7 @@
   <footer>
     <%- include("../partials/footer"); %>
   </footer>
+  <script type="module" src="/javascripts/newblogpost.js"></script>
   </body>
-  <script type="module" src="/javascripts/newblogpost.js">
   </script>
 </html>

@@ -1,15 +1,8 @@
 // add new blog post
 const addBlogPostForm = document.getElementById("addBlogPostForm");
 
-
 addBlogPostForm.addEventListener("submit", async (e) => { // if the form is submitted
   e.preventDefault(); // prevent submitting the form, send the formData to the server instead
-
-// select category
-const selectCategory = document.getElementById("selectCategory");
-selectCategory.addEventListener("change", async (e) => {
-  $("#selectCategory")
-});
 
 // get the entire form fields
 // get the element attached to the event handler.

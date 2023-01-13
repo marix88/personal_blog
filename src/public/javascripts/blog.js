@@ -1,14 +1,17 @@
 // put all blog posts for the selected category in selectCategory dropdown
-$("#selectCategory").change(function (e) {
-  $("#selectCategory").html("");
-  $("#selectCategory").removeAttr("disabled");
-  $("#titleCategory").removeAttr("disabled");
-  $("#description").removeAttr("disabled");
+const selectCategory = document.getElementById("selectCategory");
+const titleCategory = document.getElementById("titleCategory");
+const description = document.getElementById("description");
+selectCategory?.addEventListener("change", () => {
+  selectCategory.html("");
+  selectCategory.removeAttr("disabled");
+  titleCategory.removeAttr("disabled");
+  description.removeAttr("disabled");
   console.log("You need allBlogs to select a category from the dropdown!");
   for (const key in allBlogs) {
     if (this.value == key) {
       allBlogs[key].map((item) => {
-        $("#selectBlog").append(`<option value="${item}">${item}</option>`);
+        $("#selectCategory").append(`<option value="${item}">${item}</option>`);
       });
     }
   }

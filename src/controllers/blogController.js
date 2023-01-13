@@ -2,26 +2,27 @@ import mongoose from "mongoose";
 import Blog from "../models/blogpost.js";
 import Category from "../models/category.js";
 
-const forNavbar = async() => {
+const forNavbar = async () => {
   // find all records in the categories collection, selecting the "_id" and "title" fields
-  let categories = await Category.find({}, "_id title") 
+  const categories = await Category.find({}, "id, titleCategory")
     .sort({ _id: 1 })
     .exec()
-    .then((docs) => { 
+    .then((docs) => {
       return docs;
     });
-    let idAllCategories = categories.map((item) => item._id);
-    let titleAllCategories = categories.map((item) => item.titleCategory);
 
-    console.log("idAllCategories, titleAllCategories: ", idAllCategories, titleAllCategories)
+  const idAllCategories = categories.map((item) => item._id);
+  const titleAllCategories = categories.map((item) => item.titleCategory);
+ 
+  console.log("id and title: ",idAllCategories, titleAllCategories);
 
-    // extract idAllCategories, titleAllCategories from the database
-    return { idAllCategories, titleAllCategories };
+  // extract idAllCategories, titleAllCategories from the database
+  return { idAllCategories, titleAllCategories };
 };
 
 // show the "create" page and select the category for the new blog post
-export const blog_add_get = async (req, res, next) => {
-  let categories = await Category.find({}, "title")
+export const blog_add_get = async (req, res) => {
+  let categories = await Category.find({})
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {

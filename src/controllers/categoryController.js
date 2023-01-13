@@ -1,10 +1,9 @@
 import Category from "../models/category.js";
 import Blog from "../models/blogpost.js";
-import { Document } from "mongoose";
 
 const forNavbar = async () => {
   // find all records in the categories collection, selecting the "_id" and "title" fields
-  const categories = await Category.find({}, "_id, titleCategory")
+  const categories = await Category.find({}, "id, titleCategory")
     .sort({ _id: 1 })
     .exec()
     .then((docs) => {
@@ -12,9 +11,9 @@ const forNavbar = async () => {
     });
 
   const idAllCategories = categories.map((item) => item._id);
-  const titleAllCategories = categories.map((item) => item.title);
+  const titleAllCategories = categories.map((item) => item.titleCategory);
  
-  console.log("id and title forNavbar categoryController: ", idAllCategories, titleAllCategories);
+  console.log("id and title: ",idAllCategories, titleAllCategories);
 
   // extract idAllCategories, titleAllCategories from the database
   return { idAllCategories, titleAllCategories };
