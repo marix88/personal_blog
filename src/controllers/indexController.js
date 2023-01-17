@@ -59,7 +59,7 @@ export const getHomePage = async (req, res, next) => {
   
   // extract values from the database  
   const idBlog = blogs.map((item) => item._id);
-  const categoryBlog = blogs.map((item) => item.category);
+  const categoryBlog = blogs.map((item) => item.categoryBlogPost);
   const titleBlog = blogs.map((item) => item.title);
   const snippet = blogs.map((item) => item.snippet);
   const content = blogs.map((item) => item.content);

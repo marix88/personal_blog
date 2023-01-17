@@ -60,18 +60,12 @@ export const blog_add_get = async (req, res) => {
 export const blog_post = (req, res) => {
 
   const blog = new Blog({
-    categoryBlogPost: req.body.selectedCategory,
+    categoryBlogPost: req.body.selectCategory,
     title: req.body.title,
     snippet: req.body.snippet,
     content: req.body.content,
-    createdAt: req.body.date,
+    createdAt: req.body.createdAt,
   });
-
-  /* console.log("blog_post: req.body.categoryBlogPost: ", categoryBlogPost);
-  console.log("blog_post: req.body.title: ", title);
-  console.log("blog_post: req.body.snippet: ", snippet);
-  console.log("blog_post: req.body.content: ", content);
-  console.log("blog_post: req.body.date: ", createdAt); */
 
   blog
     .save()
@@ -99,30 +93,13 @@ export const blog_get = async (req, res) => {
       res.status(500).json({ error });
     });
 
-  
-  /*const idBlog = blog.map((item) => item._id);
-  const categoryBlog = blog.map((item) => item.categoryBlogPost);
-  const titleBlog = blog.map((item) => item.title);
-  const snippet = blog.map((item) => item.snippet);
-  const contentBlog = blog.map((item) => item.content);
-  const createdAt = blog.map((item) => item.createdAt);*/
-
   // extract the values from the database
   const idBlog = blog._id;
+  const categoryBlog = blog.categoryBlogPost;
   const titleBlog = blog.title;
   const snippet = blog.snippet;
   const contentBlog = blog.content;
   const createdAt = blog.createdAt;
-  const categoryBlog = blog.categoryBlogPost;
-
-  console.log("blog_get: blogId: ", blogId,
-  "blog_get: categoryBlog: ", categoryBlog,
-  "blog_get: titleBlog: ", titleBlog,
-  "blog_get: snippet: ", snippet,
-  "blog_get: contentBlog: ", contentBlog,
-  "blog_get: createdAt: ", createdAt,
-  "blog_get: categoryBlog ", categoryBlog,
-    )
 
 
   //for navbar
@@ -143,16 +120,14 @@ export const blog_get = async (req, res) => {
     createdAt,
   });
 
-  console.log(
-    "blog_get: render: idAllCategories: ", {idAllCategories},
-    "blog_get: render: titleAllCategories: ", {titleAllCategories},
-    "blog_get: render: blogId: ", {blogId},
-    "blog_get: render: titleBlog: ", {titleBlog},
-    "blog_get: render: snippet: ", {snippet},
-    "blog_get: render: contentBlog: ", {contentBlog},
-    "blog_get: render: createdAt: ", {createdAt},
-    "blog_get: render: categoryBlog: ", {categoryBlog},
-  )
+  console.log("blog_get: render: idAllCategories: ", {idAllCategories});
+  console.log("blog_get: render: titleAllCategories: ", {titleAllCategories});
+  console.log("blog_get: render: blogId: ", {blogId});
+  console.log("blog_get: render: titleBlog: ", {titleBlog});
+  console.log("blog_get: render: snippet: ", {snippet});
+  console.log("blog_get: render: contentBlog: ", {contentBlog});
+  console.log("blog_get: render: createdAt: ", {createdAt});
+  console.log("blog_get: render: categoryBlog: ", {categoryBlog});
 };
 
 // get edit blog post
@@ -300,20 +275,20 @@ const contentBlog = blogs.map((item) => item.content);
 const createdAt = blogs.map((item) => item.createdAt);
 
   // extract the values from the database
-  /*const idBlog = blog._id;
-  const titleBlog = blog.title;
-  const snippet = blog.snippet;
-  const contentBlog = blog.content;
-  const createdAt = blog.createdAt;
-  const categoryBlog = blog.categoryBlogPost;*/
+  /*const idBlog = blogs._id;
+  const titleBlog = blogs.title;
+  const snippet = blogs.snippet;
+  const contentBlog = blogs.content;
+  const createdAt = blogs.createdAt;
+  const categoryBlog = blogs.categoryBlogPost;*/
 
-  console.log( "blog_get: idBlog: ", idBlog,
-  "blog_get: categoryBlog: ", categoryBlog,
-  "blog_get: titleBlog: ", titleBlog,
-  "blog_get: snippet: ", snippet,
-  "blog_get: contentBlog: ", contentBlog,
-  "blog_get: createdAt: ", createdAt,
-  "blog_get: categoryBlog ", categoryBlog,
+  console.log( "blogs_get: idBlog: ", idBlog,
+  "blogs_get: categoryBlog: ", categoryBlog,
+  "blogs_get: titleBlog: ", titleBlog,
+  "blogs_get: snippet: ", snippet,
+  "blogs_get: contentBlog: ", contentBlog,
+  "blogs_get: createdAt: ", createdAt,
+  "blogs_get: categoryBlog ", categoryBlog,
     )
 
   //for navbar

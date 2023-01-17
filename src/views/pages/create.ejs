@@ -14,17 +14,17 @@
     <form 
     id="addBlogPostForm"
     method="POST"
-    action="http://localhost:3000/create"
+    action="/create"
     class="forms"
   > <div id="categoriesList">
       <select id="selectCategory" name="selectCategory" class="mb-3">
         <option selected>Choose category</option>
         <!-- put all categories in selectCategory -->
         <% for (let i=0; i<titleCategory.length; i++) { %>
-          <option><%= titleCategory[i] %></option>
+          <option value="<%= titleCategory[i] %>"><%= titleCategory[i] %></option>
         <% } %>
       </select>
-      </div>
+    </div>
         <input
           type="text"
           id="title"
@@ -68,5 +68,4 @@
   </footer>
   <script type="module" src="/javascripts/newblogpost.js"></script>
   </body>
-  </script>
 </html>

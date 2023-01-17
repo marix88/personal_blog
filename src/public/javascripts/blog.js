@@ -2,11 +2,11 @@
 const selectCategory = document.getElementById("selectCategory");
 const titleCategory = document.getElementById("titleCategory");
 const description = document.getElementById("description");
+
 selectCategory?.addEventListener("change", () => {
   selectCategory.html("");
   selectCategory.removeAttr("disabled");
   titleCategory.removeAttr("disabled");
-  description.removeAttr("disabled");
   console.log("You need allBlogs to select a category from the dropdown!");
   for (const key in allBlogs) {
     if (this.value == key) {
@@ -25,9 +25,9 @@ createdAt = `Edited: ${createdAt[2]} ${createdAt[1]} ${createdAt[3]}`;
 const readMore = document.getElementById("readMoreBtn"); 
 console.log(readMore);
 readMore?.addEventListener("click", () => {
-  alert('You clicked the button');
     fetch("/blogpost", {
     method: "GET",
+    mode:"no-cors",
     headers: { "Content-Type": "application/json" },
     //body: JSON.stringify({ selectCategory: titleBlog }),
   }).then(() => (window.location = "../../blog/:blogId"));
@@ -37,7 +37,6 @@ readMore?.addEventListener("click", () => {
 const readMoreBlog = document.getElementById("readMoreBtnBlog"); 
 console.log(readMoreBlog);
 readMoreBlog?.addEventListener("click", () => {
-  alert('You clicked the button');
     fetch("/blogpost", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -85,6 +84,7 @@ $("#editBlogForm").submit(function (e) {
   if (blogCategorySelected || title || snippet || content || date) {
     fetch("/blogpost", {
       method: "PATCH",
+      mode:"no-cors",
       body: formData,
     })
       .then((data) => data.json())
