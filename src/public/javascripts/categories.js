@@ -1,3 +1,14 @@
+// see the content of the blog post when pressing the "Read More" button on home page
+const readMore = document.getElementById("readMoreFromCategory"); 
+console.log(readMore);
+readMore?.addEventListener("click", () => {
+    fetch("/blogpost", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    //body: JSON.stringify({ selectCategory: titleBlog }),
+  }).then(() => (window.location = "../blog/:blogId"));
+});
+
 $("#editCategoryBtn").click(function (e) {
   $("form").removeAttr("hidden");
 });
@@ -24,6 +35,7 @@ $("#editCategoryForm").submit(function (e) {
   if (titleCategory || description) {
     fetch("/category", {
       method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: formData,
     })
       .then((data) => data.json())

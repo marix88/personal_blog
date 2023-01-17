@@ -13,7 +13,7 @@ const forNavbar = async () => {
   const idAllCategories = categories.map((item) => item._id);
   const titleAllCategories = categories.map((item) => item.titleCategory);
  
-  console.log("id and title: ",idAllCategories, titleAllCategories);
+  console.log("id and title: ", idAllCategories, titleAllCategories);
 
   // extract idAllCategories, titleAllCategories from the database
   return { idAllCategories, titleAllCategories };
@@ -99,8 +99,8 @@ export const getCategory = async (req, res) => {
   const description = category.description;
 
   const blogs = await Blog.find(
-    { category: titleCategory },
-    "_id titleCategory"
+    { categoryBlogPost: titleCategory },
+    "_id categoryBlogPost"
   )
 
     .sort({ _id: -1 })
@@ -115,7 +115,7 @@ export const getCategory = async (req, res) => {
     });
 
   const idBlog = blogs.map((item) => item._id);
-  const titleBlog = blogs.map((item) => item.titleCategory);
+  const titleBlog = blogs.map((item) => item.title);
   const createdAt = blogs.map((item) => item.createdAt);
 
   // take the result from fornavbar function (ID and title for all categories)
