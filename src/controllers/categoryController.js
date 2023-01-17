@@ -100,7 +100,7 @@ export const getCategory = async (req, res) => {
 
   const blogs = await Blog.find(
     { categoryBlogPost: titleCategory },
-    "_id categoryBlogPost"
+    "_id categoryBlogPost title createdAt"
   )
 
     .sort({ _id: -1 })
@@ -113,6 +113,10 @@ export const getCategory = async (req, res) => {
       console.log(err);
       res.status(500).json({ err });
     });
+  
+  /*const idBlog = blogs._id;
+  const titleBlog = blogs.title;
+  const createdAt = blogs.createdAt;*/
 
   const idBlog = blogs.map((item) => item._id);
   const titleBlog = blogs.map((item) => item.title);
@@ -126,7 +130,6 @@ export const getCategory = async (req, res) => {
   console.log(
     "getCategory: idAllCategories: ", idAllCategories, 
     "getCategory: titleAllCategories: ", titleAllCategories,
-    "getCategory: idCategory: ", idCategory,
     "getCategory: idCategory: ", idCategory,
     "getCategory: titleCategory: ", titleCategory,
     "getCategory: description: ", description,
