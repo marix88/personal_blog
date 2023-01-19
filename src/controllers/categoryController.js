@@ -150,14 +150,51 @@ export const getCategory = async (req, res) => {
   });
 };
 
+// display the edit-category.ejs page, method: get 
+export const getEditCategory = async (req, res) => {
+  const { categoryId } = req.params;
+  console.log("categoryId: ", categoryId);
+  const category = await Category.findById(categoryId)
+    .exec()
+    .then((doc) => {
+      console.log(doc);
+      return doc;
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error });
+    });
+
+  // extract the values from the "category" collection in the datatabase
+  const idCategory = category.id;
+  const titleCategory = category.titleCategory;
+  const description = category.description;
+  // const titleCategory = category.map((item)=>(item.titleCategory));
+  // const description = category.map((item) =>(item.description));
+
+  // take the result from fornavbar function (ID and title for all categories)
+  const allCategories = await forNavbar();
+  const idAllCategories = allCategories.idAllCategories;
+  const titleAllCategories = allCategories.titleAllCategories;
+
+  res.render("pages/edit-category", {
+    idAllCategories, 
+    titleAllCategories,
+    titleCategory,
+    description,
+    categoryId,
+    idCategory,
+  });
+};
+
+
 // edit category
 export const patchEditCategory = async (req, res) => {
   let result = {};
-
   if (req.body.titleCategory) {
-    const title = req.body.titleCategory;
-    console.log(title);
-    result.title = title;
+    const titleCategory = req.body.titleCategory;
+    console.log(titleCategory);
+    result.titleCategory = titleCategory;
   }
   if (req.body.description) {
     const description = req.body.description;
@@ -166,7 +203,7 @@ export const patchEditCategory = async (req, res) => {
   }
 
   let updateCategory = await Category.findOneAndUpdate(
-    { title: req.body.category },
+    { titleCategory, description }, 
     result,
     { new: true }
   );

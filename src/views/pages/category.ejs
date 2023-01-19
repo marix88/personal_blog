@@ -16,7 +16,7 @@
       </div>
     </div>
     <section id="categories" class="pt-5">
-      <h1 id="titleCategory" class="text-black fw-bold"><%= titleCategory %></h1>
+      <h1 id="titleCategoryHeading" class="text-black fw-bold"><%= titleCategory %></h1>
       <p id="descriptionCategory"><%= description %></p>
       <div class="row">
     
@@ -38,26 +38,13 @@
     
     <section id="cards">
       <div class="d-flex flex-wrap justify-content-around">
-        <button id="editCategoryBtn" class="btn btn-primary card-space">Edit Category</button>
-        <button id="deleteCategoryBtn" class="btn btn-primary card-space">Delete Category</button>
-        <p id="deleteFormResponse"></p>
+        <a href="/edit-category/<%= idCategory %>" id="editCategoryBtn" class="btn btn-primary card-space">Edit Category</a>
+        <a href="/category/<%= idCategory %>" id="deleteCategoryBtn" class="btn btn-primary card-space">Delete Category</a>
       </div>
-      <form id="editCategoryForm" enctype="multipart/form-data" hidden method="POST">
-        <div class="mb-3">
-          <label for="titleCategory" class="form-label">Change Title</label>
-          <input type="text" class="form-control" id="titleCategory" name="titleCategory">
-        </div>
-        <div class="mb-3">
-          <label for="description" class="form-label">Change Description</label>
-          <textarea class="form-control" id="description" name="description"></textarea>
-        </div>
-        <button id="submitChanges" type="submit" class="btn btn-primary">Submit</button>
-        <p id="editCategoryFormResponse"></p>
-      </form>
     </section>
     <footer>
       <%- include("../partials/footer"); %>
     </footer>
+    <script type="module" src="/javascripts/categories.js"></script>
   </body>
-  <script type="module" src="/javascripts/categories.js"></script>
 </html>
