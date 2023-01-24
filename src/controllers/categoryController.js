@@ -78,7 +78,7 @@ export const postAddCategory = (req, res) => {
     });
 };
 
-// show all the blogs in a category, method: get 
+// show all the blogs in a category, method: get, page: 
 export const getCategory = async (req, res) => {
   const {categoryId} = req.params;
   console.log(categoryId);
@@ -94,7 +94,7 @@ export const getCategory = async (req, res) => {
     });
 
   // take the values from the "categories" collection in the datatabase
-  const idCategory = category._id;
+  const idCategory = category.id;
   const titleCategory = category.titleCategory;
   const description = category.description;
 
@@ -106,7 +106,7 @@ export const getCategory = async (req, res) => {
     .sort({ _id: -1 })
     .exec()
     .then((docs) => {
-      console.log(docs);
+      console.log("these are the docs: ", docs);
       return docs;
     })
     .catch((err) => {
@@ -150,7 +150,7 @@ export const getCategory = async (req, res) => {
   });
 };
 
-// display the edit-category.ejs page, method: get 
+/* display the edit-category.ejs page, method: get 
 export const getEditCategory = async (req, res) => {
   const { categoryId } = req.params;
   console.log("categoryId: ", categoryId);
@@ -185,31 +185,35 @@ export const getEditCategory = async (req, res) => {
     categoryId,
     idCategory,
   });
-};
+};*/
 
 
 // edit category
 export const patchEditCategory = async (req, res) => {
-  let result = {};
-  if (req.body.titleCategory) {
-    const titleCategory = req.body.titleCategory;
-    console.log(titleCategory);
-    result.titleCategory = titleCategory;
+  let updated = req.body;
+  try {
+    let updateCategory = await Category.findByIdAndUpdate(
+      req.params.id, 
+      updated,
+      { new: true }
+    ).then ((updated) => {
+    // res.json(updateCategory);
+    // console.log(updateCategory);
+      if (req.body.titleCategory) {
+        const titleCategory = req.body.titleCategory;
+        // console.log(titleCategory);
+        updated.titleCategory = titleCategory;
+      }
+      if (req.body.description) {
+        const description = req.body.description;
+        // console.log(description);
+        updated.description = description;
+      } 
+    })
+  } catch (error) {
+    console.log(error);
+    // res.status(500).json({ error });
   }
-  if (req.body.description) {
-    const description = req.body.description;
-    console.log(description);
-    result.description = description;
-  }
-
-  let updateCategory = await Category.findOneAndUpdate(
-    { titleCategory, description }, 
-    result,
-    { new: true }
-  );
-  console.log(updateCategory);
-
-  res.json({ updateCategory });
 };
 
 // delete category

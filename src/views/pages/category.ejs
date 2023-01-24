@@ -38,9 +38,23 @@
     
     <section id="cards">
       <div class="d-flex flex-wrap justify-content-around">
-        <a href="/edit-category/<%= idCategory %>" id="editCategoryBtn" class="btn btn-primary card-space">Edit Category</a>
-        <a href="/category/<%= idCategory %>" id="deleteCategoryBtn" class="btn btn-primary card-space">Delete Category</a>
+        <button id="editCategoryBtn" class="btn btn-primary card-space">Edit Category</button>
+        <button id="deleteCategoryBtn" class="btn btn-primary card-space">Delete Category</button>
       </div>
+    </section>
+    <section id="cards">
+      <form id="editCategoryForm" class="forms" hidden>
+        <div class="mb-3">
+          <label for="titleCategory" class="form-label">Change Title</label>
+          <input type="text" class="form-control" id="titleCategory" name="titleCategory" placeholder="Type the new title here">
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Change Description</label>
+          <textarea class="form-control" id="description" name="description" placeholder="Type the new desctiption here"></textarea>
+        </div>
+        <button id="submitChanges" type="submit" class="btn btn-primary">Submit</button>
+        <p id="editCategoryFormResponse"></p>
+      </form>
     </section>
     <footer>
       <%- include("../partials/footer"); %>

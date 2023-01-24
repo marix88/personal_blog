@@ -1,7 +1,6 @@
 import express from "express";
 import { getAddCategory } from "../controllers/categoryController.js";
 import { postAddCategory } from "../controllers/categoryController.js";
-import { getEditCategory } from "../controllers/categoryController.js";
 import { getCategory } from "../controllers/categoryController.js";
 import { patchEditCategory } from "../controllers/categoryController.js";
 import { deleteCategory } from "../controllers/categoryController.js";
@@ -13,12 +12,10 @@ routerCategory.get("/add-category", getAddCategory);
 
 routerCategory.post("/add-category/:categoryId", postAddCategory);
 
-routerCategory.get("/edit-category/:categoryId", getEditCategory);
-
-routerCategory.patch("/edit-category/:categoryId", patchEditCategory);
-
-routerCategory.delete("/category", deleteCategory);
-
 routerCategory.get("/category/:categoryId", getCategory);
+
+routerCategory.patch("/category/:categoryId", patchEditCategory);
+
+routerCategory.delete("/category/:categoryId", deleteCategory);
 
 export default routerCategory;
