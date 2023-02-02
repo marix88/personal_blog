@@ -48,7 +48,7 @@ async function postFormFieldsAsJson({ url, formData }) {
     //Set the headers that specify you're sending a JSON body request and accepting JSON response
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json",
+      "Accept": "application/json"
     },
     // POST request body as JSON string.
     body: formDataJsonString,

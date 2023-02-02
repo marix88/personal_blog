@@ -1,8 +1,8 @@
-let checkFetch = (res) => {
-  if (!res.ok) {
-    throw Error(res.statusText + "-" + res.url);
+let checkFetch = (response) => {
+  if (!response.ok) {
+    throw Error(response.statusText + "-" + response.url + ": Network response was not OK");
   }
-  return res;
+  return response;
 }
 
 // see the content of the blog post when pressing the "Read More" button on home page
@@ -10,7 +10,10 @@ const readMore = document.getElementById("readMoreFromCategory");
 readMore?.addEventListener("click", () => {
     fetch("/blogpost", {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      "Content-Type": "application/json", 
+       "Accept": "application/json"
+    },
     //body: JSON.stringify({ selectCategory: titleBlog }),
   })
   .then(checkFetch)
@@ -27,55 +30,50 @@ editCategoryBtn?.addEventListener("click", () => {
   editCategoryForm.removeAttribute("hidden");
 })
 
-// const editCategory = document.getElementById("editCategoryBtn");
-// editCategory?.addEventListener("click", () => {
-//   fetch("/edit-category/idCategory")
-//   .then(checkFetch)
-//   .then(() => {
-//   (window.location = "../../edit-category/idCategory")
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
-// })
-
 // edit category
 editCategoryForm?.addEventListener("submit", (e) => {
   e.preventDefault();
-
-  let titleCategory = document.getElementById("titleCategory").value;
-  let description = document.getElementById("description").value;
-  const editCategoryFormResponse = document.getElementById("editCategoryFormResponse");
   
-  let formData = new FormData(e.target);
+  const formData = new FormData(e.target);
+  // const titleCategory = formData.get("titleCategory");
+  // const description = formData.get("description");
+  // console.log({ titleCategory });
+  // console.log({ description });
+  const updatedValues = Object.fromEntries(formData.entries());
+  console.log({ updatedValues })
+
+  const editCategoryFormResponse = document.getElementById("editCategoryFormResponse");
 
   if (titleCategory) {
-    formData.append("titleCategory", titleCategory);
-    console.log("First titleCategory: ", titleCategory);
+    formData.set("titleCategory", updatedValues.titleCategory);
+    console.log("First titleCategory: ", updatedValues.titleCategory);
   }
   if (description) {
-    formData.append("description", description);
-    console.log("First description: ", description);
+    formData.set("description", updatedValues.description);
+    console.log("First description: ", updatedValues.description);
   }
 
   if (titleCategory || description) {
     fetch("/category/idCategory", {
       method: "PATCH",
-      body: formData,
+      headers: { "Content-Type": "application/json" }, // default: application/x-www-form-urlencoded;charset=UTF-8
+      body: JSON.stringify(updatedValues), 
     })
     .then(checkFetch)
-    .then((formData) => formData.json())
-    .then((res) => console.log("Good fetch!", res))
-    .then(() => {
+    // .then(text => console.log(text))
+    // .then(response => response.text())
+    .then(response => response.json())
+    .then((res) => {
+      console.log("Good fetch!");
+      let titleCategory = res.updatedCategory.titleCategory;
+      titleCategory.html(res.titleCategory);
+      console.log(res.category);
+      let description = res.updatedCategory.description;
+      description.html(res.description);
+      console.log(res.category);
       editCategoryFormResponse.append(
         '<div class="success-block">Update successfully</div>'
       );
-      titleCategory.html(res.updateCategory.titleCategory);
-      titleCategory = res.updateCategory.titleCategory;
-      console.log(res.updateCategory);
-      // description".html(description);
-      // description = response.updateCategory.description;
-      // console.log(response.updateCategory);
     })
     .catch((err) => {
       console.log(err);

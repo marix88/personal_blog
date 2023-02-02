@@ -190,31 +190,31 @@ export const getEditCategory = async (req, res) => {
 
 // edit category
 export const patchEditCategory = async (req, res) => {
-  let updated = req.body;
-  try {
-    let updateCategory = await Category.findByIdAndUpdate(
-      req.params.id, 
-      updated,
-      { new: true }
-    ).then ((updated) => {
-    // res.json(updateCategory);
-    // console.log(updateCategory);
-      if (req.body.titleCategory) {
-        const titleCategory = req.body.titleCategory;
-        // console.log(titleCategory);
-        updated.titleCategory = titleCategory;
-      }
-      if (req.body.description) {
-        const description = req.body.description;
-        // console.log(description);
-        updated.description = description;
-      } 
-    })
-  } catch (error) {
-    console.log(error);
-    // res.status(500).json({ error });
+  let result = {};
+  if (req.body.titleCategory) {
+    const titleCategory = req.body.titleCategory;
+    console.log(titleCategory);
+    result.titleCategory = titleCategory;
   }
-};
+  if (req.body.description) {
+    const description = req.body.description;
+    console.log(description);
+    result.description = description;
+  } 
+  console.log("the result is: ", result);
+  let updatedCategory = await Category.findByIdAndUpdate(
+    { _id },
+    result,
+    { new: true } // show the updated doc
+  ) 
+  .then ((updatedCategory) => res.json({ updatedCategory }))
+  .catch ((error) => {
+  console.log(error);
+  res.status(500).json({ error });
+  })
+  console.log("The id is: ", console.log(req.params.id));
+}
+
 
 // delete category
 export const deleteCategory = async (req, res) => {
